@@ -1,0 +1,220 @@
+.learn-page {
+    padding-bottom: 60px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.unit-container {
+    margin-bottom: 40px;
+}
+
+.unit-header {
+    background: linear-gradient(135deg, var(--color-surface), rgba(18, 40, 32, 0.8));
+    color: var(--color-primary);
+    /* Gold title */
+    padding: 24px 20px;
+    border-radius: 20px;
+    margin: 24px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.unit-header-content {
+    flex: 1;
+}
+
+.unit-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.unit-desc {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-main);
+    opacity: 0.95;
+}
+
+.unit-guide-btn {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 10px 20px;
+    border-radius: 100px;
+    /* Pill */
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.unit-guide-btn:active {
+    transform: scale(0.95);
+    background: rgba(212, 175, 55, 0.2);
+}
+
+.path-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 0;
+    position: relative;
+    gap: 40px;
+}
+
+.svg-path-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.node {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.node-ring-wrapper {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 0 6px var(--color-primary));
+}
+
+.node-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.node-icon-wrapper {
+    transition: transform 0.2s;
+}
+
+.node-btn:active {
+    transform: scale(0.9);
+}
+
+.node.locked .node-btn {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text-light);
+    border: 1px solid var(--color-border);
+    box-shadow: none !important;
+    cursor: not-allowed;
+}
+
+.node.locked .node-btn:active {
+    transform: none;
+}
+
+.node.completed .node-btn {
+    filter: brightness(0.9);
+}
+
+.node.active .node-btn {
+    animation: float 3s infinite ease-in-out;
+}
+
+.node.active .node-btn::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--color-primary);
+    animation: pulse 2s infinite ease-in-out;
+    opacity: 0.5;
+}
+
+.start-tooltip {
+    position: absolute;
+    top: -65px;
+    background: rgba(18, 40, 32, 0.95);
+    color: var(--color-primary);
+    backdrop-filter: blur(8px);
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    animation: float 2s infinite ease-in-out;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.tooltip-arrow {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid rgba(212, 175, 55, 0.3);
+}
+
+.tooltip-arrow::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: -7px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid rgba(18, 40, 32, 0.95);
+}
+
+.node-label {
+    position: absolute;
+    bottom: -28px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-main);
+    text-align: center;
+    white-space: nowrap;
+    direction: rtl;
+}
+
+.node-label.locked {
+    color: var(--color-text-light);
+}

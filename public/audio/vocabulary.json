@@ -1,0 +1,810 @@
+{
+  "letter_alif_fatha": {
+    "text": "أَ",
+    "path": "/audio/letters/letter_alif_fatha.mp3"
+  },
+  "letter_baa_fatha": {
+    "text": "بَ",
+    "path": "/audio/letters/letter_baa_fatha.mp3"
+  },
+  "letter_taa_fatha": {
+    "text": "تَ",
+    "path": "/audio/letters/letter_taa_fatha.mp3"
+  },
+  "letter_thaa_fatha": {
+    "text": "ثَ",
+    "path": "/audio/letters/letter_thaa_fatha.mp3"
+  },
+  "letter_jeem_fatha": {
+    "text": "جَ",
+    "path": "/audio/letters/letter_jeem_fatha.mp3"
+  },
+  "letter_haa_fatha": {
+    "text": "حَ",
+    "path": "/audio/letters/letter_haa_fatha.mp3"
+  },
+  "letter_khaa_fatha": {
+    "text": "خَ",
+    "path": "/audio/letters/letter_khaa_fatha.mp3"
+  },
+  "letter_daal_fatha": {
+    "text": "دَ",
+    "path": "/audio/letters/letter_daal_fatha.mp3"
+  },
+  "letter_dhaal_fatha": {
+    "text": "ذَ",
+    "path": "/audio/letters/letter_dhaal_fatha.mp3"
+  },
+  "letter_raa_fatha": {
+    "text": "رَ",
+    "path": "/audio/letters/letter_raa_fatha.mp3"
+  },
+  "letter_zaay_fatha": {
+    "text": "زَ",
+    "path": "/audio/letters/letter_zaay_fatha.mp3"
+  },
+  "letter_seen_fatha": {
+    "text": "سَ",
+    "path": "/audio/letters/letter_seen_fatha.mp3"
+  },
+  "letter_sheen_fatha": {
+    "text": "شَ",
+    "path": "/audio/letters/letter_sheen_fatha.mp3"
+  },
+  "letter_saad_fatha": {
+    "text": "صَ",
+    "path": "/audio/letters/letter_saad_fatha.mp3"
+  },
+  "letter_daad_fatha": {
+    "text": "ضَ",
+    "path": "/audio/letters/letter_daad_fatha.mp3"
+  },
+  "letter_taa2_fatha": {
+    "text": "طَ",
+    "path": "/audio/letters/letter_taa2_fatha.mp3"
+  },
+  "letter_dhaa2_fatha": {
+    "text": "ظَ",
+    "path": "/audio/letters/letter_dhaa2_fatha.mp3"
+  },
+  "letter_ayn_fatha": {
+    "text": "عَ",
+    "path": "/audio/letters/letter_ayn_fatha.mp3"
+  },
+  "letter_ghayn_fatha": {
+    "text": "غَ",
+    "path": "/audio/letters/letter_ghayn_fatha.mp3"
+  },
+  "letter_faa_fatha": {
+    "text": "فَ",
+    "path": "/audio/letters/letter_faa_fatha.mp3"
+  },
+  "letter_qaaf_fatha": {
+    "text": "قَ",
+    "path": "/audio/letters/letter_qaaf_fatha.mp3"
+  },
+  "letter_kaaf_fatha": {
+    "text": "كَ",
+    "path": "/audio/letters/letter_kaaf_fatha.mp3"
+  },
+  "letter_laam_fatha": {
+    "text": "لَ",
+    "path": "/audio/letters/letter_laam_fatha.mp3"
+  },
+  "letter_meem_fatha": {
+    "text": "مَ",
+    "path": "/audio/letters/letter_meem_fatha.mp3"
+  },
+  "letter_noon_fatha": {
+    "text": "نَ",
+    "path": "/audio/letters/letter_noon_fatha.mp3"
+  },
+  "letter_haa2_fatha": {
+    "text": "هَ",
+    "path": "/audio/letters/letter_haa2_fatha.mp3"
+  },
+  "letter_waaw_fatha": {
+    "text": "وَ",
+    "path": "/audio/letters/letter_waaw_fatha.mp3"
+  },
+  "letter_yaa_fatha": {
+    "text": "يَ",
+    "path": "/audio/letters/letter_yaa_fatha.mp3"
+  },
+  "letter_alif_name": {
+    "text": "أَلِف",
+    "path": "/audio/letters/letter_alif_name.mp3"
+  },
+  "letter_baa_name": {
+    "text": "باء",
+    "path": "/audio/letters/letter_baa_name.mp3"
+  },
+  "letter_taa_name": {
+    "text": "تاء",
+    "path": "/audio/letters/letter_taa_name.mp3"
+  },
+  "letter_thaa_name": {
+    "text": "ثاء",
+    "path": "/audio/letters/letter_thaa_name.mp3"
+  },
+  "letter_jeem_name": {
+    "text": "جيم",
+    "path": "/audio/letters/letter_jeem_name.mp3"
+  },
+  "letter_haa_name": {
+    "text": "حاء",
+    "path": "/audio/letters/letter_haa_name.mp3"
+  },
+  "letter_khaa_name": {
+    "text": "خاء",
+    "path": "/audio/letters/letter_khaa_name.mp3"
+  },
+  "letter_daal_name": {
+    "text": "دال",
+    "path": "/audio/letters/letter_daal_name.mp3"
+  },
+  "letter_dhaal_name": {
+    "text": "ذال",
+    "path": "/audio/letters/letter_dhaal_name.mp3"
+  },
+  "letter_raa_name": {
+    "text": "راء",
+    "path": "/audio/letters/letter_raa_name.mp3"
+  },
+  "letter_zaay_name": {
+    "text": "زاي",
+    "path": "/audio/letters/letter_zaay_name.mp3"
+  },
+  "letter_seen_name": {
+    "text": "سين",
+    "path": "/audio/letters/letter_seen_name.mp3"
+  },
+  "letter_sheen_name": {
+    "text": "شين",
+    "path": "/audio/letters/letter_sheen_name.mp3"
+  },
+  "letter_saad_name": {
+    "text": "صاد",
+    "path": "/audio/letters/letter_saad_name.mp3"
+  },
+  "letter_daad_name": {
+    "text": "ضاد",
+    "path": "/audio/letters/letter_daad_name.mp3"
+  },
+  "letter_taa2_name": {
+    "text": "طاء",
+    "path": "/audio/letters/letter_taa2_name.mp3"
+  },
+  "letter_dhaa2_name": {
+    "text": "ظاء",
+    "path": "/audio/letters/letter_dhaa2_name.mp3"
+  },
+  "letter_ayn_name": {
+    "text": "عين",
+    "path": "/audio/letters/letter_ayn_name.mp3"
+  },
+  "letter_ghayn_name": {
+    "text": "غين",
+    "path": "/audio/letters/letter_ghayn_name.mp3"
+  },
+  "letter_faa_name": {
+    "text": "فاء",
+    "path": "/audio/letters/letter_faa_name.mp3"
+  },
+  "letter_qaaf_name": {
+    "text": "قاف",
+    "path": "/audio/letters/letter_qaaf_name.mp3"
+  },
+  "letter_kaaf_name": {
+    "text": "كاف",
+    "path": "/audio/letters/letter_kaaf_name.mp3"
+  },
+  "letter_laam_name": {
+    "text": "لام",
+    "path": "/audio/letters/letter_laam_name.mp3"
+  },
+  "letter_meem_name": {
+    "text": "ميم",
+    "path": "/audio/letters/letter_meem_name.mp3"
+  },
+  "letter_noon_name": {
+    "text": "نون",
+    "path": "/audio/letters/letter_noon_name.mp3"
+  },
+  "letter_haa2_name": {
+    "text": "هاء",
+    "path": "/audio/letters/letter_haa2_name.mp3"
+  },
+  "letter_waaw_name": {
+    "text": "واو",
+    "path": "/audio/letters/letter_waaw_name.mp3"
+  },
+  "letter_yaa_name": {
+    "text": "ياء",
+    "path": "/audio/letters/letter_yaa_name.mp3"
+  },
+  "syl_baa_fatha": {
+    "text": "بَ",
+    "path": "/audio/syllables/syl_baa_fatha.mp3"
+  },
+  "syl_baa_kasra": {
+    "text": "بِ",
+    "path": "/audio/syllables/syl_baa_kasra.mp3"
+  },
+  "syl_baa_damma": {
+    "text": "بُ",
+    "path": "/audio/syllables/syl_baa_damma.mp3"
+  },
+  "syl_taa_fatha": {
+    "text": "تَ",
+    "path": "/audio/syllables/syl_taa_fatha.mp3"
+  },
+  "syl_taa_kasra": {
+    "text": "تِ",
+    "path": "/audio/syllables/syl_taa_kasra.mp3"
+  },
+  "syl_taa_damma": {
+    "text": "تُ",
+    "path": "/audio/syllables/syl_taa_damma.mp3"
+  },
+  "syl_thaa_fatha": {
+    "text": "ثَ",
+    "path": "/audio/syllables/syl_thaa_fatha.mp3"
+  },
+  "syl_thaa_kasra": {
+    "text": "ثِ",
+    "path": "/audio/syllables/syl_thaa_kasra.mp3"
+  },
+  "syl_thaa_damma": {
+    "text": "ثُ",
+    "path": "/audio/syllables/syl_thaa_damma.mp3"
+  },
+  "syl_jeem_fatha": {
+    "text": "جَ",
+    "path": "/audio/syllables/syl_jeem_fatha.mp3"
+  },
+  "syl_jeem_kasra": {
+    "text": "جِ",
+    "path": "/audio/syllables/syl_jeem_kasra.mp3"
+  },
+  "syl_jeem_damma": {
+    "text": "جُ",
+    "path": "/audio/syllables/syl_jeem_damma.mp3"
+  },
+  "syl_haa_fatha": {
+    "text": "حَ",
+    "path": "/audio/syllables/syl_haa_fatha.mp3"
+  },
+  "syl_haa_kasra": {
+    "text": "حِ",
+    "path": "/audio/syllables/syl_haa_kasra.mp3"
+  },
+  "syl_haa_damma": {
+    "text": "حُ",
+    "path": "/audio/syllables/syl_haa_damma.mp3"
+  },
+  "syl_khaa_fatha": {
+    "text": "خَ",
+    "path": "/audio/syllables/syl_khaa_fatha.mp3"
+  },
+  "syl_khaa_kasra": {
+    "text": "خِ",
+    "path": "/audio/syllables/syl_khaa_kasra.mp3"
+  },
+  "syl_khaa_damma": {
+    "text": "خُ",
+    "path": "/audio/syllables/syl_khaa_damma.mp3"
+  },
+  "syl_daal_fatha": {
+    "text": "دَ",
+    "path": "/audio/syllables/syl_daal_fatha.mp3"
+  },
+  "syl_daal_kasra": {
+    "text": "دِ",
+    "path": "/audio/syllables/syl_daal_kasra.mp3"
+  },
+  "syl_daal_damma": {
+    "text": "دُ",
+    "path": "/audio/syllables/syl_daal_damma.mp3"
+  },
+  "syl_dhaal_fatha": {
+    "text": "ذَ",
+    "path": "/audio/syllables/syl_dhaal_fatha.mp3"
+  },
+  "syl_dhaal_kasra": {
+    "text": "ذِ",
+    "path": "/audio/syllables/syl_dhaal_kasra.mp3"
+  },
+  "syl_dhaal_damma": {
+    "text": "ذُ",
+    "path": "/audio/syllables/syl_dhaal_damma.mp3"
+  },
+  "syl_raa_fatha": {
+    "text": "رَ",
+    "path": "/audio/syllables/syl_raa_fatha.mp3"
+  },
+  "syl_raa_kasra": {
+    "text": "رِ",
+    "path": "/audio/syllables/syl_raa_kasra.mp3"
+  },
+  "syl_raa_damma": {
+    "text": "رُ",
+    "path": "/audio/syllables/syl_raa_damma.mp3"
+  },
+  "syl_zaay_fatha": {
+    "text": "زَ",
+    "path": "/audio/syllables/syl_zaay_fatha.mp3"
+  },
+  "syl_zaay_kasra": {
+    "text": "زِ",
+    "path": "/audio/syllables/syl_zaay_kasra.mp3"
+  },
+  "syl_zaay_damma": {
+    "text": "زُ",
+    "path": "/audio/syllables/syl_zaay_damma.mp3"
+  },
+  "syl_seen_fatha": {
+    "text": "سَ",
+    "path": "/audio/syllables/syl_seen_fatha.mp3"
+  },
+  "syl_seen_kasra": {
+    "text": "سِ",
+    "path": "/audio/syllables/syl_seen_kasra.mp3"
+  },
+  "syl_seen_damma": {
+    "text": "سُ",
+    "path": "/audio/syllables/syl_seen_damma.mp3"
+  },
+  "syl_sheen_fatha": {
+    "text": "شَ",
+    "path": "/audio/syllables/syl_sheen_fatha.mp3"
+  },
+  "syl_sheen_kasra": {
+    "text": "شِ",
+    "path": "/audio/syllables/syl_sheen_kasra.mp3"
+  },
+  "syl_sheen_damma": {
+    "text": "شُ",
+    "path": "/audio/syllables/syl_sheen_damma.mp3"
+  },
+  "syl_saad_fatha": {
+    "text": "صَ",
+    "path": "/audio/syllables/syl_saad_fatha.mp3"
+  },
+  "syl_saad_kasra": {
+    "text": "صِ",
+    "path": "/audio/syllables/syl_saad_kasra.mp3"
+  },
+  "syl_saad_damma": {
+    "text": "صُ",
+    "path": "/audio/syllables/syl_saad_damma.mp3"
+  },
+  "syl_daad_fatha": {
+    "text": "ضَ",
+    "path": "/audio/syllables/syl_daad_fatha.mp3"
+  },
+  "syl_daad_kasra": {
+    "text": "ضِ",
+    "path": "/audio/syllables/syl_daad_kasra.mp3"
+  },
+  "syl_daad_damma": {
+    "text": "ضُ",
+    "path": "/audio/syllables/syl_daad_damma.mp3"
+  },
+  "syl_taa2_fatha": {
+    "text": "طَ",
+    "path": "/audio/syllables/syl_taa2_fatha.mp3"
+  },
+  "syl_taa2_kasra": {
+    "text": "طِ",
+    "path": "/audio/syllables/syl_taa2_kasra.mp3"
+  },
+  "syl_taa2_damma": {
+    "text": "طُ",
+    "path": "/audio/syllables/syl_taa2_damma.mp3"
+  },
+  "syl_dhaa2_fatha": {
+    "text": "ظَ",
+    "path": "/audio/syllables/syl_dhaa2_fatha.mp3"
+  },
+  "syl_dhaa2_kasra": {
+    "text": "ظِ",
+    "path": "/audio/syllables/syl_dhaa2_kasra.mp3"
+  },
+  "syl_dhaa2_damma": {
+    "text": "ظُ",
+    "path": "/audio/syllables/syl_dhaa2_damma.mp3"
+  },
+  "syl_ayn_fatha": {
+    "text": "عَ",
+    "path": "/audio/syllables/syl_ayn_fatha.mp3"
+  },
+  "syl_ayn_kasra": {
+    "text": "عِ",
+    "path": "/audio/syllables/syl_ayn_kasra.mp3"
+  },
+  "syl_ayn_damma": {
+    "text": "عُ",
+    "path": "/audio/syllables/syl_ayn_damma.mp3"
+  },
+  "syl_ghayn_fatha": {
+    "text": "غَ",
+    "path": "/audio/syllables/syl_ghayn_fatha.mp3"
+  },
+  "syl_ghayn_kasra": {
+    "text": "غِ",
+    "path": "/audio/syllables/syl_ghayn_kasra.mp3"
+  },
+  "syl_ghayn_damma": {
+    "text": "غُ",
+    "path": "/audio/syllables/syl_ghayn_damma.mp3"
+  },
+  "syl_faa_fatha": {
+    "text": "فَ",
+    "path": "/audio/syllables/syl_faa_fatha.mp3"
+  },
+  "syl_faa_kasra": {
+    "text": "فِ",
+    "path": "/audio/syllables/syl_faa_kasra.mp3"
+  },
+  "syl_faa_damma": {
+    "text": "فُ",
+    "path": "/audio/syllables/syl_faa_damma.mp3"
+  },
+  "syl_qaaf_fatha": {
+    "text": "قَ",
+    "path": "/audio/syllables/syl_qaaf_fatha.mp3"
+  },
+  "syl_qaaf_kasra": {
+    "text": "قِ",
+    "path": "/audio/syllables/syl_qaaf_kasra.mp3"
+  },
+  "syl_qaaf_damma": {
+    "text": "قُ",
+    "path": "/audio/syllables/syl_qaaf_damma.mp3"
+  },
+  "syl_kaaf_fatha": {
+    "text": "كَ",
+    "path": "/audio/syllables/syl_kaaf_fatha.mp3"
+  },
+  "syl_kaaf_kasra": {
+    "text": "كِ",
+    "path": "/audio/syllables/syl_kaaf_kasra.mp3"
+  },
+  "syl_kaaf_damma": {
+    "text": "كُ",
+    "path": "/audio/syllables/syl_kaaf_damma.mp3"
+  },
+  "syl_laam_fatha": {
+    "text": "لَ",
+    "path": "/audio/syllables/syl_laam_fatha.mp3"
+  },
+  "syl_laam_kasra": {
+    "text": "لِ",
+    "path": "/audio/syllables/syl_laam_kasra.mp3"
+  },
+  "syl_laam_damma": {
+    "text": "لُ",
+    "path": "/audio/syllables/syl_laam_damma.mp3"
+  },
+  "syl_meem_fatha": {
+    "text": "مَ",
+    "path": "/audio/syllables/syl_meem_fatha.mp3"
+  },
+  "syl_meem_kasra": {
+    "text": "مِ",
+    "path": "/audio/syllables/syl_meem_kasra.mp3"
+  },
+  "syl_meem_damma": {
+    "text": "مُ",
+    "path": "/audio/syllables/syl_meem_damma.mp3"
+  },
+  "syl_noon_fatha": {
+    "text": "نَ",
+    "path": "/audio/syllables/syl_noon_fatha.mp3"
+  },
+  "syl_noon_kasra": {
+    "text": "نِ",
+    "path": "/audio/syllables/syl_noon_kasra.mp3"
+  },
+  "syl_noon_damma": {
+    "text": "نُ",
+    "path": "/audio/syllables/syl_noon_damma.mp3"
+  },
+  "syl_haa2_fatha": {
+    "text": "هَ",
+    "path": "/audio/syllables/syl_haa2_fatha.mp3"
+  },
+  "syl_haa2_kasra": {
+    "text": "هِ",
+    "path": "/audio/syllables/syl_haa2_kasra.mp3"
+  },
+  "syl_haa2_damma": {
+    "text": "هُ",
+    "path": "/audio/syllables/syl_haa2_damma.mp3"
+  },
+  "syl_waaw_fatha": {
+    "text": "وَ",
+    "path": "/audio/syllables/syl_waaw_fatha.mp3"
+  },
+  "syl_waaw_kasra": {
+    "text": "وِ",
+    "path": "/audio/syllables/syl_waaw_kasra.mp3"
+  },
+  "syl_waaw_damma": {
+    "text": "وُ",
+    "path": "/audio/syllables/syl_waaw_damma.mp3"
+  },
+  "syl_yaa_fatha": {
+    "text": "يَ",
+    "path": "/audio/syllables/syl_yaa_fatha.mp3"
+  },
+  "syl_yaa_kasra": {
+    "text": "يِ",
+    "path": "/audio/syllables/syl_yaa_kasra.mp3"
+  },
+  "syl_yaa_damma": {
+    "text": "يُ",
+    "path": "/audio/syllables/syl_yaa_damma.mp3"
+  },
+  "word_salam": {
+    "text": "سَلام",
+    "path": "/audio/words/word_salam.mp3"
+  },
+  "word_marhaba": {
+    "text": "مَرحَبا",
+    "path": "/audio/words/word_marhaba.mp3"
+  },
+  "word_shukran": {
+    "text": "شُكرًا",
+    "path": "/audio/words/word_shukran.mp3"
+  },
+  "word_afwan": {
+    "text": "عَفوًا",
+    "path": "/audio/words/word_afwan.mp3"
+  },
+  "word_naam": {
+    "text": "نَعَم",
+    "path": "/audio/words/word_naam.mp3"
+  },
+  "word_laa": {
+    "text": "لا",
+    "path": "/audio/words/word_laa.mp3"
+  },
+  "word_min_fadlak": {
+    "text": "مِن فَضلِك",
+    "path": "/audio/words/word_min_fadlak.mp3"
+  },
+  "word_ab": {
+    "text": "أَب",
+    "path": "/audio/words/word_ab.mp3"
+  },
+  "word_umm": {
+    "text": "أُمّ",
+    "path": "/audio/words/word_umm.mp3"
+  },
+  "word_ibn": {
+    "text": "اِبن",
+    "path": "/audio/words/word_ibn.mp3"
+  },
+  "word_bint": {
+    "text": "بِنت",
+    "path": "/audio/words/word_bint.mp3"
+  },
+  "word_akh": {
+    "text": "أَخ",
+    "path": "/audio/words/word_akh.mp3"
+  },
+  "word_ukht": {
+    "text": "أُخت",
+    "path": "/audio/words/word_ukht.mp3"
+  },
+  "word_bayt": {
+    "text": "بَيت",
+    "path": "/audio/words/word_bayt.mp3"
+  },
+  "word_kitab": {
+    "text": "كِتاب",
+    "path": "/audio/words/word_kitab.mp3"
+  },
+  "word_qalam": {
+    "text": "قَلَم",
+    "path": "/audio/words/word_qalam.mp3"
+  },
+  "word_bab": {
+    "text": "باب",
+    "path": "/audio/words/word_bab.mp3"
+  },
+  "word_maa": {
+    "text": "ماء",
+    "path": "/audio/words/word_maa.mp3"
+  },
+  "word_tamr": {
+    "text": "تَمر",
+    "path": "/audio/words/word_tamr.mp3"
+  },
+  "word_shams": {
+    "text": "شَمس",
+    "path": "/audio/words/word_shams.mp3"
+  },
+  "word_qamar": {
+    "text": "قَمَر",
+    "path": "/audio/words/word_qamar.mp3"
+  },
+  "word_nahr": {
+    "text": "نَهر",
+    "path": "/audio/words/word_nahr.mp3"
+  },
+  "word_jabal": {
+    "text": "جَبَل",
+    "path": "/audio/words/word_jabal.mp3"
+  },
+  "word_madrasah": {
+    "text": "مَدرَسة",
+    "path": "/audio/words/word_madrasah.mp3"
+  },
+  "word_walad": {
+    "text": "وَلَد",
+    "path": "/audio/words/word_walad.mp3"
+  },
+  "word_rajul": {
+    "text": "رَجُل",
+    "path": "/audio/words/word_rajul.mp3"
+  },
+  "word_samak": {
+    "text": "سَمَك",
+    "path": "/audio/words/word_samak.mp3"
+  },
+  "word_tuffah": {
+    "text": "تُفّاح",
+    "path": "/audio/words/word_tuffah.mp3"
+  },
+  "word_kalb": {
+    "text": "كَلب",
+    "path": "/audio/words/word_kalb.mp3"
+  },
+  "word_qitt": {
+    "text": "قِطّ",
+    "path": "/audio/words/word_qitt.mp3"
+  },
+  "word_ahmar": {
+    "text": "أَحمَر",
+    "path": "/audio/words/word_ahmar.mp3"
+  },
+  "word_azraq": {
+    "text": "أَزرَق",
+    "path": "/audio/words/word_azraq.mp3"
+  },
+  "word_akhdar": {
+    "text": "أَخضَر",
+    "path": "/audio/words/word_akhdar.mp3"
+  },
+  "word_abyad": {
+    "text": "أَبيَض",
+    "path": "/audio/words/word_abyad.mp3"
+  },
+  "word_aswad": {
+    "text": "أَسوَد",
+    "path": "/audio/words/word_aswad.mp3"
+  },
+  "word_wahid": {
+    "text": "واحِد",
+    "path": "/audio/words/word_wahid.mp3"
+  },
+  "word_ithnan": {
+    "text": "اِثنان",
+    "path": "/audio/words/word_ithnan.mp3"
+  },
+  "word_thalathah": {
+    "text": "ثَلاثة",
+    "path": "/audio/words/word_thalathah.mp3"
+  },
+  "word_arba3ah": {
+    "text": "أَربَعة",
+    "path": "/audio/words/word_arba3ah.mp3"
+  },
+  "word_khamsah": {
+    "text": "خَمسة",
+    "path": "/audio/words/word_khamsah.mp3"
+  },
+  "word_sittah": {
+    "text": "سِتّة",
+    "path": "/audio/words/word_sittah.mp3"
+  },
+  "word_sab3ah": {
+    "text": "سَبعة",
+    "path": "/audio/words/word_sab3ah.mp3"
+  },
+  "word_thamaniyah": {
+    "text": "ثَمانية",
+    "path": "/audio/words/word_thamaniyah.mp3"
+  },
+  "word_tis3ah": {
+    "text": "تِسعة",
+    "path": "/audio/words/word_tis3ah.mp3"
+  },
+  "word_3asharah": {
+    "text": "عَشَرة",
+    "path": "/audio/words/word_3asharah.mp3"
+  },
+  "word_yad": {
+    "text": "يَد",
+    "path": "/audio/words/word_yad.mp3"
+  },
+  "word_ayn_body": {
+    "text": "عَين",
+    "path": "/audio/words/word_ayn_body.mp3"
+  },
+  "word_rass": {
+    "text": "رَأس",
+    "path": "/audio/words/word_rass.mp3"
+  },
+  "word_qalb": {
+    "text": "قَلب",
+    "path": "/audio/words/word_qalb.mp3"
+  },
+  "word_khubz": {
+    "text": "خُبز",
+    "path": "/audio/words/word_khubz.mp3"
+  },
+  "word_haleb": {
+    "text": "حَليب",
+    "path": "/audio/words/word_haleb.mp3"
+  },
+  "word_chai": {
+    "text": "شاي",
+    "path": "/audio/words/word_chai.mp3"
+  },
+  "word_qahwah": {
+    "text": "قَهوة",
+    "path": "/audio/words/word_qahwah.mp3"
+  },
+  "sent_assalamu": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/sentences/sent_assalamu.mp3"
+  },
+  "sent_bismillah": {
+    "text": "بِسمِ اللّه",
+    "path": "/audio/sentences/sent_bismillah.mp3"
+  },
+  "sent_kayf_halak": {
+    "text": "كَيفَ حالُك",
+    "path": "/audio/sentences/sent_kayf_halak.mp3"
+  },
+  "sent_ana_bikhayr": {
+    "text": "أَنا بِخَير",
+    "path": "/audio/sentences/sent_ana_bikhayr.mp3"
+  },
+  "sent_ismi": {
+    "text": "اِسمي",
+    "path": "/audio/sentences/sent_ismi.mp3"
+  },
+  "sent_hadha_kitab": {
+    "text": "هذا كِتاب",
+    "path": "/audio/sentences/sent_hadha_kitab.mp3"
+  },
+  "sent_hadhihi_madrasah": {
+    "text": "هذِهِ مَدرَسة",
+    "path": "/audio/sentences/sent_hadhihi_madrasah.mp3"
+  },
+  "sent_ana_uhibb": {
+    "text": "أَنا أُحِبُّ اللُّغة العَرَبيّة",
+    "path": "/audio/sentences/sent_ana_uhibb.mp3"
+  },
+  "sent_ma3a_salama": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/sentences/sent_ma3a_salama.mp3"
+  },
+  "sent_sabah_alkhayr": {
+    "text": "صَباحُ الخَير",
+    "path": "/audio/sentences/sent_sabah_alkhayr.mp3"
+  },
+  "sent_masaa_alkhayr": {
+    "text": "مَساءُ الخَير",
+    "path": "/audio/sentences/sent_masaa_alkhayr.mp3"
+  },
+  "sent_jazak_allah": {
+    "text": "جَزاكَ اللّه خَيرًا",
+    "path": "/audio/sentences/sent_jazak_allah.mp3"
+  }
+}

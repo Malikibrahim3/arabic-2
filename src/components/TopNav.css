@@ -1,0 +1,54 @@
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height-top);
+    background: rgba(18, 40, 32, 0.85);
+    /* Dark emerald glass */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    /* Subtle gold border */
+    z-index: 100;
+}
+
+.top-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.flag-icon {
+    font-size: 24px;
+}
+
+.gems-container {
+    color: var(--color-secondary);
+}
+
+.icon-gem {
+    color: var(--color-secondary);
+    width: 20px;
+    height: 20px;
+}
+
+.hearts-container {
+    color: var(--color-danger);
+}
+
+.icon-heart {
+    color: var(--color-danger);
+    width: 22px;
+    height: 22px;
+}
+
+.streak-container {
+    flex-grow: 1;
+}
