@@ -3595,9 +3595,18 @@ const UNIT9_QURAN_VERSES: QuranVerse[] = [
 function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] {
     const exercises: Exercise[] = [];
     
-    // 1. Reading exercise with audio
+    // INTRO CARD: Teach the verse first
     exercises.push({
-        id: nextId(`${nodeId}-read`),
+        id: nextId(`${nodeId}-intro`),
+        type: 'intro_card',
+        prompt: verse.arabic,
+        hint: `${verse.transliteration}\n\n"${verse.translation}"${verse.context ? `\n\n${verse.context}` : ''}`,
+        promptAudio: verse.audio
+    });
+    
+    // 1. Listening exercise - hear and recognize
+    exercises.push({
+        id: nextId(`${nodeId}-listen`),
         type: 'hear_choose',
         prompt: 'Listen and identify the correct verse',
         promptAudio: verse.audio,
