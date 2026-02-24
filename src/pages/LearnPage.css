@@ -4,8 +4,58 @@
     margin: 0 auto;
 }
 
+.learn-page-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 20px 0;
+}
+
+.god-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(18, 40, 32, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-light);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.god-mode-toggle.active {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.5);
+    color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+.god-mode-toggle:active {
+    transform: scale(0.95);
+}
+
 .unit-container {
     margin-bottom: 40px;
+    transition: all 0.5s ease;
+}
+
+.unit-locked {
+    filter: grayscale(0.85) brightness(0.7);
+    opacity: 0.8;
+}
+
+.unit-locked .unit-header {
+    background: linear-gradient(135deg, var(--color-surface), #1a1a1a);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-light);
+    box-shadow: none;
+}
+
+.unit-locked .unit-guide-btn {
+    display: none;
 }
 
 .unit-header {
@@ -144,7 +194,14 @@
 }
 
 .node.completed .node-btn {
-    filter: brightness(0.9);
+    background-color: var(--color-primary) !important;
+    color: var(--color-surface);
+    border: none;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4) !important;
+}
+
+.node.completed .node-ring-wrapper .progress-ring path {
+    stroke: var(--color-primary) !important;
 }
 
 .node.active .node-btn {
@@ -164,45 +221,7 @@
     opacity: 0.5;
 }
 
-.start-tooltip {
-    position: absolute;
-    top: -65px;
-    background: rgba(18, 40, 32, 0.95);
-    color: var(--color-primary);
-    backdrop-filter: blur(8px);
-    padding: 12px 24px;
-    border-radius: 100px;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 1px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    animation: float 2s infinite ease-in-out;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    cursor: pointer;
-    z-index: 10;
-}
 
-.tooltip-arrow {
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid rgba(212, 175, 55, 0.3);
-}
-
-.tooltip-arrow::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: -7px;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 7px solid rgba(18, 40, 32, 0.95);
-}
 
 .node-label {
     position: absolute;

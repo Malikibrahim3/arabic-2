@@ -1,0 +1,156 @@
+.yasmine-container {
+    min-height: 100vh;
+    min-width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0e0413 0%, #351328 100%);
+    overflow: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+    z-index: 99999;
+}
+
+.yasmine-bg-shape {
+    position: absolute;
+    width: 60vh;
+    height: 60vh;
+    background: radial-gradient(circle, rgba(233, 62, 102, 0.15) 0%, rgba(233, 62, 102, 0) 70%);
+    border-radius: 50%;
+    animation: floatShape 8s ease-in-out infinite alternate;
+    z-index: 0;
+}
+
+.shape1 {
+    top: -10%;
+    left: -10%;
+}
+
+.shape2 {
+    bottom: -10%;
+    right: -10%;
+    animation-delay: -4s;
+}
+
+@keyframes floatShape {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, 50px) scale(1.1);
+    }
+}
+
+.yasmine-content {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4rem 3rem;
+    border-radius: 2rem;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+    width: 500px;
+}
+
+.yasmine-title {
+    color: #fff;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+}
+
+.yasmine-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    min-height: 150px;
+}
+
+.yasmine-yes {
+    background: linear-gradient(135deg, #ff4d6d 0%, #c9184a 100%);
+    color: white;
+    border: none;
+    padding: 1.2rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 10px 25px rgba(201, 24, 74, 0.4);
+}
+
+.yasmine-yes:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(201, 24, 74, 0.6);
+}
+
+.yasmine-yes:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.yasmine-no {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.2rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 999px;
+    cursor: not-allowed;
+    transition: top 0.2s ease-out, left 0.2s ease-out, background 0.3s ease;
+}
+
+.yasmine-no:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.yasmine-dare-bubble {
+    position: absolute;
+    top: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: #ff4d6d;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: floatBubble 2s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.yasmine-dare-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent rgba(255, 255, 255, 0.9) transparent;
+}
+
+@keyframes floatBubble {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}

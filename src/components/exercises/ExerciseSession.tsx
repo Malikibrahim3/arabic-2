@@ -4,10 +4,12 @@ import type { Exercise } from '../../data/types';
 import { useAudio } from '../../hooks/useAudio';
 import { MatchPairs } from './MatchPairs';
 import { TrapSelect } from './TrapSelect';
+import { WordAssembly } from './WordAssembly';
 import './ExerciseSession.css';
 
 interface ExerciseSessionProps {
     exercises: Exercise[];
+    isTest?: boolean;
     onComplete: (results: { correct: number; total: number }) => void;
     onQuit: () => void;
 }
@@ -23,7 +25,7 @@ function shuffle<T>(arr: T[]): T[] {
 
 type FeedbackState = null | 'correct' | 'incorrect';
 
-export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: initialExercises, onComplete, onQuit }) => {
+export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: initialExercises, isTest = false, onComplete, onQuit }) => {
     const [exerciseQueue, setExerciseQueue] = useState<Exercise[]>([...initialExercises]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [hearts, setHearts] = useState(5);
@@ -134,6 +136,33 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
         setTimeout(advanceToNext, 400);
     }, [advanceToNext]);
 
+    const handleWordAssemblyComplete = useCallback((isCorrect: boolean) => {
+        if (isCorrect) {
+            setCorrectCount(c => c + 1);
+        } else {
+            setHearts(h => h - 1);
+            if (!isReviewPhase) {
+                const baseId = exercise.id.replace(/-retry$/, '');
+                setFailedQueue(prev => {
+                    if (prev.some(e => e.id.startsWith(baseId))) return prev;
+                    return [...prev, { ...exercise, id: baseId }];
+                });
+
+                setExerciseQueue(prev => {
+                    const copy = [...prev];
+                    const retry = { ...exercise, id: exercise.id + '-retry' };
+                    const insertAt = Math.min(currentIndex + 4, copy.length);
+                    copy.splice(insertAt, 0, retry);
+                    return copy;
+                });
+            } else {
+                setExerciseQueue(prev => [...prev, { ...exercise, id: exercise.id + '-review-retry' }]);
+            }
+        }
+        setTotalAnswered(t => t + 1);
+        advanceToNext();
+    }, [exercise, isReviewPhase, advanceToNext, currentIndex]);
+
     // ─── Session Complete ───────────────────────────────────
     if (showMistakeInterstitial) {
         return (
@@ -158,6 +187,27 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
     if (sessionDone) {
         const total = totalAnswered;
         const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+        // If it was a test and the user dropped to 0 hearts, force a strict quit
+        if (isTest && hearts <= 0) {
+            return (
+                <div className="exercise-session">
+                    <div className="session-complete">
+                        <div className="complete-emoji">💔</div>
+                        <h2 className="complete-title" style={{ color: 'var(--color-danger)' }}>
+                            Test Failed!
+                        </h2>
+                        <p style={{ color: 'var(--color-text-light)', fontSize: '20px', marginBottom: '32px', textAlign: 'center' }}>
+                            You ran out of hearts. You must complete the test with at least 1 heart to pass.
+                        </p>
+                        <button className="complete-continue-btn" style={{ background: 'var(--color-surface)', color: 'var(--color-text-main)', border: '2px solid var(--color-border)' }} onClick={onQuit}>
+                            Try Again Later
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div className="exercise-session">
                 <div className="session-complete">
@@ -255,6 +305,20 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
                     onSelect={doSelect}
                     onContinue={advanceToNext}
                     onPlayAudio={exercise.promptAudio ? playAudio : undefined}
+                />
+            </div>
+        );
+    }
+
+    // ─── Word Assembly ────────────────────────────────────────
+    if (exercise.type === 'word_assembly') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <WordAssembly
+                    exercise={exercise}
+                    shuffledParts={shuffledChoices}
+                    onComplete={handleWordAssemblyComplete}
                 />
             </div>
         );

@@ -44,6 +44,7 @@ export const LessonPage: React.FC = () => {
         return (
             <ExerciseSession
                 exercises={roundLesson.exercises}
+                isTest={foundNode.type === 'test'}
                 onComplete={() => {
                     // Mark round complete (in-memory for now)
                     foundNode!.completedRounds = currentRound + 1;

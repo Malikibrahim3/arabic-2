@@ -544,34 +544,99 @@
 .trap-explanation-card h2 {
     color: var(--color-danger);
     font-size: 32px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     font-weight: 800;
 }
 
-.trap-message {
-    font-size: 22px;
-    color: var(--color-text-main);
-    margin-bottom: 24px;
-    line-height: 1.4;
+.trap-comparison-board {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 32px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.trap-detail-box {
-    background: #FFF;
-    padding: 24px;
-    border-radius: 16px;
-    border: 2px solid #FFE0E0;
+.trap-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.trap-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.incorrect-side .trap-label {
+    color: var(--color-danger);
+}
+
+.correct-side .trap-label {
+    color: var(--color-secondary);
+}
+
+.trap-char-box {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    font-family: 'Amiri', serif;
+    font-weight: bold;
+    color: #fff;
+    box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.incorrect-side .trap-char-box {
+    background: rgba(233, 79, 79, 0.15);
+    border: 2px solid var(--color-danger);
+    text-shadow: 0 0 20px rgba(233, 79, 79, 0.5);
+}
+
+.correct-side .trap-char-box {
+    background: rgba(15, 90, 62, 0.15);
+    border: 2px solid var(--color-secondary);
+    text-shadow: 0 0 20px rgba(15, 90, 62, 0.5);
+}
+
+.trap-vs {
     font-size: 20px;
+    font-weight: 800;
+    color: var(--color-text-light);
+    margin: 0 16px;
+    opacity: 0.5;
+}
+
+.trap-detail-message {
+    font-size: 18px;
     color: var(--color-text-main);
     margin-bottom: 32px;
     line-height: 1.6;
     width: 100%;
+    text-align: center;
+    padding: 0 16px;
+}
+
+.trap-detail-message strong {
+    color: var(--color-primary);
+    font-weight: 800;
 }
 
 .trap-continue-btn {
     background-color: var(--color-danger);
     color: white;
     border: none;
-    border-radius: 16px;
+    border-radius: 100px;
     padding: 16px 32px;
     font-size: 20px;
     font-weight: bold;

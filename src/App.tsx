@@ -5,8 +5,28 @@ import { CharactersPage } from './pages/CharactersPage';
 import { QuestsPage } from './pages/QuestsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { LessonPage } from './pages/LessonPage';
+import { useState, useEffect } from 'react';
+import { YasmineGate } from './components/YasmineGate';
 
 function App() {
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  useEffect(() => {
+    const unlocked = sessionStorage.getItem('yasmine_unlocked');
+    if (unlocked === 'true') {
+      setIsUnlocked(true);
+    }
+  }, []);
+
+  const handleUnlock = () => {
+    sessionStorage.setItem('yasmine_unlocked', 'true');
+    setIsUnlocked(true);
+  };
+
+  if (!isUnlocked) {
+    return <YasmineGate onUnlock={handleUnlock} />;
+  }
+
   return (
     <Switch>
       {/* Lesson page is rendered full-screen without the Layout shell */}

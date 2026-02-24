@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Star, Check, Lock } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Star, Check, Lock, Unlock } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { courseData } from '../data/course';
 import './LearnPage.css';
@@ -48,6 +48,7 @@ const ProgressRing: React.FC<{ completed: number; total: number; color: string; 
 
 export const LearnPage: React.FC = () => {
     const [, setLocation] = useLocation();
+    const [isGodMode, setIsGodMode] = useState(false);
 
     useEffect(() => {
         const activeNode = document.querySelector('.node.active');
@@ -61,6 +62,43 @@ export const LearnPage: React.FC = () => {
         return offsets[index % 8];
     };
 
+    const handleNodeClick = (node: any, isLocked: boolean) => {
+        if (!isLocked) {
+            setLocation(`/lesson/${node.id}`);
+            return;
+        }
+
+        // If clicking a locked test/checkpoint when God Mode is OFF, prompt to jump ahead
+        if (!isGodMode && node.type === 'test') {
+            const confirmed = window.confirm(
+                "Are you sure you want to jump ahead to this checkpoint? This will permanently unlock all previous content."
+            );
+
+            if (confirmed) {
+                // Hacky local-state override for demo purposes:
+                // We iterate through courseData, mark everything before this node as 'completed'
+                // and mark this node as 'active'.
+                let foundTarget = false;
+                courseData.units.forEach(u => {
+                    u.nodes.forEach(n => {
+                        if (!foundTarget) {
+                            if (n.id === node.id) {
+                                n.status = 'active';
+                                foundTarget = true;
+                            } else {
+                                n.status = 'completed';
+                                n.completedRounds = n.totalRounds;
+                            }
+                        }
+                    });
+                });
+
+                // Force a re-render so they see the unlock (or just navigate straight in)
+                setLocation(`/lesson/${node.id}`);
+            }
+        }
+    };
+
     const getIcon = (status: string) => {
         if (status === 'completed') return Check;
         if (status === 'locked') return Lock;
@@ -69,77 +107,107 @@ export const LearnPage: React.FC = () => {
 
     return (
         <div className="learn-page">
-            {courseData.units.map((unit) => (
-                <div key={unit.id} className="unit-container">
-                    <header className="unit-header" style={{ backgroundColor: unit.color }}>
-                        <div className="unit-header-content">
-                            <h2 className="unit-title">{unit.title}</h2>
-                            <p className="unit-desc">{unit.description}</p>
-                        </div>
-                        <button className="unit-guide-btn">Guide</button>
-                    </header>
+            <div className="learn-page-header">
+                <button
+                    className={`god-mode-toggle ${isGodMode ? 'active' : ''}`}
+                    onClick={() => setIsGodMode(!isGodMode)}
+                    title="Unlock all levels"
+                >
+                    {isGodMode ? <Unlock size={18} /> : <Lock size={18} />}
+                    <span>{isGodMode ? 'All Unlocked' : 'Jump Ahead'}</span>
+                </button>
+            </div>
 
-                    <div className="path-container" style={{ '--path-color': unit.color } as React.CSSProperties}>
-                        {unit.nodes.map((node, index) => {
-                            const Icon = getIcon(node.status);
-                            const isLocked = node.status === 'locked';
-                            const isActive = node.status === 'active';
-                            const isCompleted = node.status === 'completed';
-                            const offsetX = getPathOffset(index);
+            {courseData.units.map((unit) => {
+                // A unit is fully locked if it has no completed nodes AND no active nodes (i.e. all nodes are locked)
+                // We simplify this by checking if the very first node is locked.
+                const isUnitLocked = unit.nodes.length > 0 && unit.nodes[0].status === 'locked' && !isGodMode;
 
-                            let buttonClass = 'node-btn ';
-                            if (isLocked) buttonClass += 'locked';
-                            else if (isActive) buttonClass += 'active';
-                            else if (isCompleted) buttonClass += 'completed';
+                return (
+                    <div key={unit.id} className={`unit-container ${isUnitLocked ? 'unit-locked' : ''}`}>
+                        <header className="unit-header" style={{ backgroundColor: unit.color }}>
+                            <div className="unit-header-content">
+                                <h2 className="unit-title">{unit.title}</h2>
+                                <p className="unit-desc">{unit.description}</p>
+                            </div>
+                            <button className="unit-guide-btn">Guide</button>
+                        </header>
 
-                            return (
-                                <div
-                                    key={node.id}
-                                    className={`node ${node.status}`}
-                                    style={{ transform: `translateX(${offsetX}px)` }}
-                                >
-                                    <div className="node-ring-wrapper">
-                                        {/* Progress ring showing round completion */}
-                                        {!isLocked && (
-                                            <ProgressRing
-                                                completed={node.completedRounds}
-                                                total={node.totalRounds}
-                                                color={unit.color}
-                                            />
-                                        )}
-                                        <button
-                                            className={buttonClass}
-                                            style={{
-                                                backgroundColor: isLocked ? 'var(--color-surface)' : unit.color,
-                                                boxShadow: isLocked ? 'none' : `0 4px 16px ${unit.color}60`,
-                                                border: isLocked ? '1px solid var(--color-border)' : '1px solid rgba(255,255,255,0.2)',
-                                            }}
-                                            onClick={() => {
-                                                if (!isLocked) setLocation(`/lesson/${node.id}`);
-                                            }}
-                                        >
-                                            <div className="node-icon-wrapper">
-                                                <Icon size={32} strokeWidth={2.5} />
-                                            </div>
-                                        </button>
-                                    </div>
+                        <div className="path-container" style={{ '--path-color': unit.color } as React.CSSProperties}>
+                            {unit.nodes.map((node, index) => {
+                                const Icon = getIcon(node.status);
+                                let isLocked = node.status === 'locked';
+                                const isActive = node.status === 'active';
+                                const isCompleted = node.status === 'completed';
+                                const offsetX = getPathOffset(index);
 
-                                    <div className={`node-label ${isLocked ? 'locked' : ''}`}>
-                                        {node.title}
-                                    </div>
+                                // God mode overrides locked visual status for navigation
+                                if (isGodMode && isLocked) {
+                                    isLocked = false;
+                                }
 
-                                    {isActive && (
-                                        <div className="start-tooltip" onClick={() => setLocation(`/lesson/${node.id}`)}>
-                                            <div className="tooltip-content">START</div>
-                                            <div className="tooltip-arrow"></div>
+                                let buttonClass = 'node-btn ';
+                                if (isCompleted && !isActive) buttonClass += 'completed ';
+                                else if (isLocked) buttonClass += 'locked ';
+                                else if (isActive || (isGodMode && (node.status === 'locked' || node.status === 'active'))) buttonClass += 'active ';
+
+                                const isDisabled = isLocked && !isGodMode;
+
+                                return (
+                                    <div
+                                        key={node.id}
+                                        className={`node ${node.status}`}
+                                        style={{
+                                            transform: `translateX(${offsetX}px)`,
+                                            pointerEvents: isDisabled ? 'none' : 'auto'
+                                        }}
+                                        onClick={() => {
+                                            if (!isDisabled) {
+                                                handleNodeClick(node, isLocked);
+                                            }
+                                        }}
+                                    >
+                                        <div className="node-ring-wrapper">
+                                            {/* Progress ring showing round completion */}
+                                            {!isLocked && (
+                                                <ProgressRing
+                                                    completed={node.completedRounds}
+                                                    total={node.totalRounds}
+                                                    color={unit.color}
+                                                />
+                                            )}
+                                            <button
+                                                className={buttonClass}
+                                                disabled={isDisabled}
+                                                style={{
+                                                    backgroundColor: isLocked ? 'var(--color-surface)' : unit.color,
+                                                    boxShadow: isLocked ? 'none' : `0 4px 16px ${unit.color}60`,
+                                                    border: isLocked ? '1px solid var(--color-border)' : '1px solid rgba(255,255,255,0.2)',
+                                                    opacity: isLocked ? 0.4 : 1,
+                                                    cursor: isLocked ? 'not-allowed' : 'pointer',
+                                                    pointerEvents: isDisabled ? 'none' : 'auto'
+                                                }}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    if (!isDisabled) handleNodeClick(node, isLocked);
+                                                }}
+                                            >
+                                                <div className="node-icon-wrapper" style={{ opacity: isLocked ? 0.5 : 1 }}>
+                                                    <Icon size={32} strokeWidth={2.5} />
+                                                </div>
+                                            </button>
                                         </div>
-                                    )}
-                                </div>
-                            );
-                        })}
+
+                                        <div className={`node-label ${isLocked ? 'locked' : ''}`}>
+                                            {node.title}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            ))}
+                )
+            })}
         </div>
     );
 };

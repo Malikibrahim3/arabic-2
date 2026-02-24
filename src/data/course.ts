@@ -763,7 +763,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
     const vowel = VOWELS[vowelIndex];
     const prevVowels = VOWELS.slice(0, vowelIndex);
     const letters = pick(PRACTICE_LETTERS, 8);
-    
+
     // Divide letters into batches for progressive rounds
     const batch1 = letters.slice(0, 3);
     const batch2 = letters.slice(3, 6);
@@ -799,7 +799,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         }
         return res;
     };
-    
+
     // ── Round 1: Intro vowel + batch 1 ──
     const r1: Exercise[] = [];
     r1.push({
@@ -860,7 +860,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
     }
     // review batch1
     for (const l of batch1) {
-         r2.push({
+        r2.push({
             id: nextId(`${nodeId}-r2-tap`),
             type: 'tap_letter',
             prompt: `Tap "${vowelSyllable(l, vowel)}"`,
@@ -892,7 +892,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
     }
     // Review batch1 and batch2 with audio
     for (const l of pick([...batch1, ...batch2], 4)) {
-         r3.push({
+        r3.push({
             id: nextId(`${nodeId}-r3-audio-tap`),
             type: 'hear_choose',
             prompt: 'Listen — which syllable?',
@@ -1164,6 +1164,189 @@ function makeUnit2Test(): CourseNode {
     };
 }
 
+// ═══════════════════════════════════════════════════════════
+// UNIT 3: LETTER CONNECTIONS & WORD ASSEMBLY
+// ═══════════════════════════════════════════════════════════
+
+interface WordData {
+    arabic: string;
+    translit: string;
+    english: string;
+    audio: string;
+}
+
+const UNIT3_WORDS: WordData[] = [
+    // Node 1: First Words
+    { arabic: 'باب', translit: 'Baab', english: 'Door', audio: '/audio/words/word_bab.mp3' },
+    { arabic: 'بيت', translit: 'Bayt', english: 'House', audio: '/audio/words/word_bayt.mp3' },
+    { arabic: 'بنت', translit: 'Bint', english: 'Girl', audio: '/audio/words/word_bint.mp3' },
+    { arabic: 'تمر', translit: 'Tamr', english: 'Dates', audio: '/audio/words/word_tamr.mp3' },
+
+    // Node 2: Nature & Animals
+    { arabic: 'كلب', translit: 'Kalb', english: 'Dog', audio: '/audio/words/word_kalb.mp3' },
+    { arabic: 'شمس', translit: 'Shams', english: 'Sun', audio: '/audio/words/word_shams.mp3' },
+    { arabic: 'قمر', translit: 'Qamar', english: 'Moon', audio: '/audio/words/word_qamar.mp3' },
+    { arabic: 'ماء', translit: 'Maa', english: 'Water', audio: '/audio/words/word_maa.mp3' },
+
+    // Node 3: People & Things
+    { arabic: 'ولد', translit: 'Walad', english: 'Boy', audio: '/audio/words/word_walad.mp3' },
+    { arabic: 'رجل', translit: 'Rajul', english: 'Man', audio: '/audio/words/word_rajul.mp3' },
+    { arabic: 'كتاب', translit: 'Kitaab', english: 'Book', audio: '/audio/words/word_kitab.mp3' },
+    { arabic: 'خبز', translit: 'Khubz', english: 'Bread', audio: '/audio/words/word_khubz.mp3' },
+
+    // Node 4: Body Parts (Tricky Connections: ع, ه, أ)
+    { arabic: 'عين', translit: 'Ayn', english: 'Eye', audio: '/audio/words/word_ayn.mp3' },     // Middle Ya, Initial Ayn
+    { arabic: 'وجه', translit: 'Wajh', english: 'Face', audio: '/audio/words/word_wajh.mp3' },   // Final Haa
+    { arabic: 'رأس', translit: 'Raas', english: 'Head', audio: '/audio/words/word_raas.mp3' },   // Non-connectors, Hamza on Alif
+    { arabic: 'فم', translit: 'Fam', english: 'Mouth', audio: '/audio/words/word_fam.mp3' },     // Initial Fa, Final Mim
+    { arabic: 'يد', translit: 'Yad', english: 'Hand', audio: '/audio/words/word_yad.mp3' },      // Initial Ya, Final Dal
+
+    // Node 5: Common Adjectives (Tricky Medial Connections)
+    { arabic: 'كبير', translit: 'Kabeer', english: 'Big', audio: '/audio/words/word_kabeer.mp3' },       // Initial Kaaf, Medial Baa
+    { arabic: 'صغير', translit: 'Sagheer', english: 'Small', audio: '/audio/words/word_sagheer.mp3' },   // Medial Ghayn
+    { arabic: 'جديد', translit: 'Jadeed', english: 'New', audio: '/audio/words/word_jadeed.mp3' },       // Medial Dal (non connector)
+    { arabic: 'قديم', translit: 'Qadeem', english: 'Old', audio: '/audio/words/word_qadeem.mp3' },       // Medial Dal, Final Mim
+    { arabic: 'جميل', translit: 'Jameel', english: 'Beautiful', audio: '/audio/words/word_jameel.mp3' }  // Medial Mim
+];
+
+// UNIT 4: CORE VOCABULARY (STAGE 4 EXPANSION)
+const UNIT4_WORDS: WordData[] = [
+    // Category 1: Home & Basics
+    { arabic: 'بيت', translit: 'Bayt', english: 'House', audio: '/audio/words/word_bayt.mp3' },
+    { arabic: 'باب', translit: 'Baab', english: 'Door', audio: '/audio/words/word_bab.mp3' },
+    { arabic: 'كبير', translit: 'Kabeer', english: 'Big', audio: '/audio/words/word_kabeer.mp3' },
+    { arabic: 'صغير', translit: 'Sagheer', english: 'Small', audio: '/audio/words/word_sagheer.mp3' },
+
+    // Category 2: Family
+    { arabic: 'أب', translit: 'Ab', english: 'Father', audio: '/audio/words/fam_father.mp3' },
+    { arabic: 'أم', translit: 'Umm', english: 'Mother', audio: '/audio/words/fam_mother.mp3' },
+    { arabic: 'أخ', translit: 'Akh', english: 'Brother', audio: '/audio/words/fam_brother.mp3' },
+    { arabic: 'أخت', translit: 'Ukht', english: 'Sister', audio: '/audio/words/fam_sister.mp3' },
+
+    // Category 3: Eat & Drink
+    { arabic: 'ماء', translit: 'Maa', english: 'Water', audio: '/audio/words/word_maa.mp3' },
+    { arabic: 'خبز', translit: 'Khubz', english: 'Bread', audio: '/audio/words/word_khubz.mp3' },
+    { arabic: 'تفاح', translit: 'Tuffah', english: 'Apple', audio: '/audio/words/food_apple.mp3' },
+    { arabic: 'حليب', translit: 'Haleeb', english: 'Milk', audio: '/audio/words/drink_milk.mp3' },
+
+    // Category 4: Places
+    { arabic: 'مدرسة', translit: 'Madrasa', english: 'School', audio: '/audio/words/place_school.mp3' },
+    { arabic: 'مسجد', translit: 'Masjid', english: 'Mosque', audio: '/audio/words/place_mosque.mp3' },
+    { arabic: 'مستشفى', translit: 'Mustashfa', english: 'Hospital', audio: '/audio/words/place_hospital.mp3' },
+    { arabic: 'سوق', translit: 'Suq', english: 'Market', audio: '/audio/words/place_market.mp3' }
+];
+
+function makeWordAssemblyExercises(word: WordData, nodeId: string): Exercise[] {
+    const letters = word.arabic.split(''); // Breaks into char array
+    // Add one distractor letter
+    const distractorLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ر', 'س', 'ش', 'م', 'ن', 'ه', 'و', 'ي'];
+    const distactor = distractorLetters.find(l => !letters.includes(l)) || 'م';
+    const choices = shuffle([...letters, distactor]);
+
+    return [
+        {
+            id: nextId(`${nodeId}-intro`),
+            type: 'introduction',
+            prompt: `Assemble: **${word.english}** (${word.translit})`,
+            correctAnswer: word.arabic,
+            choices: [],
+            hint: `Notice how the letters connect:\n${letters.join(' + ')} = ${word.arabic}`,
+        },
+        {
+            id: nextId(`${nodeId}-assembly`),
+            type: 'word_assembly',
+            prompt: `Tap the letters to spell: **${word.english}**`,
+            correctAnswer: word.arabic,
+            choices: choices,
+        },
+        {
+            id: nextId(`${nodeId}-hear`),
+            type: 'hear_choose',
+            prompt: `Listen and select the word`,
+            promptAudio: word.audio,
+            correctAnswer: word.arabic,
+            choices: shuffle([word.arabic, ...pick(UNIT3_WORDS.map(w => w.arabic).filter(w => w !== word.arabic), 3)]),
+        }
+    ];
+}
+
+function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], requireReview: boolean = false): CourseNode {
+    const intros: Exercise[] = [];
+    const assemblies: Exercise[] = [];
+    const hears: Exercise[] = [];
+
+    words.forEach(w => {
+        const exs = makeWordAssemblyExercises(w, nodeId);
+        intros.push(exs[0]);
+        assemblies.push(exs[1]);
+        hears.push(exs[2]);
+    });
+
+    const refreshers: Exercise[] = [];
+    if (requireReview) {
+        // Add some basic letter/vowel refreshers
+        const reviewLetters = pick(ALL_LETTERS, 3);
+        reviewLetters.forEach(l => {
+            refreshers.push({
+                id: nextId(`${nodeId}-ref`),
+                type: 'tap_letter',
+                prompt: `Refresher: Tap "${l.name}"`,
+                correctAnswer: l.letter,
+                choices: makeChoices(l.letter, ALL_LETTERS.map(x => x.letter)),
+            });
+        });
+    }
+
+    const lessons: Lesson[] = [];
+
+    // Grouping strictly to teach the words FIRST
+    lessons.push({
+        id: `${nodeId}-l1`,
+        title: `Round 1: Meet the Words`,
+        description: `Learn the connecting letters.`,
+        exercises: [...intros, ...shuffle(assemblies)]
+    });
+
+    lessons.push({
+        id: `${nodeId}-l2`,
+        title: `Round 2: Hearing`,
+        description: `Listen and select.`,
+        exercises: [...shuffle(hears), ...shuffle(refreshers)]
+    });
+
+    lessons.push({
+        id: `${nodeId}-l3`,
+        title: `Round 3: Assembly Review`,
+        description: `Build words from scratch.`,
+        exercises: shuffle([...assemblies, ...hears])
+    });
+
+    lessons.push({
+        id: `${nodeId}-l4`,
+        title: `Round 4: More Assembly`,
+        description: `Build and listen.`,
+        exercises: shuffle([...assemblies, ...hears])
+    });
+
+    lessons.push({
+        id: `${nodeId}-l5`,
+        title: `Round 5: Full Mastery`,
+        description: `Mix it all together.`,
+        exercises: shuffle([...assemblies, ...hears])
+    });
+
+    return {
+        id: nodeId,
+        title: title,
+        description: `Vocabulary and word assembly`,
+        type: 'lesson',
+        status: 'active',
+        totalRounds: 5,
+        completedRounds: 0,
+        lessons: lessons,
+    };
+}
+
 // ─── Course Data ───────────────────────────────────────────
 
 const baseCourseData: Course = {
@@ -1200,6 +1383,103 @@ const baseCourseData: Course = {
                 makeUnit2Test(),
             ],
         },
+        {
+            id: 3,
+            title: 'Unit 3',
+            description: 'Words & Connecting',
+            color: '#FF4B4B',
+            nodes: [
+                makeWordAssemblyNode('u3-n1', 'First Words', UNIT3_WORDS.slice(0, 4), true),
+                makeWordAssemblyNode('u3-n2', 'Nature & Animals', UNIT3_WORDS.slice(4, 8), true),
+                makeWordAssemblyNode('u3-n3', 'People & Things', UNIT3_WORDS.slice(8, 12), true),
+                makeWordAssemblyNode('u3-n4', 'Body Parts', UNIT3_WORDS.slice(12, 17), true),
+                makeWordAssemblyNode('u3-n5', 'Common Adjectives', UNIT3_WORDS.slice(17, 22), true),
+                {
+                    id: 'u3-test',
+                    title: '📝 Unit 3 Test',
+                    description: 'Test your vocabulary',
+                    type: 'test',
+                    status: 'active',
+                    totalRounds: 1,
+                    completedRounds: 0,
+                    lessons: [{
+                        id: 'u3-test-lesson',
+                        title: 'Unit 3 Test',
+                        description: 'Assemble all the words learned.',
+                        exercises: shuffle(UNIT3_WORDS.flatMap(w => [
+                            {
+                                id: nextId('u3t-asm'),
+                                type: 'word_assembly',
+                                prompt: `Spell: ${w.english}`,
+                                correctAnswer: w.arabic,
+                                choices: shuffle([...w.arabic.split(''), 'م']),
+                            }
+                        ])),
+                    }],
+                }
+            ],
+        },
+        {
+            id: 4,
+            title: 'Unit 4',
+            description: 'Core Vocabulary (Stage 4)',
+            color: '#9C27B0', // A nice deep purple for Stage 4
+            nodes: [
+                makeWordAssemblyNode('u4-n1', 'Home Sweet Home', UNIT4_WORDS.slice(0, 4), true),
+                makeWordAssemblyNode('u4-n2', 'Family Members', UNIT4_WORDS.slice(4, 8), true),
+                {
+                    id: 'u4-review1',
+                    title: 'Home & Family Review',
+                    description: 'Practice combining nodes',
+                    type: 'lesson',
+                    status: 'locked',
+                    totalRounds: 2,
+                    completedRounds: 0,
+                    lessons: [
+                        {
+                            id: 'u4R1-l1',
+                            title: 'Vocabulary Recall',
+                            description: 'Listen and identify.',
+                            exercises: shuffle(UNIT4_WORDS.slice(0, 8).flatMap(w => [
+                                {
+                                    id: nextId('u4r1-hear'),
+                                    type: 'hear_choose',
+                                    prompt: 'Hear and choose the correct word',
+                                    promptAudio: w.audio,
+                                    correctAnswer: w.arabic,
+                                    choices: shuffle([w.arabic, ...pick(UNIT4_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
+                                }
+                            ]))
+                        }
+                    ]
+                },
+                makeWordAssemblyNode('u4-n3', 'Eat & Drink', UNIT4_WORDS.slice(8, 12), true),
+                makeWordAssemblyNode('u4-n4', 'Places', UNIT4_WORDS.slice(12, 16), true),
+                {
+                    id: 'u4-test',
+                    title: '📝 Stage 4A Checkpoint',
+                    description: 'Prove your vocabulary knowledge',
+                    type: 'test',
+                    status: 'locked',
+                    totalRounds: 1,
+                    completedRounds: 0,
+                    lessons: [{
+                        id: 'u4-test-lesson',
+                        title: 'Checkpoint Test',
+                        description: 'Translate and assemble the core words.',
+                        exercises: shuffle(UNIT4_WORDS.flatMap(w => [
+                            {
+                                id: nextId('u4t-mul'),
+                                type: 'multiple_choice',
+                                prompt: `What is the Arabic word for "${w.english}"?`,
+                                correctAnswer: w.arabic,
+                                choices: shuffle([w.arabic, ...pick(UNIT4_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
+                            }
+                        ])),
+                    }],
+                }
+            ]
+        }
     ],
 };
 
@@ -1208,24 +1488,24 @@ const baseCourseData: Course = {
 // We traverse the generated course and duplicate 'hear_choose' and audio 'trap_select'
 // to shift the balance dynamically.
 
-function boostAudio(course: Course): Course {
+function postProcessCourse(course: Course): Course {
     course.units.forEach(unit => {
         unit.nodes.forEach(node => {
             if (node.lessons) {
                 node.lessons.forEach(lesson => {
-                    const audioExercises = lesson.exercises.filter(e => 
+                    const audioExercises = lesson.exercises.filter(e =>
                         e.type === 'hear_choose' || e.promptAudio
                     );
-                    const readingExercises = lesson.exercises.filter(e => 
+                    const readingExercises = lesson.exercises.filter(e =>
                         e.type !== 'hear_choose' && !e.promptAudio && e.type !== 'introduction' && e.type.toString() !== 'intro-trap-philosophy'
                     );
-                    
+
                     // Duplicate some audio exercises to shift the ratio
                     // Make sure audio questions outnumber reading questions by about 20%
                     const targetAudioCount = Math.ceil(readingExercises.length * 1.2);
                     const currentAudioCount = audioExercises.length;
                     const diff = targetAudioCount - currentAudioCount;
-                    
+
                     if (diff > 0 && audioExercises.length > 0) {
                         for (let i = 0; i < diff; i++) {
                             const exToClone = audioExercises[i % audioExercises.length];
@@ -1235,19 +1515,23 @@ function boostAudio(course: Course): Course {
                                 id: exToClone.id + '-boost-' + i
                             });
                         }
-                        
-                        // Separate intros from graded
-                        const intros = lesson.exercises.filter(e => e.type === 'introduction' || e.type.toString() === 'intro-trap-philosophy');
-                        const others = lesson.exercises.filter(e => e.type !== 'introduction' && e.type.toString() !== 'intro-trap-philosophy');
-                        
-                        // Fisher-Yates shuffle for others
-                        for (let i = others.length - 1; i > 0; i--) {
-                            const j = Math.floor(Math.random() * (i + 1));
-                            [others[i], others[j]] = [others[j], others[i]];
-                        }
-                        
-                        lesson.exercises = [...intros, ...others];
                     }
+
+                    // ====== UNIVERSAL INTRO SORTING ======
+                    // Ensure that ALL 'introduction' and 'intro-trap-philosophy' cards
+                    // appear at the VERY START of the lesson array so they are never
+                    // shuffled behind test exercises.
+                    const intros = lesson.exercises.filter(e => e.type === 'introduction' || e.type.toString() === 'intro-trap-philosophy');
+                    const others = lesson.exercises.filter(e => e.type !== 'introduction' && e.type.toString() !== 'intro-trap-philosophy');
+
+                    // Fisher-Yates shuffle ONLY the graded/test exercises
+                    for (let i = others.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [others[i], others[j]] = [others[j], others[i]];
+                    }
+
+                    // Reconstruct lesson with Intros safely locked at the front
+                    lesson.exercises = [...intros, ...others];
                 });
             }
         });
@@ -1255,5 +1539,5 @@ function boostAudio(course: Course): Course {
     return course;
 }
 
-export const courseData: Course = boostAudio(baseCourseData);
+export const courseData: Course = postProcessCourse(baseCourseData);
 
