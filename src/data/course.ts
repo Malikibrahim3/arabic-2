@@ -2136,7 +2136,14 @@ const WORD_CONFUSION_GROUPS: Record<string, string[]> = {
 };
 
 function makeWordAssemblyExercises(word: WordData, nodeId: string): Exercise[] {
-    const letters = word.arabic.split(''); // Breaks into char array
+    // Strip diacritics to get base letters only
+    const stripHarakatForDisplay = (text: string): string => {
+        return text.replace(/[\u064B-\u0652\u0654-\u0655]/g, '');
+    };
+    
+    const baseWord = stripHarakatForDisplay(word.arabic);
+    const letters = baseWord.split(''); // Now splits only base letters
+    
     // Add one distractor letter
     const distractorLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ر', 'س', 'ش', 'م', 'ن', 'ه', 'و', 'ي'];
     const distactor = distractorLetters.find(l => !letters.includes(l)) || 'م';
@@ -2740,7 +2747,7 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         type: 'word_assembly',
         prompt: `Assemble the word: ${sentences[0].words[0]}`,
         correctAnswer: sentences[0].words[0],
-        choices: shuffle([...sentences[0].words[0].split(''), 'م']),
+        choices: shuffle([...stripHarakat(sentences[0].words[0]).split(''), 'م']),
     };
     
     // Add MORE sentence confusion traps (AGGRESSIVE)
@@ -2879,8 +2886,8 @@ const UNIT7_CONVERSATIONS: ConversationData[] = [
             { speaker: 'أَحْمَد', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/conversations/conv5_line1.mp3' },
             { speaker: 'فَاطِمَة', arabic: 'وَعَلَيْكُمُ السَّلامُ', english: 'And upon you peace', audio: '/audio/conversations/conv5_line2.mp3' },
             { speaker: 'أَحْمَد', arabic: 'مَا اسْمُكِ؟', english: 'What is your name?', audio: '/audio/conversations/conv5_line3.mp3' },
-            { speaker: 'فَاطِمَة', arabic: 'اِسْمِي أَحْمَد', english: 'My name is Ahmad', audio: '/audio/conversations/conv5_line4.mp3' },
-            { speaker: 'أَحْمَد', arabic: 'اِسْمِي فَاطِمَة', english: 'My name is Fatima', audio: '/audio/conversations/conv5_line5.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'اِسْمِي فَاطِمَة', english: 'My name is Fatima', audio: '/audio/conversations/conv5_line4.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'اِسْمِي أَحْمَد', english: 'My name is Ahmad', audio: '/audio/conversations/conv5_line5.mp3' },
             { speaker: 'فَاطِمَة', arabic: 'تَشَرَّفْنَا', english: 'Nice to meet you', audio: '/audio/conversations/conv5_line6.mp3' }
         ]
     },
@@ -3598,8 +3605,10 @@ function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] 
     // INTRO CARD: Teach the verse first
     exercises.push({
         id: nextId(`${nodeId}-intro`),
-        type: 'intro_card',
+        type: 'introduction',
         prompt: verse.arabic,
+        correctAnswer: '',
+        choices: [],
         hint: `${verse.transliteration}\n\n"${verse.translation}"${verse.context ? `\n\n${verse.context}` : ''}`,
         promptAudio: verse.audio
     });
@@ -3795,7 +3804,7 @@ const baseCourseData: Course = {
                                 type: 'word_assembly',
                                 prompt: `Spell: ${w.english}`,
                                 correctAnswer: w.arabic,
-                                choices: shuffle([...w.arabic.split(''), 'م']),
+                                choices: shuffle([...stripHarakat(w.arabic).split(''), 'م']),
                             }
                         ])),
                     }],
