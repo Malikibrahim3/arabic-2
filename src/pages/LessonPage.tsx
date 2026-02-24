@@ -93,11 +93,12 @@ export const LessonPage: React.FC = () => {
                         }
 
                         const roundTitle = foundNode!.lessons[i]?.title || `Round ${i + 1}`;
+                        const roundStatus = isComplete ? 'Complete' : (isLocked ? 'Locked' : (isCurrent ? 'Start' : 'Available'));
 
                         return (
                             <button
                                 key={i}
-                                className={`round-item ${isComplete ? 'complete' : ''} ${isCurrent ? 'current' : ''} ${isLocked ? 'locked' : ''}`}
+                                className={`round-item ${isComplete ? 'complete' : ''} ${isCurrent && !isGodMode ? 'current' : ''} ${isLocked ? 'locked' : ''}`}
                                 onClick={() => {
                                     if (!isLocked) {
                                         warmUpAudio();
@@ -109,9 +110,7 @@ export const LessonPage: React.FC = () => {
                                 <div className="round-number">{isComplete ? '✓' : i + 1}</div>
                                 <div className="round-info">
                                     <span className="round-title">{roundTitle}</span>
-                                    <span className="round-status">
-                                        {isComplete ? 'Complete' : isCurrent ? 'Start' : 'Locked'}
-                                    </span>
+                                    <span className="round-status">{roundStatus}</span>
                                 </div>
                             </button>
                         );

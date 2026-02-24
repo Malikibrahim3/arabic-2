@@ -224,6 +224,16 @@ export const LearnPage: React.FC = () => {
 
                                         <div className={`node-label ${isLocked ? 'locked' : ''}`}>
                                             {node.title}
+                                            {!isLocked && node.totalRounds > 0 && (
+                                                <div style={{ 
+                                                    fontSize: '11px', 
+                                                    opacity: 0.7, 
+                                                    marginTop: '2px',
+                                                    fontWeight: 500
+                                                }}>
+                                                    {node.completedRounds}/{node.totalRounds}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 );
