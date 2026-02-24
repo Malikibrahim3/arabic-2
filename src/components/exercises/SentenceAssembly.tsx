@@ -12,12 +12,6 @@ export const SentenceAssembly: React.FC<SentenceAssemblyProps> = ({ exercise, sh
     const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
     const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
 
-    // Reset state when exercise changes
-    useEffect(() => {
-        setSelectedIndices([]);
-        setFeedback(null);
-    }, [exercise.id]);
-
     // Auto-advance when correct
     useEffect(() => {
         if (feedback === 'correct') {

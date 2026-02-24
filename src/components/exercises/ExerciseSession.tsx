@@ -393,6 +393,7 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
             <div className="exercise-session">
                 {headerBar}
                 <WordAssembly
+                    key={exercise.id}
                     exercise={exercise}
                     shuffledParts={shuffledChoices}
                     onComplete={handleWordAssemblyComplete}
@@ -407,6 +408,7 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
             <div className="exercise-session">
                 {headerBar}
                 <SentenceAssembly
+                    key={exercise.id}
                     exercise={exercise}
                     shuffledWords={shuffledChoices}
                     onComplete={handleSentenceAssemblyComplete}

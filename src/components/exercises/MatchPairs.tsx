@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import './MatchPairs.css';
 
 interface Pair {
@@ -29,7 +29,8 @@ export const MatchPairs: React.FC<MatchPairsProps> = ({ prompt, pairs, onComplet
     const [matched, setMatched] = useState<Set<string>>(new Set());
     const [wrongPair, setWrongPair] = useState<{ left: string; right: string } | null>(null);
 
-    const pairMap = new Map(pairs.map(p => [p.left, p.right]));
+    // Wrap pairMap in useMemo to prevent recreation on every render
+    const pairMap = useMemo(() => new Map(pairs.map(p => [p.left, p.right])), [pairs]);
 
     const handleLeftClick = useCallback((left: string) => {
         if (matched.has(left) || wrongPair) return;

@@ -203,7 +203,6 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
-}
 
 .round-item.current .round-status {
     color: var(--color-primary);

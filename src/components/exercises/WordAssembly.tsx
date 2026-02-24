@@ -12,12 +12,6 @@ export const WordAssembly: React.FC<WordAssemblyProps> = ({ exercise, shuffledPa
     const [selectedParts, setSelectedParts] = useState<number[]>([]);
     const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
 
-    // Reset state when exercise changes
-    useEffect(() => {
-        setSelectedParts([]);
-        setFeedback(null);
-    }, [exercise.id]);
-
     // Auto-advance when correct
     useEffect(() => {
         if (feedback === 'correct') {
