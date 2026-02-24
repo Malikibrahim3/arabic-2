@@ -29,7 +29,7 @@ async function uploadDirectory(localPath: string, bucketPath: string) {
             console.log(`Uploading ${fullBucketPath}...`);
             const fileBuffer = fs.readFileSync(fullLocalPath);
 
-            const { data, error } = await supabase.storage
+            const { error } = await supabase.storage
                 .from(BUCKET_NAME)
                 .upload(fullBucketPath, fileBuffer, {
                     upsert: true,

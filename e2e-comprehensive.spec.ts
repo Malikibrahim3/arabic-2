@@ -39,14 +39,6 @@ async function enableGodMode(page: Page) {
     await page.waitForTimeout(500);
 }
 
-// Helper to click a node and enter lesson
-async function enterLesson(page: Page, nodeSelector: string) {
-    await page.click(nodeSelector);
-    await page.waitForURL(/lesson/);
-    await expect(page.locator('.lesson-page')).toBeVisible();
-}
-
-
 // Helper to start a round
 async function startRound(page: Page, roundNumber: number) {
     const roundButton = page.locator('.round-item').nth(roundNumber);
@@ -59,24 +51,6 @@ async function startRound(page: Page, roundNumber: number) {
 async function completeIntroCard(page: Page) {
     const continueBtn = page.locator('.intro-continue-btn, button:has-text("Got it!"), button:has-text("I\'m Ready")');
     if (await continueBtn.isVisible()) {
-        await continueBtn.click();
-        await page.waitForTimeout(300);
-    }
-}
-
-// Helper to answer a multiple choice or tap letter exercise
-async function answerExercise(page: Page, correctAnswer: string) {
-    const choiceBtn = page.locator(`.choice-btn:has-text("${correctAnswer}")`).first();
-    await expect(choiceBtn).toBeVisible();
-    await choiceBtn.click();
-    
-    // Wait for feedback
-    await page.waitForTimeout(500);
-    
-    // Check if feedback is shown
-    const feedbackBanner = page.locator('.feedback-banner');
-    if (await feedbackBanner.isVisible()) {
-        const continueBtn = page.locator('.feedback-continue-btn');
         await continueBtn.click();
         await page.waitForTimeout(300);
     }
@@ -303,9 +277,7 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
             // Check graded exercises
             const choicesGrid = page.locator('.choices-grid');
             if (await choicesGrid.isVisible()) {
-                const prompt = await page.locator('.exercise-prompt').textContent();
                 const choices = page.locator('.choice-btn');
-                const choiceCount = await choices.count();
                 
                 // Get the correct answer from the first choice (simplified)
                 const firstChoice = await choices.first().textContent();
