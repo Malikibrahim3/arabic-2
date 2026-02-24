@@ -6,10 +6,10 @@ export function YasmineGate({ onUnlock }: { onUnlock: () => void }) {
     const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
     const [isMoving, setIsMoving] = useState(false);
     const [clickCount, setClickCount] = useState(0);
-    const yesHoldTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const yesHoldTimerRef = useRef<number | null>(null);
     const [isYesHeld, setIsYesHeld] = useState(false);
     const [yesHoldProgress, setYesHoldProgress] = useState(0);
-    const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const progressIntervalRef = useRef<number | null>(null);
 
     const noMessages = [
         "No absolutely not",
