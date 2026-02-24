@@ -202,7 +202,7 @@ const SENTENCES = [
     { id: 'sent_ismi', text: 'اِسمي' },
     { id: 'sent_hadha_kitab', text: 'هذا كِتاب' },
     { id: 'sent_hadhihi_madrasah', text: 'هذِهِ مَدرَسة' },
-    { id: 'sent_ana_uhibb', text: 'أَنا أُحِبُّ اللُّغة العَرَبيّة' },
+    { id: 'sent_ana_uhibb', text: 'أَنا أُحِبُّ العَرَبيّة' },
     { id: 'sent_ma3a_salama', text: 'مَعَ السَّلامة' },
     { id: 'sent_sabah_alkhayr', text: 'صَباحُ الخَير' },
     { id: 'sent_masaa_alkhayr', text: 'مَساءُ الخَير' },
