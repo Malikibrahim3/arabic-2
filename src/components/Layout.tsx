@@ -4,13 +4,12 @@ import './Layout.css';
 
 interface LayoutProps {
     children: React.ReactNode;
-    onLogout?: () => void;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children, onLogout }) => {
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <div className="app-container">
-            <TopNav onLogout={onLogout} />
+            <TopNav />
             <main className="main-content">
                 {children}
             </main>
