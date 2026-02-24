@@ -209,6 +209,57 @@ const SENTENCES = [
     { id: 'sent_jazak_allah', text: 'جَزاكَ اللّه خَيرًا' },
 ];
 
+// Unit 7 Conversation Audio
+const CONVERSATIONS = [
+    // Conversation 1: Meeting a Friend
+    { id: 'conv1_line1', text: 'اَلسَّلامُ عَلَيكُم' },
+    { id: 'conv1_line2', text: 'وَعَلَيكُمُ السَّلامُ' },
+    { id: 'conv1_line3', text: 'كَيفَ حالُكِ؟' },
+    { id: 'conv1_line4', text: 'أَنا بِخَير، شُكرًا' },
+    { id: 'conv1_line5', text: 'أَنا بِخَير أَيضًا' },
+    { id: 'conv1_line6', text: 'مَعَ السَّلامة' },
+    
+    // Conversation 2: Good Morning at School
+    { id: 'conv2_line1', text: 'صَباحُ الخَير' },
+    { id: 'conv2_line2', text: 'صَباحُ النُّور' },
+    { id: 'conv2_line3', text: 'هَذِهِ مَدرَسة' },
+    { id: 'conv2_line4', text: 'نَعَم، هَذِهِ مَدرَسة جَميلة' },
+    { id: 'conv2_line5', text: 'أَنا أُحِبُّ العَرَبيّة' },
+    { id: 'conv2_line6', text: 'أَنا أُحِبُّ العَرَبيّة أَيضًا' },
+    
+    // Conversation 3: Showing a Book
+    { id: 'conv3_line1', text: 'هَذا كِتاب' },
+    { id: 'conv3_line2', text: 'كِتابٌ جَميل' },
+    { id: 'conv3_line3', text: 'شُكرًا' },
+    { id: 'conv3_line4', text: 'عَفوًا' },
+    { id: 'conv3_line5', text: 'مَعَ السَّلامة' },
+    { id: 'conv3_line6', text: 'مَعَ السَّلامة' },
+    
+    // Conversation 4: Starting Class
+    { id: 'conv4_line1', text: 'بِسمِ اللّه' },
+    { id: 'conv4_line2', text: 'بِسمِ اللّه' },
+    { id: 'conv4_line3', text: 'اَلسَّلامُ عَلَيكُم' },
+    { id: 'conv4_line4', text: 'وَعَلَيكُمُ السَّلامُ' },
+    { id: 'conv4_line5', text: 'كَيفَ حالُكُم؟' },
+    { id: 'conv4_line6', text: 'نَحنُ بِخَير' },
+    
+    // Conversation 5: Meeting Someone New
+    { id: 'conv5_line1', text: 'اَلسَّلامُ عَلَيكُم' },
+    { id: 'conv5_line2', text: 'وَعَلَيكُمُ السَّلامُ' },
+    { id: 'conv5_line3', text: 'ما اسمُكَ؟' },
+    { id: 'conv5_line4', text: 'اِسمي أَحمَد' },
+    { id: 'conv5_line5', text: 'اِسمي فاطِمة' },
+    { id: 'conv5_line6', text: 'تَشَرَّفنا' },
+    
+    // Conversation 6: Evening Greeting
+    { id: 'conv6_line1', text: 'مَساءُ الخَير' },
+    { id: 'conv6_line2', text: 'مَساءُ النُّور' },
+    { id: 'conv6_line3', text: 'كَيفَ حالُكَ؟' },
+    { id: 'conv6_line4', text: 'أَنا بِخَير، الحَمدُ لِلّه' },
+    { id: 'conv6_line5', text: 'جَيِّد' },
+    { id: 'conv6_line6', text: 'مَعَ السَّلامة' },
+];
+
 // ─── Build all items with directory info ───────────────────
 
 function addDir(items, dir) {
@@ -220,6 +271,7 @@ const ALL_ITEMS = [
     ...SYLLABLES,
     ...addDir(WORDS, 'words'),
     ...addDir(SENTENCES, 'sentences'),
+    ...addDir(CONVERSATIONS, 'conversations'),
 ];
 
 // ─── Download from Google Translate TTS ────────────────────
@@ -276,6 +328,7 @@ async function downloadAll() {
     console.log(`   Syllables: ${SYLLABLES.length}`);
     console.log(`   Words: ${WORDS.length}`);
     console.log(`   Sentences: ${SENTENCES.length}`);
+    console.log(`   Conversations: ${CONVERSATIONS.length}`);
     console.log(`   Output: ${OUTPUT_BASE}\n`);
 
     ensureDir(OUTPUT_BASE);

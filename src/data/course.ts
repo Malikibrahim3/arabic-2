@@ -1777,81 +1777,80 @@ interface ConversationData {
 const UNIT7_CONVERSATIONS: ConversationData[] = [
     {
         id: 'conv1',
-        title: 'Meeting Someone New',
-        context: 'Two people meet for the first time',
+        title: 'Meeting a Friend',
+        context: 'Two friends greet each other and ask how they are',
         lines: [
-            { speaker: 'أَحْمَد', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/sentences/sent_assalamu.mp3' },
-            { speaker: 'فَاطِمَة', arabic: 'وَعَلَيْكُمُ السَّلامُ', english: 'And upon you peace', audio: '/audio/sentences/greet_reply.mp3' },
-            { speaker: 'أَحْمَد', arabic: 'مَا اسْمُكِ؟', english: 'What is your name?', audio: '/audio/sentences/phrase_whats_your_name.mp3' },
-            { speaker: 'فَاطِمَة', arabic: 'اِسْمِي فَاطِمَة', english: 'My name is Fatima', audio: '/audio/sentences/sent_ismi.mp3' },
-            { speaker: 'أَحْمَد', arabic: 'أَنَا أَحْمَد', english: 'I am Ahmad', audio: '/audio/sentences/sent_ismi.mp3' },
-            { speaker: 'فَاطِمَة', arabic: 'تَشَرَّفْنَا', english: 'Nice to meet you', audio: '/audio/sentences/greet_reply.mp3' }
+            { speaker: 'أَحْمَد', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/conversations/conv1_line1.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'وَعَلَيْكُمُ السَّلامُ', english: 'And upon you peace', audio: '/audio/conversations/conv1_line2.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'كَيْفَ حَالُكِ؟', english: 'How are you?', audio: '/audio/conversations/conv1_line3.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'أَنَا بِخَيْرٍ، شُكْرًا', english: 'I am fine, thank you', audio: '/audio/conversations/conv1_line4.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'أَنَا بِخَيْرٍ أَيْضًا', english: 'I am also fine', audio: '/audio/conversations/conv1_line5.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'مَعَ السَّلامَةِ', english: 'Goodbye', audio: '/audio/conversations/conv1_line6.mp3' }
         ]
     },
     {
         id: 'conv2',
-        title: 'How Are You?',
-        context: 'Friends greeting each other',
+        title: 'Good Morning at School',
+        context: 'Students greet each other in the morning at school',
         lines: [
-            { speaker: 'عَلِي', arabic: 'صَبَاحُ الخَيْرِ', english: 'Good morning', audio: '/audio/sentences/sent_sabah_alkhayr.mp3' },
-            { speaker: 'مَرْيَم', arabic: 'صَبَاحُ النُّورِ', english: 'Morning of light', audio: '/audio/sentences/greet_good_morning.mp3' },
-            { speaker: 'عَلِي', arabic: 'كَيْفَ حَالُكِ؟', english: 'How are you?', audio: '/audio/sentences/sent_kayf_halak.mp3' },
-            { speaker: 'مَرْيَم', arabic: 'أَنَا بِخَيْرٍ، الحَمْدُ لِلّهِ', english: 'I am fine, praise be to God', audio: '/audio/sentences/sent_ana_bikhayr.mp3' },
-            { speaker: 'عَلِي', arabic: 'وَأَنْتِ؟', english: 'And you?', audio: '/audio/sentences/greet_how_are_you.mp3' },
-            { speaker: 'مَرْيَم', arabic: 'أَنَا بِخَيْرٍ أَيْضًا', english: 'I am also fine', audio: '/audio/sentences/greet_fine_thanks.mp3' }
+            { speaker: 'عَلِي', arabic: 'صَبَاحُ الخَيْرِ', english: 'Good morning', audio: '/audio/conversations/conv2_line1.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'صَبَاحُ النُّورِ', english: 'Morning of light', audio: '/audio/conversations/conv2_line2.mp3' },
+            { speaker: 'عَلِي', arabic: 'هَذِهِ مَدْرَسَةٌ', english: 'This is a school', audio: '/audio/conversations/conv2_line3.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'نَعَمْ، هَذِهِ مَدْرَسَةٌ جَمِيلَةٌ', english: 'Yes, this is a beautiful school', audio: '/audio/conversations/conv2_line4.mp3' },
+            { speaker: 'عَلِي', arabic: 'أَنَا أُحِبُّ العَرَبِيَّةَ', english: 'I love Arabic', audio: '/audio/conversations/conv2_line5.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'أَنَا أُحِبُّ العَرَبِيَّةَ أَيْضًا', english: 'I also love Arabic', audio: '/audio/conversations/conv2_line6.mp3' }
         ]
     },
     {
         id: 'conv3',
-        title: 'At Home',
-        context: 'Talking about family and home',
+        title: 'Showing a Book',
+        context: 'One person shows a book to another',
         lines: [
-            { speaker: 'خَالِد', arabic: 'هَذَا بَيْتِي', english: 'This is my house', audio: '/audio/sentences/sent_hadha_kitab.mp3' },
-            { speaker: 'سَارَة', arabic: 'بَيْتُكَ كَبِيرٌ', english: 'Your house is big', audio: '/audio/words/word_kabeer.mp3' },
-            { speaker: 'خَالِد', arabic: 'شُكْرًا، هَذَا أَبِي وَهَذِهِ أُمِّي', english: 'Thank you, this is my father and this is my mother', audio: '/audio/words/fam_father.mp3' },
-            { speaker: 'سَارَة', arabic: 'تَشَرَّفْنَا', english: 'Nice to meet you', audio: '/audio/sentences/greet_reply.mp3' },
-            { speaker: 'الأَب', arabic: 'أَهْلًا وَسَهْلًا', english: 'Welcome', audio: '/audio/sentences/greet_salam.mp3' },
-            { speaker: 'الأُم', arabic: 'تَفَضَّلِي', english: 'Please come in', audio: '/audio/sentences/greet_reply.mp3' }
+            { speaker: 'خَالِد', arabic: 'هَذَا كِتَابٌ', english: 'This is a book', audio: '/audio/conversations/conv3_line1.mp3' },
+            { speaker: 'سَارَة', arabic: 'كِتَابٌ جَمِيلٌ', english: 'A beautiful book', audio: '/audio/conversations/conv3_line2.mp3' },
+            { speaker: 'خَالِد', arabic: 'شُكْرًا', english: 'Thank you', audio: '/audio/conversations/conv3_line3.mp3' },
+            { speaker: 'سَارَة', arabic: 'عَفْوًا', english: 'You\'re welcome', audio: '/audio/conversations/conv3_line4.mp3' },
+            { speaker: 'خَالِد', arabic: 'مَعَ السَّلامَةِ', english: 'Goodbye', audio: '/audio/conversations/conv3_line5.mp3' },
+            { speaker: 'سَارَة', arabic: 'مَعَ السَّلامَةِ', english: 'Goodbye', audio: '/audio/conversations/conv3_line6.mp3' }
         ]
     },
     {
         id: 'conv4',
-        title: 'At the Market',
-        context: 'Shopping for food',
+        title: 'Starting Class',
+        context: 'A teacher starts the class with students',
         lines: [
-            { speaker: 'زَبُون', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/sentences/sent_assalamu.mp3' },
-            { speaker: 'بَائِع', arabic: 'وَعَلَيْكُمُ السَّلامُ، مَاذَا تُرِيدُ؟', english: 'And upon you peace, what do you want?', audio: '/audio/sentences/greet_reply.mp3' },
-            { speaker: 'زَبُون', arabic: 'أُرِيدُ خُبْزًا وَحَلِيبًا', english: 'I want bread and milk', audio: '/audio/words/word_khubz.mp3' },
-            { speaker: 'بَائِع', arabic: 'تَفَضَّلْ، هَذَا خُبْزٌ وَهَذَا حَلِيبٌ', english: 'Here you go, this is bread and this is milk', audio: '/audio/words/drink_milk.mp3' },
-            { speaker: 'زَبُون', arabic: 'كَمْ الثَّمَنُ؟', english: 'How much is the price?', audio: '/audio/sentences/phrase_how_much.mp3' },
-            { speaker: 'بَائِع', arabic: 'عَشَرَةُ دَرَاهِمَ', english: 'Ten dirhams', audio: '/audio/sentences/greet_reply.mp3' },
-            { speaker: 'زَبُون', arabic: 'شُكْرًا', english: 'Thank you', audio: '/audio/sentences/sent_jazak_allah.mp3' }
+            { speaker: 'أُسْتَاذ', arabic: 'بِسْمِ اللّهِ', english: 'In the name of Allah', audio: '/audio/conversations/conv4_line1.mp3' },
+            { speaker: 'طُلَّاب', arabic: 'بِسْمِ اللّهِ', english: 'In the name of Allah', audio: '/audio/conversations/conv4_line2.mp3' },
+            { speaker: 'أُسْتَاذ', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/conversations/conv4_line3.mp3' },
+            { speaker: 'طُلَّاب', arabic: 'وَعَلَيْكُمُ السَّلامُ', english: 'And upon you peace', audio: '/audio/conversations/conv4_line4.mp3' },
+            { speaker: 'أُسْتَاذ', arabic: 'كَيْفَ حَالُكُم؟', english: 'How are you all?', audio: '/audio/conversations/conv4_line5.mp3' },
+            { speaker: 'طُلَّاب', arabic: 'نَحْنُ بِخَيْرٍ', english: 'We are fine', audio: '/audio/conversations/conv4_line6.mp3' }
         ]
     },
     {
         id: 'conv5',
-        title: 'Asking for Help',
-        context: 'Someone needs directions',
+        title: 'Meeting Someone New',
+        context: 'Two people introduce themselves for the first time',
         lines: [
-            { speaker: 'سَائِح', arabic: 'عَفْوًا، أَيْنَ المَسْجِدُ؟', english: 'Excuse me, where is the mosque?', audio: '/audio/sentences/phrase_where_bathroom.mp3' },
-            { speaker: 'رَجُل', arabic: 'المَسْجِدُ قَرِيبٌ مِنْ هُنَا', english: 'The mosque is near here', audio: '/audio/words/place_mosque.mp3' },
-            { speaker: 'سَائِح', arabic: 'هَلْ تَتَكَلَّمُ الإِنْجِلِيزِيَّةَ؟', english: 'Do you speak English?', audio: '/audio/sentences/phrase_do_you_speak_english.mp3' },
-            { speaker: 'رَجُل', arabic: 'نَعَمْ، قَلِيلًا', english: 'Yes, a little', audio: '/audio/sentences/greet_reply.mp3' },
-            { speaker: 'سَائِح', arabic: 'أَنَا لا أَفْهَمُ العَرَبِيَّةَ جَيِّدًا', english: 'I don\'t understand Arabic well', audio: '/audio/sentences/phrase_dont_understand.mp3' },
-            { speaker: 'رَجُل', arabic: 'لا بَأْسَ، تَعَالَ مَعِي', english: 'No problem, come with me', audio: '/audio/sentences/phrase_need_help.mp3' }
+            { speaker: 'أَحْمَد', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/conversations/conv5_line1.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'وَعَلَيْكُمُ السَّلامُ', english: 'And upon you peace', audio: '/audio/conversations/conv5_line2.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'مَا اسْمُكِ؟', english: 'What is your name?', audio: '/audio/conversations/conv5_line3.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'اِسْمِي أَحْمَد', english: 'My name is Ahmad', audio: '/audio/conversations/conv5_line4.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'اِسْمِي فَاطِمَة', english: 'My name is Fatima', audio: '/audio/conversations/conv5_line5.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'تَشَرَّفْنَا', english: 'Nice to meet you', audio: '/audio/conversations/conv5_line6.mp3' }
         ]
     },
     {
         id: 'conv6',
-        title: 'Saying Goodbye',
-        context: 'Friends parting ways',
+        title: 'Evening Greeting',
+        context: 'Friends meet in the evening and greet each other',
         lines: [
-            { speaker: 'يُوسُف', arabic: 'أَنَا ذَاهِبٌ الآنَ', english: 'I am going now', audio: '/audio/sentences/sent_ma3a_salama.mp3' },
-            { speaker: 'لَيْلَى', arabic: 'إِلَى أَيْنَ؟', english: 'Where to?', audio: '/audio/sentences/phrase_where_from.mp3' },
-            { speaker: 'يُوسُف', arabic: 'إِلَى المَدْرَسَةِ', english: 'To the school', audio: '/audio/words/place_school.mp3' },
-            { speaker: 'لَيْلَى', arabic: 'حَسَنًا، مَعَ السَّلامَةِ', english: 'Okay, goodbye', audio: '/audio/sentences/sent_ma3a_salama.mp3' },
-            { speaker: 'يُوسُف', arabic: 'اللهُ مَعَكِ', english: 'God be with you', audio: '/audio/sentences/sent_jazak_allah.mp3' },
-            { speaker: 'لَيْلَى', arabic: 'وَمَعَكَ أَيْضًا', english: 'And with you too', audio: '/audio/sentences/greet_reply.mp3' }
+            { speaker: 'يُوسُف', arabic: 'مَسَاءُ الخَيْرِ', english: 'Good evening', audio: '/audio/conversations/conv6_line1.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'مَسَاءُ النُّورِ', english: 'Evening of light', audio: '/audio/conversations/conv6_line2.mp3' },
+            { speaker: 'يُوسُف', arabic: 'كَيْفَ حَالُكِ؟', english: 'How are you?', audio: '/audio/conversations/conv6_line3.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'أَنَا بِخَيْرٍ، الحَمْدُ لِلّهِ', english: 'I am fine, praise be to God', audio: '/audio/conversations/conv6_line4.mp3' },
+            { speaker: 'يُوسُف', arabic: 'جَيِّدٌ', english: 'Good', audio: '/audio/conversations/conv6_line5.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'مَعَ السَّلامَةِ', english: 'Goodbye', audio: '/audio/conversations/conv6_line6.mp3' }
         ]
     }
 ];

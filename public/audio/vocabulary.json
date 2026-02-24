@@ -806,5 +806,149 @@
   "sent_jazak_allah": {
     "text": "جَزاكَ اللّه خَيرًا",
     "path": "/audio/sentences/sent_jazak_allah.mp3"
+  },
+  "conv1_line1": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/conversations/conv1_line1.mp3"
+  },
+  "conv1_line2": {
+    "text": "وَعَلَيكُمُ السَّلامُ",
+    "path": "/audio/conversations/conv1_line2.mp3"
+  },
+  "conv1_line3": {
+    "text": "كَيفَ حالُكِ؟",
+    "path": "/audio/conversations/conv1_line3.mp3"
+  },
+  "conv1_line4": {
+    "text": "أَنا بِخَير، شُكرًا",
+    "path": "/audio/conversations/conv1_line4.mp3"
+  },
+  "conv1_line5": {
+    "text": "أَنا بِخَير أَيضًا",
+    "path": "/audio/conversations/conv1_line5.mp3"
+  },
+  "conv1_line6": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/conversations/conv1_line6.mp3"
+  },
+  "conv2_line1": {
+    "text": "صَباحُ الخَير",
+    "path": "/audio/conversations/conv2_line1.mp3"
+  },
+  "conv2_line2": {
+    "text": "صَباحُ النُّور",
+    "path": "/audio/conversations/conv2_line2.mp3"
+  },
+  "conv2_line3": {
+    "text": "هَذِهِ مَدرَسة",
+    "path": "/audio/conversations/conv2_line3.mp3"
+  },
+  "conv2_line4": {
+    "text": "نَعَم، هَذِهِ مَدرَسة جَميلة",
+    "path": "/audio/conversations/conv2_line4.mp3"
+  },
+  "conv2_line5": {
+    "text": "أَنا أُحِبُّ العَرَبيّة",
+    "path": "/audio/conversations/conv2_line5.mp3"
+  },
+  "conv2_line6": {
+    "text": "أَنا أُحِبُّ العَرَبيّة أَيضًا",
+    "path": "/audio/conversations/conv2_line6.mp3"
+  },
+  "conv3_line1": {
+    "text": "هَذا كِتاب",
+    "path": "/audio/conversations/conv3_line1.mp3"
+  },
+  "conv3_line2": {
+    "text": "كِتابٌ جَميل",
+    "path": "/audio/conversations/conv3_line2.mp3"
+  },
+  "conv3_line3": {
+    "text": "شُكرًا",
+    "path": "/audio/conversations/conv3_line3.mp3"
+  },
+  "conv3_line4": {
+    "text": "عَفوًا",
+    "path": "/audio/conversations/conv3_line4.mp3"
+  },
+  "conv3_line5": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/conversations/conv3_line5.mp3"
+  },
+  "conv3_line6": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/conversations/conv3_line6.mp3"
+  },
+  "conv4_line1": {
+    "text": "بِسمِ اللّه",
+    "path": "/audio/conversations/conv4_line1.mp3"
+  },
+  "conv4_line2": {
+    "text": "بِسمِ اللّه",
+    "path": "/audio/conversations/conv4_line2.mp3"
+  },
+  "conv4_line3": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/conversations/conv4_line3.mp3"
+  },
+  "conv4_line4": {
+    "text": "وَعَلَيكُمُ السَّلامُ",
+    "path": "/audio/conversations/conv4_line4.mp3"
+  },
+  "conv4_line5": {
+    "text": "كَيفَ حالُكُم؟",
+    "path": "/audio/conversations/conv4_line5.mp3"
+  },
+  "conv4_line6": {
+    "text": "نَحنُ بِخَير",
+    "path": "/audio/conversations/conv4_line6.mp3"
+  },
+  "conv5_line1": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/conversations/conv5_line1.mp3"
+  },
+  "conv5_line2": {
+    "text": "وَعَلَيكُمُ السَّلامُ",
+    "path": "/audio/conversations/conv5_line2.mp3"
+  },
+  "conv5_line3": {
+    "text": "ما اسمُكَ؟",
+    "path": "/audio/conversations/conv5_line3.mp3"
+  },
+  "conv5_line4": {
+    "text": "اِسمي أَحمَد",
+    "path": "/audio/conversations/conv5_line4.mp3"
+  },
+  "conv5_line5": {
+    "text": "اِسمي فاطِمة",
+    "path": "/audio/conversations/conv5_line5.mp3"
+  },
+  "conv5_line6": {
+    "text": "تَشَرَّفنا",
+    "path": "/audio/conversations/conv5_line6.mp3"
+  },
+  "conv6_line1": {
+    "text": "مَساءُ الخَير",
+    "path": "/audio/conversations/conv6_line1.mp3"
+  },
+  "conv6_line2": {
+    "text": "مَساءُ النُّور",
+    "path": "/audio/conversations/conv6_line2.mp3"
+  },
+  "conv6_line3": {
+    "text": "كَيفَ حالُكَ؟",
+    "path": "/audio/conversations/conv6_line3.mp3"
+  },
+  "conv6_line4": {
+    "text": "أَنا بِخَير، الحَمدُ لِلّه",
+    "path": "/audio/conversations/conv6_line4.mp3"
+  },
+  "conv6_line5": {
+    "text": "جَيِّد",
+    "path": "/audio/conversations/conv6_line5.mp3"
+  },
+  "conv6_line6": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/conversations/conv6_line6.mp3"
   }
 }
