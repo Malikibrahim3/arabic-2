@@ -1705,34 +1705,35 @@ function makeCumulativeTest2(): CourseNode {
         });
     }
 
-    // === VOWELED WORDS (Unit 4) - 10 questions ===
-    for (const w of pick(UNIT4_WORDS, 10)) {
+    // === VOWELED WORDS (Unit 4, 4B, 4C) - 15 questions ===
+    const allVocab = [...UNIT4_WORDS, ...UNIT4B_WORDS, ...UNIT4C_WORDS];
+    for (const w of pick(allVocab, 15)) {
         exercises.push({
             id: nextId('cum2-word'),
             type: 'multiple_choice',
             prompt: `Review: What does this mean?`,
             correctAnswer: w.english,
-            choices: shuffle([w.english, ...pick(UNIT4_WORDS.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+            choices: shuffle([w.english, ...pick(allVocab.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
             hint: w.arabic,
             promptAudio: w.audio,
         });
     }
 
-    // === UNVOWELLED WORDS (Unit 5) - 10 questions ===
-    for (const w of pick(UNIT4_WORDS, 10)) {
+    // === UNVOWELLED WORDS (Unit 5) - 15 questions ===
+    for (const w of pick(allVocab, 15)) {
         exercises.push({
             id: nextId('cum2-unvowelled'),
             type: 'multiple_choice',
             prompt: `Review: What does this mean?`,
             correctAnswer: w.english,
-            choices: shuffle([w.english, ...pick(UNIT4_WORDS.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+            choices: shuffle([w.english, ...pick(allVocab.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
             hint: stripHarakat(w.arabic),
             promptAudio: w.audio,
         });
     }
 
-    // === SENTENCES (Unit 6) - 10 questions ===
-    for (const s of pick(UNIT6_SENTENCES, 10)) {
+    // === SENTENCES (Unit 6) - 15 questions ===
+    for (const s of pick(UNIT6_SENTENCES, 15)) {
         exercises.push({
             id: nextId('cum2-sentence'),
             type: 'multiple_choice',
@@ -1807,21 +1808,22 @@ function makeFinalComprehensiveTest(): CourseNode {
         });
     }
 
-    // === VOCABULARY - 15 questions ===
-    for (const w of pick([...UNIT3_WORDS, ...UNIT4_WORDS], 15)) {
+    // === VOCABULARY - 20 questions ===
+    const allVocab = [...UNIT3_WORDS, ...UNIT4_WORDS, ...UNIT4B_WORDS, ...UNIT4C_WORDS];
+    for (const w of pick(allVocab, 20)) {
         exercises.push({
             id: nextId('final-vocab'),
             type: 'multiple_choice',
             prompt: `What does this mean?`,
             correctAnswer: w.english,
-            choices: shuffle([w.english, ...pick([...UNIT3_WORDS, ...UNIT4_WORDS].filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+            choices: shuffle([w.english, ...pick(allVocab.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
             hint: stripHarakat(w.arabic),
             promptAudio: w.audio,
         });
     }
 
-    // === SENTENCES - 10 questions ===
-    for (const s of pick(UNIT6_SENTENCES, 10)) {
+    // === SENTENCES - 15 questions ===
+    for (const s of pick(UNIT6_SENTENCES, 15)) {
         exercises.push({
             id: nextId('final-sentence'),
             type: 'multiple_choice',
@@ -1947,7 +1949,139 @@ const UNIT4_WORDS: WordData[] = [
     { arabic: 'مَدْرَسَةٌ', translit: 'Madrasatun', english: 'School', audio: '/audio/words/place_school.mp3' },
     { arabic: 'مَسْجِدٌ', translit: 'Masjidun', english: 'Mosque', audio: '/audio/words/place_mosque.mp3' },
     { arabic: 'مُسْتَشْفَى', translit: 'Mustashfa', english: 'Hospital', audio: '/audio/words/place_hospital.mp3' },
-    { arabic: 'سُوقٌ', translit: 'Suqun', english: 'Market', audio: '/audio/words/place_market.mp3' }
+    { arabic: 'سُوقٌ', translit: 'Suqun', english: 'Market', audio: '/audio/words/place_market.mp3' },
+
+    // Category 5: Time & Numbers (NEW - 8 words)
+    { arabic: 'يَوْمٌ', translit: 'Yawmun', english: 'Day', audio: '/audio/words/time_day.mp3' },
+    { arabic: 'لَيْلَةٌ', translit: 'Laylatun', english: 'Night', audio: '/audio/words/time_night.mp3' },
+    { arabic: 'سَاعَةٌ', translit: 'Saa\'atun', english: 'Hour', audio: '/audio/words/time_hour.mp3' },
+    { arabic: 'أُسْبُوعٌ', translit: 'Usboo\'un', english: 'Week', audio: '/audio/words/time_week.mp3' },
+    { arabic: 'شَهْرٌ', translit: 'Shahrun', english: 'Month', audio: '/audio/words/time_month.mp3' },
+    { arabic: 'سَنَةٌ', translit: 'Sanatun', english: 'Year', audio: '/audio/words/time_year.mp3' },
+    { arabic: 'وَاحِدٌ', translit: 'Waahidun', english: 'One', audio: '/audio/words/num_one.mp3' },
+    { arabic: 'اِثْنَانِ', translit: 'Ithnaani', english: 'Two', audio: '/audio/words/num_two.mp3' },
+
+    // Category 6: Actions/Verbs (NEW - 8 words)
+    { arabic: 'ذَهَبَ', translit: 'Dhahaba', english: 'Went', audio: '/audio/words/verb_went.mp3' },
+    { arabic: 'جَاءَ', translit: 'Jaa\'a', english: 'Came', audio: '/audio/words/verb_came.mp3' },
+    { arabic: 'أَكَلَ', translit: 'Akala', english: 'Ate', audio: '/audio/words/verb_ate.mp3' },
+    { arabic: 'شَرِبَ', translit: 'Shariba', english: 'Drank', audio: '/audio/words/verb_drank.mp3' },
+    { arabic: 'كَتَبَ', translit: 'Kataba', english: 'Wrote', audio: '/audio/words/verb_wrote.mp3' },
+    { arabic: 'قَرَأَ', translit: 'Qara\'a', english: 'Read', audio: '/audio/words/verb_read.mp3' },
+    { arabic: 'نَامَ', translit: 'Naama', english: 'Slept', audio: '/audio/words/verb_slept.mp3' },
+    { arabic: 'قَالَ', translit: 'Qaala', english: 'Said', audio: '/audio/words/verb_said.mp3' },
+
+    // Category 7: Adjectives (NEW - 8 words)
+    { arabic: 'جَمِيلٌ', translit: 'Jameelun', english: 'Beautiful', audio: '/audio/words/adj_beautiful.mp3' },
+    { arabic: 'قَبِيحٌ', translit: 'Qabeehun', english: 'Ugly', audio: '/audio/words/adj_ugly.mp3' },
+    { arabic: 'طَوِيلٌ', translit: 'Taweelun', english: 'Tall', audio: '/audio/words/adj_tall.mp3' },
+    { arabic: 'قَصِيرٌ', translit: 'Qaseerun', english: 'Short', audio: '/audio/words/adj_short.mp3' },
+    { arabic: 'سَرِيعٌ', translit: 'Saree\'un', english: 'Fast', audio: '/audio/words/adj_fast.mp3' },
+    { arabic: 'بَطِيءٌ', translit: 'Batee\'un', english: 'Slow', audio: '/audio/words/adj_slow.mp3' },
+    { arabic: 'سَهْلٌ', translit: 'Sahlun', english: 'Easy', audio: '/audio/words/adj_easy.mp3' },
+    { arabic: 'صَعْبٌ', translit: 'Sa\'bun', english: 'Difficult', audio: '/audio/words/adj_difficult.mp3' }
+];
+
+// UNIT 4B: EXTENDED VOCABULARY (NEW UNIT - 40 words)
+const UNIT4B_WORDS: WordData[] = [
+    // Category 1: Body Parts Extended (10 words)
+    { arabic: 'أُذُنٌ', translit: 'Udhunun', english: 'Ear', audio: '/audio/words/body_ear.mp3' },
+    { arabic: 'أَنْفٌ', translit: 'Anfun', english: 'Nose', audio: '/audio/words/body_nose.mp3' },
+    { arabic: 'فَمٌ', translit: 'Famun', english: 'Mouth', audio: '/audio/words/body_mouth.mp3' },
+    { arabic: 'لِسَانٌ', translit: 'Lisaanun', english: 'Tongue', audio: '/audio/words/body_tongue.mp3' },
+    { arabic: 'سِنٌّ', translit: 'Sinnun', english: 'Tooth', audio: '/audio/words/body_tooth.mp3' },
+    { arabic: 'شَعْرٌ', translit: 'Sha\'run', english: 'Hair', audio: '/audio/words/body_hair.mp3' },
+    { arabic: 'رِجْلٌ', translit: 'Rijlun', english: 'Leg', audio: '/audio/words/body_leg.mp3' },
+    { arabic: 'إِصْبَعٌ', translit: 'Isba\'un', english: 'Finger', audio: '/audio/words/body_finger.mp3' },
+    { arabic: 'قَلْبٌ', translit: 'Qalbun', english: 'Heart', audio: '/audio/words/body_heart.mp3' },
+    { arabic: 'ظَهْرٌ', translit: 'Dhahrun', english: 'Back', audio: '/audio/words/body_back.mp3' },
+
+    // Category 2: Colors (10 words)
+    { arabic: 'أَبْيَضُ', translit: 'Abyadu', english: 'White', audio: '/audio/words/color_white.mp3' },
+    { arabic: 'أَسْوَدُ', translit: 'Aswadu', english: 'Black', audio: '/audio/words/color_black.mp3' },
+    { arabic: 'أَحْمَرُ', translit: 'Ahmaru', english: 'Red', audio: '/audio/words/color_red.mp3' },
+    { arabic: 'أَخْضَرُ', translit: 'Akhdaru', english: 'Green', audio: '/audio/words/color_green.mp3' },
+    { arabic: 'أَزْرَقُ', translit: 'Azraqu', english: 'Blue', audio: '/audio/words/color_blue.mp3' },
+    { arabic: 'أَصْفَرُ', translit: 'Asfaru', english: 'Yellow', audio: '/audio/words/color_yellow.mp3' },
+    { arabic: 'بُنِّيٌّ', translit: 'Bunniyyun', english: 'Brown', audio: '/audio/words/color_brown.mp3' },
+    { arabic: 'رَمَادِيٌّ', translit: 'Ramaadiyyun', english: 'Gray', audio: '/audio/words/color_gray.mp3' },
+    { arabic: 'بُرْتُقَالِيٌّ', translit: 'Burtuqaaliyyun', english: 'Orange', audio: '/audio/words/color_orange.mp3' },
+    { arabic: 'وَرْدِيٌّ', translit: 'Wardiyyun', english: 'Pink', audio: '/audio/words/color_pink.mp3' },
+
+    // Category 3: Nature & Weather (10 words)
+    { arabic: 'سَمَاءٌ', translit: 'Samaa\'un', english: 'Sky', audio: '/audio/words/nature_sky.mp3' },
+    { arabic: 'أَرْضٌ', translit: 'Ardun', english: 'Earth', audio: '/audio/words/nature_earth.mp3' },
+    { arabic: 'جَبَلٌ', translit: 'Jabalun', english: 'Mountain', audio: '/audio/words/nature_mountain.mp3' },
+    { arabic: 'بَحْرٌ', translit: 'Bahrun', english: 'Sea', audio: '/audio/words/nature_sea.mp3' },
+    { arabic: 'نَهْرٌ', translit: 'Nahrun', english: 'River', audio: '/audio/words/nature_river.mp3' },
+    { arabic: 'شَجَرَةٌ', translit: 'Shajaratun', english: 'Tree', audio: '/audio/words/nature_tree.mp3' },
+    { arabic: 'زَهْرَةٌ', translit: 'Zahratun', english: 'Flower', audio: '/audio/words/nature_flower.mp3' },
+    { arabic: 'مَطَرٌ', translit: 'Matarun', english: 'Rain', audio: '/audio/words/weather_rain.mp3' },
+    { arabic: 'رِيحٌ', translit: 'Reehun', english: 'Wind', audio: '/audio/words/weather_wind.mp3' },
+    { arabic: 'غَيْمٌ', translit: 'Ghaymun', english: 'Cloud', audio: '/audio/words/weather_cloud.mp3' },
+
+    // Category 4: Common Objects (10 words)
+    { arabic: 'قَلَمٌ', translit: 'Qalamun', english: 'Pen', audio: '/audio/words/obj_pen.mp3' },
+    { arabic: 'وَرَقَةٌ', translit: 'Waraqatun', english: 'Paper', audio: '/audio/words/obj_paper.mp3' },
+    { arabic: 'طَاوِلَةٌ', translit: 'Taawilatun', english: 'Table', audio: '/audio/words/obj_table.mp3' },
+    { arabic: 'كُرْسِيٌّ', translit: 'Kursiyyun', english: 'Chair', audio: '/audio/words/obj_chair.mp3' },
+    { arabic: 'نَافِذَةٌ', translit: 'Naafidhatun', english: 'Window', audio: '/audio/words/obj_window.mp3' },
+    { arabic: 'سَاعَةٌ', translit: 'Saa\'atun', english: 'Clock', audio: '/audio/words/obj_clock.mp3' },
+    { arabic: 'مِفْتَاحٌ', translit: 'Miftaahun', english: 'Key', audio: '/audio/words/obj_key.mp3' },
+    { arabic: 'هَاتِفٌ', translit: 'Haatifun', english: 'Phone', audio: '/audio/words/obj_phone.mp3' },
+    { arabic: 'حَقِيبَةٌ', translit: 'Haqeebatun', english: 'Bag', audio: '/audio/words/obj_bag.mp3' },
+    { arabic: 'سَيَّارَةٌ', translit: 'Sayyaaratun', english: 'Car', audio: '/audio/words/obj_car.mp3' }
+];
+
+// UNIT 4C: ADVANCED VOCABULARY (NEW UNIT - 40 words)
+const UNIT4C_WORDS: WordData[] = [
+    // Category 1: Directions & Places (10 words)
+    { arabic: 'يَمِينٌ', translit: 'Yameenun', english: 'Right', audio: '/audio/words/dir_right.mp3' },
+    { arabic: 'يَسَارٌ', translit: 'Yasaarun', english: 'Left', audio: '/audio/words/dir_left.mp3' },
+    { arabic: 'فَوْقَ', translit: 'Fawqa', english: 'Above', audio: '/audio/words/dir_above.mp3' },
+    { arabic: 'تَحْتَ', translit: 'Tahta', english: 'Below', audio: '/audio/words/dir_below.mp3' },
+    { arabic: 'أَمَامَ', translit: 'Amaama', english: 'Front', audio: '/audio/words/dir_front.mp3' },
+    { arabic: 'خَلْفَ', translit: 'Khalfa', english: 'Behind', audio: '/audio/words/dir_behind.mp3' },
+    { arabic: 'دَاخِلَ', translit: 'Daakhila', english: 'Inside', audio: '/audio/words/dir_inside.mp3' },
+    { arabic: 'خَارِجَ', translit: 'Khaarija', english: 'Outside', audio: '/audio/words/dir_outside.mp3' },
+    { arabic: 'قَرِيبٌ', translit: 'Qareebun', english: 'Near', audio: '/audio/words/dir_near.mp3' },
+    { arabic: 'بَعِيدٌ', translit: 'Ba\'eedun', english: 'Far', audio: '/audio/words/dir_far.mp3' },
+
+    // Category 2: People & Relationships (10 words)
+    { arabic: 'رَجُلٌ', translit: 'Rajulun', english: 'Man', audio: '/audio/words/word_rajul.mp3' },
+    { arabic: 'اِمْرَأَةٌ', translit: 'Imra\'atun', english: 'Woman', audio: '/audio/words/people_woman.mp3' },
+    { arabic: 'وَلَدٌ', translit: 'Waladun', english: 'Boy', audio: '/audio/words/word_walad.mp3' },
+    { arabic: 'طِفْلٌ', translit: 'Tiflun', english: 'Child', audio: '/audio/words/people_child.mp3' },
+    { arabic: 'صَدِيقٌ', translit: 'Sadeequn', english: 'Friend', audio: '/audio/words/people_friend.mp3' },
+    { arabic: 'مُعَلِّمٌ', translit: 'Mu\'allimun', english: 'Teacher', audio: '/audio/words/people_teacher.mp3' },
+    { arabic: 'طَالِبٌ', translit: 'Taalibun', english: 'Student', audio: '/audio/words/people_student.mp3' },
+    { arabic: 'طَبِيبٌ', translit: 'Tabeebun', english: 'Doctor', audio: '/audio/words/people_doctor.mp3' },
+    { arabic: 'جَارٌ', translit: 'Jaarun', english: 'Neighbor', audio: '/audio/words/people_neighbor.mp3' },
+    { arabic: 'ضَيْفٌ', translit: 'Dayfun', english: 'Guest', audio: '/audio/words/people_guest.mp3' },
+
+    // Category 3: Actions Extended (10 words)
+    { arabic: 'فَتَحَ', translit: 'Fataha', english: 'Opened', audio: '/audio/words/verb_opened.mp3' },
+    { arabic: 'أَغْلَقَ', translit: 'Aghlaqa', english: 'Closed', audio: '/audio/words/verb_closed.mp3' },
+    { arabic: 'جَلَسَ', translit: 'Jalasa', english: 'Sat', audio: '/audio/words/verb_sat.mp3' },
+    { arabic: 'وَقَفَ', translit: 'Waqafa', english: 'Stood', audio: '/audio/words/verb_stood.mp3' },
+    { arabic: 'مَشَى', translit: 'Mashaa', english: 'Walked', audio: '/audio/words/verb_walked.mp3' },
+    { arabic: 'رَكَضَ', translit: 'Rakada', english: 'Ran', audio: '/audio/words/verb_ran.mp3' },
+    { arabic: 'سَمِعَ', translit: 'Sami\'a', english: 'Heard', audio: '/audio/words/verb_heard.mp3' },
+    { arabic: 'رَأَى', translit: 'Ra\'aa', english: 'Saw', audio: '/audio/words/verb_saw.mp3' },
+    { arabic: 'فَهِمَ', translit: 'Fahima', english: 'Understood', audio: '/audio/words/verb_understood.mp3' },
+    { arabic: 'عَرَفَ', translit: 'Arafa', english: 'Knew', audio: '/audio/words/verb_knew.mp3' },
+
+    // Category 4: Common Expressions (10 words)
+    { arabic: 'نَعَمْ', translit: 'Na\'am', english: 'Yes', audio: '/audio/words/expr_yes.mp3' },
+    { arabic: 'لَا', translit: 'Laa', english: 'No', audio: '/audio/words/expr_no.mp3' },
+    { arabic: 'مِنْ فَضْلِكَ', translit: 'Min fadlika', english: 'Please', audio: '/audio/words/expr_please.mp3' },
+    { arabic: 'شُكْرًا', translit: 'Shukran', english: 'Thanks', audio: '/audio/words/expr_thanks.mp3' },
+    { arabic: 'عَفْوًا', translit: '\'Afwan', english: 'Welcome', audio: '/audio/words/expr_welcome.mp3' },
+    { arabic: 'آسِفٌ', translit: 'Aasifun', english: 'Sorry', audio: '/audio/words/expr_sorry.mp3' },
+    { arabic: 'مَعَ', translit: 'Ma\'a', english: 'With', audio: '/audio/words/expr_with.mp3' },
+    { arabic: 'بِدُونِ', translit: 'Bidooni', english: 'Without', audio: '/audio/words/expr_without.mp3' },
+    { arabic: 'أَيْضًا', translit: 'Aydan', english: 'Also', audio: '/audio/words/expr_also.mp3' },
+    { arabic: 'لَكِنْ', translit: 'Laakin', english: 'But', audio: '/audio/words/expr_but.mp3' }
 ];
 
 // ═══════════════════════════════════════════════════════════
@@ -2407,6 +2541,132 @@ const UNIT6_SENTENCES: SentenceData[] = [
         audio: '/audio/sentences/sent_ana_uhibb.mp3',
         words: ['أَنا', 'أُحِبُّ', 'العَرَبيّة']
     }
+,
+    // NEW SENTENCES - Questions (5)
+    {
+        arabic: 'مَا اسْمُكَ',
+        english: 'What is your name?',
+        audio: '/audio/sentences/sent_ma_ismuka.mp3',
+        words: ['مَا', 'اسْمُكَ']
+    },
+    {
+        arabic: 'أَيْنَ تَسْكُنُ',
+        english: 'Where do you live?',
+        audio: '/audio/sentences/sent_ayna_taskun.mp3',
+        words: ['أَيْنَ', 'تَسْكُنُ']
+    },
+    {
+        arabic: 'كَمْ عُمْرُكَ',
+        english: 'How old are you?',
+        audio: '/audio/sentences/sent_kam_umruk.mp3',
+        words: ['كَمْ', 'عُمْرُكَ']
+    },
+    {
+        arabic: 'مَاذَا تَعْمَلُ',
+        english: 'What do you do?',
+        audio: '/audio/sentences/sent_madha_tamal.mp3',
+        words: ['مَاذَا', 'تَعْمَلُ']
+    },
+    {
+        arabic: 'هَلْ تَتَكَلَّمُ العَرَبِيَّةَ',
+        english: 'Do you speak Arabic?',
+        audio: '/audio/sentences/sent_hal_tatakallam.mp3',
+        words: ['هَلْ', 'تَتَكَلَّمُ', 'العَرَبِيَّةَ']
+    },
+    // NEW SENTENCES - Negations (5)
+    {
+        arabic: 'لَا أَفْهَمُ',
+        english: 'I do not understand',
+        audio: '/audio/sentences/sent_la_afham.mp3',
+        words: ['لَا', 'أَفْهَمُ']
+    },
+    {
+        arabic: 'لَيْسَ عِنْدِي',
+        english: 'I do not have',
+        audio: '/audio/sentences/sent_laysa_indi.mp3',
+        words: ['لَيْسَ', 'عِنْدِي']
+    },
+    {
+        arabic: 'لَمْ أَذْهَبْ',
+        english: 'I did not go',
+        audio: '/audio/sentences/sent_lam_adhhab.mp3',
+        words: ['لَمْ', 'أَذْهَبْ']
+    },
+    {
+        arabic: 'لَا أَعْرِفُ',
+        english: 'I do not know',
+        audio: '/audio/sentences/sent_la_arif.mp3',
+        words: ['لَا', 'أَعْرِفُ']
+    },
+    {
+        arabic: 'لَيْسَ هُنَا',
+        english: 'It is not here',
+        audio: '/audio/sentences/sent_laysa_huna.mp3',
+        words: ['لَيْسَ', 'هُنَا']
+    },
+    // NEW SENTENCES - Commands (5)
+    {
+        arabic: 'تَعَالَ هُنَا',
+        english: 'Come here',
+        audio: '/audio/sentences/sent_taal_huna.mp3',
+        words: ['تَعَالَ', 'هُنَا']
+    },
+    {
+        arabic: 'اِجْلِسْ',
+        english: 'Sit down',
+        audio: '/audio/sentences/sent_ijlis.mp3',
+        words: ['اِجْلِسْ']
+    },
+    {
+        arabic: 'اِنْتَظِرْ',
+        english: 'Wait',
+        audio: '/audio/sentences/sent_intadhir.mp3',
+        words: ['اِنْتَظِرْ']
+    },
+    {
+        arabic: 'اِذْهَبْ',
+        english: 'Go',
+        audio: '/audio/sentences/sent_idhhab.mp3',
+        words: ['اِذْهَبْ']
+    },
+    {
+        arabic: 'اِسْمَعْ',
+        english: 'Listen',
+        audio: '/audio/sentences/sent_isma.mp3',
+        words: ['اِسْمَعْ']
+    },
+    // NEW SENTENCES - Descriptions (5)
+    {
+        arabic: 'الطَّقْسُ جَمِيلٌ',
+        english: 'The weather is beautiful',
+        audio: '/audio/sentences/sent_taqs_jamil.mp3',
+        words: ['الطَّقْسُ', 'جَمِيلٌ']
+    },
+    {
+        arabic: 'الكِتَابُ كَبِيرٌ',
+        english: 'The book is big',
+        audio: '/audio/sentences/sent_kitab_kabir.mp3',
+        words: ['الكِتَابُ', 'كَبِيرٌ']
+    },
+    {
+        arabic: 'البَيْتُ نَظِيفٌ',
+        english: 'The house is clean',
+        audio: '/audio/sentences/sent_bayt_nadhif.mp3',
+        words: ['البَيْتُ', 'نَظِيفٌ']
+    },
+    {
+        arabic: 'الطَّعَامُ لَذِيذٌ',
+        english: 'The food is delicious',
+        audio: '/audio/sentences/sent_taam_ladhidh.mp3',
+        words: ['الطَّعَامُ', 'لَذِيذٌ']
+    },
+    {
+        arabic: 'المَدْرَسَةُ قَرِيبَةٌ',
+        english: 'The school is near',
+        audio: '/audio/sentences/sent_madrasa_qariba.mp3',
+        words: ['المَدْرَسَةُ', 'قَرِيبَةٌ']
+    }
+
 ];
 
 function makeSentenceExercises(sent: SentenceData, nodeId: string): Exercise[] {
@@ -3542,34 +3802,11 @@ const baseCourseData: Course = {
             nodes: [
                 makeWordAssemblyNode('u4-n1', 'Home Sweet Home', UNIT4_WORDS.slice(0, 4), true),
                 makeWordAssemblyNode('u4-n2', 'Family Members', UNIT4_WORDS.slice(4, 8), true),
-                {
-                    id: 'u4-review1',
-                    title: 'Home & Family Review',
-                    description: 'Practice combining nodes',
-                    type: 'lesson',
-                    status: 'locked',
-                    totalRounds: 2,
-                    completedRounds: 0,
-                    lessons: [
-                        {
-                            id: 'u4R1-l1',
-                            title: 'Vocabulary Recall',
-                            description: 'Listen and identify.',
-                            exercises: shuffle(UNIT4_WORDS.slice(0, 8).flatMap(w => [
-                                {
-                                    id: nextId('u4r1-hear'),
-                                    type: 'hear_choose',
-                                    prompt: 'Hear and choose the correct word',
-                                    promptAudio: w.audio,
-                                    correctAnswer: w.arabic,
-                                    choices: shuffle([w.arabic, ...pick(UNIT4_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
-                                }
-                            ]))
-                        }
-                    ]
-                },
                 makeWordAssemblyNode('u4-n3', 'Eat & Drink', UNIT4_WORDS.slice(8, 12), true),
                 makeWordAssemblyNode('u4-n4', 'Places', UNIT4_WORDS.slice(12, 16), true),
+                makeWordAssemblyNode('u4-n5', 'Time & Numbers', UNIT4_WORDS.slice(16, 24), true),
+                makeWordAssemblyNode('u4-n6', 'Actions', UNIT4_WORDS.slice(24, 32), true),
+                makeWordAssemblyNode('u4-n7', 'Adjectives', UNIT4_WORDS.slice(32, 40), true),
                 {
                     id: 'u4-test',
                     title: '📝 Unit 4 Test',
@@ -3597,14 +3834,85 @@ const baseCourseData: Course = {
         },
         {
             id: 5,
+            title: 'Unit 4B',
+            description: 'Extended Vocabulary',
+            color: '#7B1FA2', // Darker purple for Unit 4B
+            nodes: [
+                makeWordAssemblyNode('u4b-n1', 'Body Parts', UNIT4B_WORDS.slice(0, 10), true),
+                makeWordAssemblyNode('u4b-n2', 'Colors', UNIT4B_WORDS.slice(10, 20), true),
+                makeWordAssemblyNode('u4b-n3', 'Nature & Weather', UNIT4B_WORDS.slice(20, 30), true),
+                makeWordAssemblyNode('u4b-n4', 'Common Objects', UNIT4B_WORDS.slice(30, 40), true),
+                {
+                    id: 'u4b-test',
+                    title: '📝 Unit 4B Test',
+                    description: 'Test extended vocabulary',
+                    type: 'test',
+                    status: 'locked',
+                    totalRounds: 1,
+                    completedRounds: 0,
+                    lessons: [{
+                        id: 'u4b-test-lesson',
+                        title: 'Unit 4B Test',
+                        description: 'Test your extended vocabulary.',
+                        exercises: shuffle(UNIT4B_WORDS.flatMap(w => [
+                            {
+                                id: nextId('u4bt-mul'),
+                                type: 'multiple_choice',
+                                prompt: `What is the Arabic word for "${w.english}"?`,
+                                correctAnswer: w.arabic,
+                                choices: shuffle([w.arabic, ...pick(UNIT4B_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
+                            }
+                        ])),
+                    }],
+                }
+            ]
+        },
+        {
+            id: 6,
+            title: 'Unit 4C',
+            description: 'Advanced Vocabulary',
+            color: '#6A1B9A', // Even darker purple for Unit 4C
+            nodes: [
+                makeWordAssemblyNode('u4c-n1', 'Directions', UNIT4C_WORDS.slice(0, 10), true),
+                makeWordAssemblyNode('u4c-n2', 'People', UNIT4C_WORDS.slice(10, 20), true),
+                makeWordAssemblyNode('u4c-n3', 'More Actions', UNIT4C_WORDS.slice(20, 30), true),
+                makeWordAssemblyNode('u4c-n4', 'Expressions', UNIT4C_WORDS.slice(30, 40), true),
+                {
+                    id: 'u4c-test',
+                    title: '📝 Unit 4C Test',
+                    description: 'Test advanced vocabulary',
+                    type: 'test',
+                    status: 'locked',
+                    totalRounds: 1,
+                    completedRounds: 0,
+                    lessons: [{
+                        id: 'u4c-test-lesson',
+                        title: 'Unit 4C Test',
+                        description: 'Test your advanced vocabulary.',
+                        exercises: shuffle(UNIT4C_WORDS.flatMap(w => [
+                            {
+                                id: nextId('u4ct-mul'),
+                                type: 'multiple_choice',
+                                prompt: `What is the Arabic word for "${w.english}"?`,
+                                correctAnswer: w.arabic,
+                                choices: shuffle([w.arabic, ...pick(UNIT4C_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
+                            }
+                        ])),
+                    }],
+                }
+            ]
+        },
+        {
+            id: 7,
             title: 'Unit 5',
             description: 'Unvowelled Reading (Stage 5)',
             color: '#F5A623', // Bright vibrant orange
             nodes: [
-                makeUnvowelledNode('u5-n1', 'Naked Words 1', UNIT4_WORDS.slice(0, 4)),
-                makeUnvowelledNode('u5-n2', 'Naked Words 2', UNIT4_WORDS.slice(4, 8)),
-                makeUnvowelledNode('u5-n3', 'Naked Words 3', UNIT4_WORDS.slice(8, 12)),
-                makeUnvowelledNode('u5-n4', 'Naked Words 4', UNIT4_WORDS.slice(12, 16)),
+                makeUnvowelledNode('u5-n1', 'Naked Words 1', [...UNIT4_WORDS.slice(0, 10), ...UNIT4B_WORDS.slice(0, 5)]),
+                makeUnvowelledNode('u5-n2', 'Naked Words 2', [...UNIT4_WORDS.slice(10, 20), ...UNIT4B_WORDS.slice(5, 10)]),
+                makeUnvowelledNode('u5-n3', 'Naked Words 3', [...UNIT4_WORDS.slice(20, 30), ...UNIT4B_WORDS.slice(10, 15)]),
+                makeUnvowelledNode('u5-n4', 'Naked Words 4', [...UNIT4_WORDS.slice(30, 40), ...UNIT4C_WORDS.slice(0, 5)]),
+                makeUnvowelledNode('u5-n5', 'Naked Words 5', [...UNIT4C_WORDS.slice(5, 20)]),
                 {
                     id: 'u5-test',
                     title: '📝 Unit 5 Test',
@@ -3617,13 +3925,13 @@ const baseCourseData: Course = {
                         id: 'u5-test-lesson',
                         title: 'Unit 5 Test',
                         description: 'Translate unvowelled Arabic back to English.',
-                        exercises: shuffle(UNIT4_WORDS.flatMap(w => [
+                        exercises: shuffle([...UNIT4_WORDS, ...UNIT4B_WORDS, ...UNIT4C_WORDS].flatMap(w => [
                             {
                                 id: nextId('u5t-mul'),
                                 type: 'multiple_choice',
                                 prompt: `What does this word mean?`,
                                 correctAnswer: w.english,
-                                choices: shuffle([w.english, ...pick(UNIT4_WORDS.map(ww => ww.english).filter(a => a !== w.english), 3)]),
+                                choices: shuffle([w.english, ...pick([...UNIT4_WORDS, ...UNIT4B_WORDS, ...UNIT4C_WORDS].map(ww => ww.english).filter(a => a !== w.english), 3)]),
                                 hint: stripHarakat(w.arabic)
                             }
                         ])),
@@ -3632,14 +3940,16 @@ const baseCourseData: Course = {
             ]
         },
         {
-            id: 6,
+            id: 8,
             title: 'Unit 6',
             description: 'Full Sentences (Stage 6)',
             color: '#FFD700', // Gold color for Stage 6 mastery
             nodes: [
-                makeSentenceNode('u6-n1', 'Greetings', UNIT6_SENTENCES.slice(0, 4)),
-                makeSentenceNode('u6-n2', 'Common Phrases', UNIT6_SENTENCES.slice(4, 7)),
-                makeSentenceNode('u6-n3', 'Sayings', UNIT6_SENTENCES.slice(7, 10)),
+                makeSentenceNode('u6-n1', 'Greetings', UNIT6_SENTENCES.slice(0, 6)),
+                makeSentenceNode('u6-n2', 'Common Phrases', UNIT6_SENTENCES.slice(6, 12)),
+                makeSentenceNode('u6-n3', 'Questions', UNIT6_SENTENCES.slice(12, 18)),
+                makeSentenceNode('u6-n4', 'Negations', UNIT6_SENTENCES.slice(18, 24)),
+                makeSentenceNode('u6-n5', 'Commands & Descriptions', UNIT6_SENTENCES.slice(24, 30)),
                 {
                     id: 'u6-test',
                     title: '📝 Unit 6 Test',
@@ -3668,7 +3978,7 @@ const baseCourseData: Course = {
             ]
         },
         {
-            id: 7,
+            id: 9,
             title: 'Unit 7',
             description: 'Real Conversations (Stage 7)',
             color: '#00BFA5', // Teal color for conversation mastery
@@ -3683,7 +3993,7 @@ const baseCourseData: Course = {
             ]
         },
         {
-            id: 8,
+            id: 10,
             title: 'Unit 8',
             description: 'Advanced Conversations (Stage 8)',
             color: '#E91E63', // Pink color for advanced mastery
@@ -3700,7 +4010,7 @@ const baseCourseData: Course = {
             ]
         },
         {
-            id: 9,
+            id: 11,
             title: 'Unit 9',
             description: 'Quranic Verses (Stage 9)',
             color: '#4CAF50', // Green color for spiritual mastery
