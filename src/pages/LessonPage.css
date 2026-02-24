@@ -128,9 +128,23 @@
 }
 
 .round-item.locked {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.02);
+    filter: grayscale(1);
+    pointer-events: none;
+}
+
+.round-item.locked .round-number {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-muted);
+    opacity: 0.5;
+}
+
+.round-item.locked .round-title,
+.round-item.locked .round-status {
+    color: var(--color-text-muted);
+    opacity: 0.5;
 }
 
 .round-number {
