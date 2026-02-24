@@ -123,8 +123,8 @@ async function loadVocabulary(): Promise<Record<string, { text: string; path: st
 // ─── Resolve text/ID → audio file path ─────────────────────
 
 function resolveAudioId(input: string): string | null {
-    // If it's already a known audio ID (e.g., 'letter_baa_fatha')
-    if (input.startsWith('letter_') || input.startsWith('syl_') || input.startsWith('word_') || input.startsWith('sent_')) {
+    // If it's already a known audio ID (e.g., 'letter_baa_fatha', 'conv1_line1')
+    if (input.startsWith('letter_') || input.startsWith('syl_') || input.startsWith('word_') || input.startsWith('sent_') || input.startsWith('conv')) {
         return input;
     }
 
@@ -149,6 +149,7 @@ function audioIdToPath(audioId: string): string {
     if (audioId.startsWith('syl_')) return `/audio/syllables/${audioId}.mp3`;
     if (audioId.startsWith('word_')) return `/audio/words/${audioId}.mp3`;
     if (audioId.startsWith('sent_')) return `/audio/sentences/${audioId}.mp3`;
+    if (audioId.startsWith('conv')) return `/audio/conversations/${audioId}.mp3`;
     return `/audio/letters/${audioId}.mp3`;
 }
 
