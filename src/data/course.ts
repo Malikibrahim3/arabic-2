@@ -2118,15 +2118,7 @@ function makeSentenceExercises(sent: SentenceData, nodeId: string): Exercise[] {
     const assemblyChoices = shuffle([...sent.words, ...distractorWords]);
 
     return [
-        {
-            id: nextId(`${nodeId}-intro`),
-            type: 'introduction',
-            prompt: `Let's learn a full sentence!\n**${sent.arabic}**`,
-            correctAnswer: sent.arabic,
-            choices: [],
-            hint: `Means: ${sent.english}`,
-            promptAudio: sent.audio
-        },
+        // REMOVED: Introduction card - learners must figure out meaning themselves!
         {
             id: nextId(`${nodeId}-mc`),
             type: 'multiple_choice',
@@ -2148,13 +2140,11 @@ function makeSentenceExercises(sent: SentenceData, nodeId: string): Exercise[] {
 }
 
 function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData[]): CourseNode {
-    const intros: Exercise[] = [];
     const graded: Exercise[] = [];
 
     sentences.forEach(s => {
         const exs = makeSentenceExercises(s, nodeId);
-        intros.push(exs[0]);
-        graded.push(...exs.slice(1));
+        graded.push(...exs); // No more separate intros array!
     });
     
     // Register these sentences as learned (DUOLINGO-STYLE)
@@ -2210,7 +2200,7 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
     return {
         id: nodeId,
         title: title,
-        description: `Learn basic sentences`,
+        description: `Read and understand sentences`,
         type: 'lesson',
         status: 'locked',
         totalRounds: 5,
@@ -2218,9 +2208,9 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         lessons: [
             { 
                 id: `${nodeId}-r1`, 
-                title: 'Round 1: Introduction', 
-                description: 'Meet the sentences', 
-                exercises: [...intros, ...shuffle([...graded.slice(0, 5), matchEx, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(3, nodeId)])] 
+                title: 'Round 1: Comprehension', 
+                description: 'Figure out what they mean', 
+                exercises: shuffle([...graded.slice(0, 6), matchEx, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(3, nodeId)]) 
             },
             { 
                 id: `${nodeId}-r2`, 
@@ -2511,28 +2501,7 @@ const UNIT8_CONVERSATIONS: ConversationData[] = [
 function makeConversationExercises(conv: ConversationData, nodeId: string): Exercise[] {
     const exercises: Exercise[] = [];
     
-    // Introduction to the conversation
-    exercises.push({
-        id: nextId(`${nodeId}-intro`),
-        type: 'introduction',
-        prompt: `**${conv.title}**\n\n${conv.context}`,
-        correctAnswer: '',
-        choices: [],
-        hint: 'Listen to the full conversation and learn each line'
-    });
-    
-    // Present each line as an introduction
-    conv.lines.forEach((line, idx) => {
-        exercises.push({
-            id: nextId(`${nodeId}-line-${idx}`),
-            type: 'introduction',
-            prompt: `**${line.speaker}:** ${line.arabic}`,
-            correctAnswer: line.arabic,
-            choices: [],
-            hint: `Meaning: ${line.english}`,
-            promptAudio: line.audio
-        });
-    });
+    // REMOVED: Introduction cards - learners must figure out the conversation!
     
     // Comprehension: Match speaker to line
     conv.lines.forEach((line, idx) => {
@@ -2619,8 +2588,7 @@ function makeConversationExercises(conv: ConversationData, nodeId: string): Exer
 function makeConversationNode(conv: ConversationData): CourseNode {
     const exercises = makeConversationExercises(conv, conv.id);
     
-    // Split into rounds
-    const intros = exercises.filter(e => e.type === 'introduction');
+    // Split into rounds (NO MORE INTROS!)
     const comprehension = exercises.filter(e => e.type === 'multiple_choice');
     const assembly = exercises.filter(e => e.type === 'sentence_assembly');
     const matching = exercises.filter(e => e.type === 'match_pairs');
@@ -2661,36 +2629,30 @@ function makeConversationNode(conv: ConversationData): CourseNode {
         description: conv.context,
         type: 'lesson',
         status: 'locked',
-        totalRounds: 5,
+        totalRounds: 4,
         completedRounds: 0,
         lessons: [
             {
                 id: `u7-${conv.id}-r1`,
-                title: 'Round 1: Learn the Conversation',
-                description: 'Listen to each line',
-                exercises: [...intros, ...makeLetterRefreshers(3, conv.id), ...makeWordRefreshers(3, conv.id)]
-            },
-            {
-                id: `u7-${conv.id}-r2`,
-                title: 'Round 2: Comprehension',
-                description: 'Understand what is said',
+                title: 'Round 1: Comprehension',
+                description: 'Figure out what is said',
                 exercises: shuffle([...comprehension.slice(0, Math.ceil(comprehension.length / 2)), ...conversationTraps.slice(0, 2), ...makeWordRefreshers(4, conv.id), ...makeSentenceRefreshers(3, conv.id)])
             },
             {
-                id: `u7-${conv.id}-r3`,
-                title: 'Round 3: Build Sentences',
+                id: `u7-${conv.id}-r2`,
+                title: 'Round 2: Build Sentences',
                 description: 'Assemble the conversation',
                 exercises: shuffle([...assembly, ...assembly, ...comprehension.slice(Math.ceil(comprehension.length / 2)), ...conversationTraps.slice(2, 4), ...makeWordRefreshers(5, conv.id), ...makeSentenceRefreshers(4, conv.id)])
             },
             {
-                id: `u7-${conv.id}-r4`,
-                title: 'Round 4: Practice More',
+                id: `u7-${conv.id}-r3`,
+                title: 'Round 3: Practice More',
                 description: 'Keep practicing',
                 exercises: shuffle([...matching, ...pick(comprehension, 3), ...pick(assembly, 2), ...pick(assembly, 2), ...conversationTraps.slice(4, 6), ...makeWordRefreshers(6, conv.id), ...makeSentenceRefreshers(5, conv.id)])
             },
             {
-                id: `u7-${conv.id}-r5`,
-                title: 'Round 5: Master the Dialogue',
+                id: `u7-${conv.id}-r4`,
+                title: 'Round 4: Master the Dialogue',
                 description: 'Put it all together',
                 exercises: shuffle([...matching, ...pick(comprehension, 4), ...pick(assembly, 3), ...conversationTraps, ...makeLetterRefreshers(4, conv.id), ...makeWordRefreshers(6, conv.id), ...makeSentenceRefreshers(6, conv.id)])
             }
