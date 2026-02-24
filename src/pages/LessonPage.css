@@ -61,32 +61,39 @@
 
 .lesson-letter-char {
     font-family: 'Amiri', serif;
-    font-size: 56px;
+    font-size: clamp(36px, 10vw, 56px);
     color: var(--color-primary);
     /* Gold text */
     background: linear-gradient(135deg, var(--color-surface), rgba(18, 40, 32, 0.8));
     border: 1px solid rgba(212, 175, 55, 0.2);
     border-radius: 20px;
-    width: 80px;
-    height: 80px;
+    width: clamp(60px, 15vw, 80px);
+    height: clamp(60px, 15vw, 80px);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
 }
 
 .lesson-title {
-    font-size: 24px;
+    font-size: clamp(18px, 4vw, 24px);
     font-weight: 700;
     color: var(--color-text-main);
     margin: 8px 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 .lesson-subtitle {
-    font-size: 15px;
+    font-size: clamp(13px, 3vw, 15px);
     color: var(--color-text-muted);
     font-weight: 500;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 /* Round list */
@@ -148,13 +155,13 @@
 }
 
 .round-number {
-    width: 44px;
-    height: 44px;
+    width: clamp(36px, 10vw, 44px);
+    height: clamp(36px, 10vw, 44px);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: clamp(14px, 4vw, 18px);
     font-weight: 700;
     flex-shrink: 0;
     background: var(--color-surface-hover);
@@ -182,15 +189,20 @@
 }
 
 .round-title {
-    font-size: 16px;
+    font-size: clamp(14px, 3.5vw, 16px);
     font-weight: 600;
     color: var(--color-text-main);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .round-status {
-    font-size: 13px;
+    font-size: clamp(11px, 2.5vw, 13px);
     font-weight: 500;
     color: var(--color-text-muted);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 }
 
 .round-item.current .round-status {

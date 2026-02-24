@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PWA Icon Generator</title>
+</head>
+<body>
+    <h1>PWA Icon Generator</h1>
+    <p>This will generate placeholder icons for your PWA.</p>
+    <button onclick="generateIcons()">Generate Icons</button>
+    <div id="output"></div>
+
+    <script>
+        function generateIcons() {
+            const sizes = [192, 512];
+            const output = document.getElementById('output');
+            output.innerHTML = '<h2>Generated Icons:</h2>';
+
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                // Background gradient
+                const gradient = ctx.createLinearGradient(0, 0, size, size);
+                gradient.addColorStop(0, '#D4AF37'); // Gold
+                gradient.addColorStop(1, '#0F5A3E'); // Dark green
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, size, size);
+
+                // Arabic letter (ع for Arabic)
+                ctx.fillStyle = 'white';
+                ctx.font = `bold ${size * 0.6}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('ع', size / 2, size / 2);
+
+                // Download link
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `pwa-${size}x${size}.png`;
+                    link.textContent = `Download ${size}x${size} icon`;
+                    link.style.display = 'block';
+                    link.style.margin = '10px 0';
+                    output.appendChild(link);
+                });
+            });
+
+            // Generate favicon
+            const faviconCanvas = document.createElement('canvas');
+            faviconCanvas.width = 32;
+            faviconCanvas.height = 32;
+            const fctx = faviconCanvas.getContext('2d');
+            const fgradient = fctx.createLinearGradient(0, 0, 32, 32);
+            fgradient.addColorStop(0, '#D4AF37');
+            fgradient.addColorStop(1, '#0F5A3E');
+            fctx.fillStyle = fgradient;
+            fctx.fillRect(0, 0, 32, 32);
+            fctx.fillStyle = 'white';
+            fctx.font = 'bold 20px Arial';
+            fctx.textAlign = 'center';
+            fctx.textBaseline = 'middle';
+            fctx.fillText('ع', 16, 16);
+
+            faviconCanvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'favicon.ico';
+                link.textContent = 'Download favicon.ico';
+                link.style.display = 'block';
+                link.style.margin = '10px 0';
+                output.appendChild(link);
+            });
+
+            // Generate apple-touch-icon
+            const appleCanvas = document.createElement('canvas');
+            appleCanvas.width = 180;
+            appleCanvas.height = 180;
+            const actx = appleCanvas.getContext('2d');
+            const agradient = actx.createLinearGradient(0, 0, 180, 180);
+            agradient.addColorStop(0, '#D4AF37');
+            agradient.addColorStop(1, '#0F5A3E');
+            actx.fillStyle = agradient;
+            actx.fillRect(0, 0, 180, 180);
+            actx.fillStyle = 'white';
+            actx.font = 'bold 108px Arial';
+            actx.textAlign = 'center';
+            actx.textBaseline = 'middle';
+            actx.fillText('ع', 90, 90);
+
+            appleCanvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'apple-touch-icon.png';
+                link.textContent = 'Download apple-touch-icon.png';
+                link.style.display = 'block';
+                link.style.margin = '10px 0';
+                output.appendChild(link);
+            });
+        }
+    </script>
+</body>
+</html>

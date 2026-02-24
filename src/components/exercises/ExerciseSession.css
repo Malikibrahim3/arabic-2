@@ -68,21 +68,26 @@
 }
 
 .exercise-prompt {
-    font-size: 22px;
+    font-size: clamp(16px, 4vw, 22px);
     font-weight: 800;
     color: var(--color-text-main);
     text-align: center;
     margin-bottom: 32px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 .exercise-letter-hero {
-    font-size: 140px;
+    font-size: clamp(80px, 20vw, 140px);
     line-height: 1.1;
     font-weight: 800;
     color: var(--color-text-main);
     direction: rtl;
     margin-bottom: 24px;
     text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Choice grid */
@@ -98,16 +103,23 @@
 .choice-btn {
     padding: 20px 16px;
     border: 1px solid var(--color-border);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
     border-radius: 20px;
     background: var(--color-surface);
     cursor: pointer;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
     font-weight: 700;
     color: var(--color-text-main);
     direction: rtl;
     text-align: center;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
 }
 
 .choice-btn:active {
@@ -171,11 +183,13 @@
 }
 
 .feedback-title {
-    font-size: 22px;
+    font-size: clamp(18px, 4vw, 22px);
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 8px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .feedback-banner.correct .feedback-title {
@@ -187,10 +201,13 @@
 }
 
 .feedback-detail {
-    font-size: 15px;
+    font-size: clamp(13px, 3vw, 15px);
     font-weight: 600;
     color: var(--color-text-main);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     text-align: center;
+    padding: 0 8px;
 }
 
 .feedback-continue-btn {
@@ -199,7 +216,7 @@
     padding: 14px 24px;
     border: none;
     border-radius: 16px;
-    font-size: 16px;
+    font-size: clamp(14px, 3vw, 16px);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -207,6 +224,8 @@
     color: white;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
     transition: all 0.1s;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .feedback-continue-btn:active {
@@ -235,14 +254,17 @@
 }
 
 .complete-emoji {
-    font-size: 80px;
+    font-size: clamp(60px, 15vw, 80px);
     animation: bounce 1s ease;
 }
 
 .complete-title {
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
     font-weight: 800;
     color: var(--color-primary-shadow);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 .complete-stats {
@@ -259,17 +281,19 @@
 }
 
 .stat-value {
-    font-size: 32px;
+    font-size: clamp(24px, 6vw, 32px);
     font-weight: 800;
     color: var(--color-text-main);
 }
 
 .stat-label {
-    font-size: 13px;
+    font-size: clamp(11px, 2.5vw, 13px);
     font-weight: 700;
     color: var(--color-text-light);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .complete-continue-btn {
@@ -280,7 +304,7 @@
     border-radius: 16px;
     background: var(--color-primary);
     color: white;
-    font-size: 18px;
+    font-size: clamp(16px, 3.5vw, 18px);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -288,6 +312,8 @@
     box-shadow: 0 6px 0 var(--color-primary-shadow);
     margin-top: 24px;
     transition: all 0.1s;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .complete-continue-btn:active {
@@ -390,19 +416,24 @@
 }
 
 .intro-letter-display {
-    font-size: 120px;
+    font-size: clamp(60px, 18vw, 120px);
     line-height: 1.2;
     font-weight: 800;
     color: var(--color-text-main);
     direction: rtl;
     margin-bottom: 16px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .intro-prompt {
-    font-size: 20px;
+    font-size: clamp(16px, 3.5vw, 20px);
     font-weight: 700;
     color: var(--color-text-main);
     margin-bottom: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 .intro-prompt strong {
@@ -410,10 +441,13 @@
 }
 
 .intro-hint {
-    font-size: 16px;
+    font-size: clamp(14px, 3vw, 16px);
     color: var(--color-text-light);
     font-weight: 600;
     line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 .intro-continue-btn {
@@ -424,13 +458,15 @@
     border-radius: 16px;
     background: var(--color-secondary);
     color: white;
-    font-size: 18px;
+    font-size: clamp(16px, 3.5vw, 18px);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
     box-shadow: 0 6px 0 var(--color-secondary-shadow);
     transition: all 0.1s;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .intro-continue-btn:active {
@@ -499,11 +535,14 @@
 }
 
 .intro-hint-line {
-    font-size: 16px;
+    font-size: clamp(14px, 3vw, 16px);
     color: var(--color-text-light);
     font-weight: 600;
     line-height: 1.6;
     margin: 2px 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 /* ── Trap Explanation Overlay ─────────────────────────── */
@@ -543,9 +582,11 @@
 
 .trap-explanation-card h2 {
     color: var(--color-danger);
-    font-size: 32px;
+    font-size: clamp(24px, 5vw, 32px);
     margin-bottom: 24px;
     font-weight: 800;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .trap-comparison-board {
@@ -568,11 +609,13 @@
 }
 
 .trap-label {
-    font-size: 14px;
+    font-size: clamp(11px, 2.5vw, 14px);
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
     margin-bottom: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .incorrect-side .trap-label {
@@ -584,17 +627,18 @@
 }
 
 .trap-char-box {
-    width: 100px;
-    height: 100px;
+    width: clamp(70px, 18vw, 100px);
+    height: clamp(70px, 18vw, 100px);
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 64px;
+    font-size: clamp(40px, 12vw, 64px);
     font-family: 'Amiri', serif;
     font-weight: bold;
     color: #fff;
     box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
 .incorrect-side .trap-char-box {
@@ -610,21 +654,23 @@
 }
 
 .trap-vs {
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 20px);
     font-weight: 800;
     color: var(--color-text-light);
-    margin: 0 16px;
+    margin: 0 clamp(8px, 3vw, 16px);
     opacity: 0.5;
 }
 
 .trap-detail-message {
-    font-size: 18px;
+    font-size: clamp(14px, 3.5vw, 18px);
     color: var(--color-text-main);
     margin-bottom: 32px;
     line-height: 1.6;
     width: 100%;
     text-align: center;
     padding: 0 16px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .trap-detail-message strong {
@@ -638,12 +684,14 @@
     border: none;
     border-radius: 100px;
     padding: 16px 32px;
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 20px);
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 6px 0 var(--color-danger-shadow);
     transition: all 0.1s;
     width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .trap-continue-btn:active {
@@ -671,4 +719,141 @@
 .timer-bar-fill.danger {
     background: var(--color-danger);
     box-shadow: 0 0 8px var(--color-danger);
+}
+
+/* ── Word & Sentence Assembly Responsive Styles ─────────────────────────── */
+.assembly-box {
+    overflow: hidden;
+}
+
+.assembly-box span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.assembled-word-tile {
+    font-size: clamp(20px, 5vw, 28px) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.parts-pool .choice-btn {
+    font-size: clamp(18px, 4vw, 24px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-width: auto;
+    max-width: 100%;
+}
+
+/* Responsive assembly display text */
+@media (max-width: 480px) {
+    .assembly-box {
+        min-height: 60px !important;
+        padding: 6px !important;
+    }
+    
+    .assembly-box > span:first-child {
+        font-size: clamp(32px, 10vw, 48px) !important;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .assembly-box > span:first-child {
+        font-size: clamp(40px, 8vw, 48px) !important;
+    }
+}
+
+/* ── Trap Philosophy Card Responsive Styles ─────────────────────────── */
+.intro-card h2 {
+    font-size: clamp(24px, 5vw, 32px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
+}
+
+.intro-card h3 {
+    font-size: clamp(18px, 4vw, 24px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
+}
+
+.intro-card p {
+    font-size: clamp(14px, 3.5vw, 18px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
+}
+
+.intro-card li {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.intro-card li strong {
+    font-size: clamp(16px, 4vw, 20px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+    .intro-card {
+        padding: 24px 16px !important;
+    }
+    
+    .intro-card-area {
+        padding: 16px !important;
+    }
+}
+
+/* ── Global Responsive Text Overflow Prevention ─────────────────────────── */
+@media (max-width: 480px) {
+    .exercise-area {
+        padding: 24px 12px;
+    }
+    
+    .choices-grid {
+        gap: 8px;
+        max-width: 100%;
+    }
+    
+    .choice-btn {
+        padding: 16px 12px;
+        min-height: 50px;
+    }
+    
+    .intro-card {
+        padding: 24px 16px;
+    }
+    
+    .trap-explanation-card {
+        padding: 24px 16px;
+    }
+    
+    .trap-comparison-board {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .trap-vs {
+        transform: rotate(90deg);
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .exercise-area {
+        padding: 28px 16px;
+    }
+    
+    .choices-grid {
+        gap: 10px;
+    }
+}
+
+/* Ensure all text elements respect container boundaries */
+.exercise-session * {
+    max-width: 100%;
+    box-sizing: border-box;
 }

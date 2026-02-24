@@ -7,11 +7,14 @@
 }
 
 .match-prompt {
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 20px);
     font-weight: 800;
     color: var(--color-text-main);
     text-align: center;
     margin-bottom: 8px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 8px;
 }
 
 .match-columns {
@@ -33,18 +36,25 @@
     border: 1px solid var(--color-border);
     border-radius: 16px;
     background: var(--color-surface);
-    font-size: 22px;
+    font-size: clamp(16px, 4vw, 22px);
     font-weight: 700;
     color: var(--color-text-main);
     cursor: pointer;
     text-align: center;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
 }
 
 .match-left {
     direction: rtl;
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
     font-family: 'Amiri', serif;
 }
 
@@ -85,4 +95,42 @@
     color: var(--color-text-light);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+/* ── Responsive Match Pairs Styles ─────────────────────────── */
+@media (max-width: 480px) {
+    .match-columns {
+        gap: 8px;
+        max-width: 100%;
+    }
+    
+    .match-item {
+        padding: 10px 8px;
+        min-height: 50px;
+        font-size: clamp(14px, 3.5vw, 18px);
+    }
+    
+    .match-left {
+        font-size: clamp(18px, 4.5vw, 24px);
+    }
+    
+    .match-prompt {
+        padding: 0 12px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .match-columns {
+        gap: 12px;
+    }
+    
+    .match-item {
+        padding: 12px 10px;
+    }
+}
+
+/* Ensure text never overflows match items */
+.match-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -79,7 +79,8 @@ export const LearnPage: React.FC = () => {
             );
 
             if (confirmed) {
-                // Hacky local-state override for demo purposes:
+                // God Mode: Mark all previous nodes as completed for testing
+                // This allows testers to access any lesson without completing prerequisites
                 // We iterate through courseData, mark everything before this node as 'completed'
                 // and mark this node as 'active'.
                 let foundTarget = false;
