@@ -950,5 +950,457 @@
   "conv6_line6": {
     "text": "مَعَ السَّلامة",
     "path": "/audio/conversations/conv6_line6.mp3"
+  },
+  "conv8_1_line1": {
+    "text": "أَهلًا وَسَهلًا بِكَ في مَطعَمِنا",
+    "path": "/audio/conversations/conv8_1_line1.mp3"
+  },
+  "conv8_1_line2": {
+    "text": "شُكرًا، هَذا المَكانُ جَميلٌ جِدًّا",
+    "path": "/audio/conversations/conv8_1_line2.mp3"
+  },
+  "conv8_1_line3": {
+    "text": "نَحنُ سُعَداءُ بِزِيارَتِكَ، ما الَّذي تُفَضِّلُهُ اليَومَ؟",
+    "path": "/audio/conversations/conv8_1_line3.mp3"
+  },
+  "conv8_1_line4": {
+    "text": "ما هُوَ أَشهَرُ طَبَقٍ عِندَكُم؟",
+    "path": "/audio/conversations/conv8_1_line4.mp3"
+  },
+  "conv8_1_line5": {
+    "text": "الكَبسَةُ بِاللَّحمِ هِيَ الأَشهَرُ وَالأَلَذّ",
+    "path": "/audio/conversations/conv8_1_line5.mp3"
+  },
+  "conv8_1_line6": {
+    "text": "مُمتازٌ، سَآخُذُ الكَبسَةَ مَعَ سَلَطَةٍ وَعَصيرِ بُرتُقال",
+    "path": "/audio/conversations/conv8_1_line6.mp3"
+  },
+  "conv8_1_line7": {
+    "text": "اختِيارٌ رائِعٌ، هَل تُريدُ الطَّبَقَ حارًّا أَم مُتَوَسِّطًا؟",
+    "path": "/audio/conversations/conv8_1_line7.mp3"
+  },
+  "conv8_1_line8": {
+    "text": "مُتَوَسِّطًا مِن فَضلِكَ، وَكَم يَستَغرِقُ التَّحضير؟",
+    "path": "/audio/conversations/conv8_1_line8.mp3"
+  },
+  "conv8_1_line9": {
+    "text": "حَوالَي عِشرينَ دَقيقَةً، هَل تُريدُ مُقَبِّلاتٍ أَثناءَ الانتِظار؟",
+    "path": "/audio/conversations/conv8_1_line9.mp3"
+  },
+  "conv8_1_line10": {
+    "text": "نَعَم، أَحضِر لي حُمُّصًا وَخُبزًا طازَجًا",
+    "path": "/audio/conversations/conv8_1_line10.mp3"
+  },
+  "conv8_1_line11": {
+    "text": "حاضِرٌ، سَأُحضِرُها فَورًا، بِالهَناءِ وَالشِّفاء",
+    "path": "/audio/conversations/conv8_1_line11.mp3"
+  },
+  "conv8_1_line12": {
+    "text": "شُكرًا جَزيلًا، اللهُ يُبارِكُ فيكَ",
+    "path": "/audio/conversations/conv8_1_line12.mp3"
+  },
+  "conv8_2_line1": {
+    "text": "صَباحُ الخَيرِ، تَفَضَّل بِالجُلوس",
+    "path": "/audio/conversations/conv8_2_line1.mp3"
+  },
+  "conv8_2_line2": {
+    "text": "صَباحُ النُّورِ، شُكرًا لِإِتاحَةِ هَذِهِ الفُرصَة",
+    "path": "/audio/conversations/conv8_2_line2.mp3"
+  },
+  "conv8_2_line3": {
+    "text": "أَخبِرني عَن خِبرَتِكَ العَمَليَّةِ السّابِقَة",
+    "path": "/audio/conversations/conv8_2_line3.mp3"
+  },
+  "conv8_2_line4": {
+    "text": "عَمِلتُ خَمسَ سَنَواتٍ في شَرِكَةٍ كَبيرَةٍ كَمُهَندِس",
+    "path": "/audio/conversations/conv8_2_line4.mp3"
+  },
+  "conv8_2_line5": {
+    "text": "مُمتازٌ، وَما هِيَ أَهَمُّ إِنجازاتِكَ هُناكَ؟",
+    "path": "/audio/conversations/conv8_2_line5.mp3"
+  },
+  "conv8_2_line6": {
+    "text": "قُدتُ فَريقًا نَجَحَ في تَطويرِ نِظامٍ جَديد",
+    "path": "/audio/conversations/conv8_2_line6.mp3"
+  },
+  "conv8_2_line7": {
+    "text": "رائِعٌ، لِماذا تُريدُ العَمَلَ مَعَنا بِالتَّحديد؟",
+    "path": "/audio/conversations/conv8_2_line7.mp3"
+  },
+  "conv8_2_line8": {
+    "text": "لِأَنَّ شَرِكَتَكُم رائِدَةٌ في المَجالِ وَلَدَيها سُمعَةٌ مُمتازَة",
+    "path": "/audio/conversations/conv8_2_line8.mp3"
+  },
+  "conv8_2_line9": {
+    "text": "ما هِيَ نِقاطُ قُوَّتِكَ وَضَعفِك؟",
+    "path": "/audio/conversations/conv8_2_line9.mp3"
+  },
+  "conv8_2_line10": {
+    "text": "أَنا مُجتَهِدٌ وَمُنَظَّمٌ، لَكِنّي أَحيانًا أَكونُ مُتَطَلِّبًا جِدًّا",
+    "path": "/audio/conversations/conv8_2_line10.mp3"
+  },
+  "conv8_2_line11": {
+    "text": "جَيِّدٌ، سَنَتَّصِلُ بِكَ خِلالَ أُسبوعٍ بِإِذنِ الله",
+    "path": "/audio/conversations/conv8_2_line11.mp3"
+  },
+  "conv8_2_line12": {
+    "text": "شُكرًا جَزيلًا، في انتِظارِ رَدِّكُم",
+    "path": "/audio/conversations/conv8_2_line12.mp3"
+  },
+  "conv8_3_line1": {
+    "text": "أُفَكِّرُ في السَّفَرِ إِلى تُركِيا الشَّهرَ القادِم",
+    "path": "/audio/conversations/conv8_3_line1.mp3"
+  },
+  "conv8_3_line2": {
+    "text": "فِكرَةٌ رائِعَة، كَم يَومًا سَتَبقى هُناكَ؟",
+    "path": "/audio/conversations/conv8_3_line2.mp3"
+  },
+  "conv8_3_line3": {
+    "text": "أُخَطِّطُ لِلبَقاءِ عَشَرَةَ أَيّامٍ لِزِيارَةِ إِسطَنبولَ وَأَنطاليا",
+    "path": "/audio/conversations/conv8_3_line3.mp3"
+  },
+  "conv8_3_line4": {
+    "text": "هَل حَجَزتَ الفُندُقَ وَالطَّيَرانَ بِالفِعل؟",
+    "path": "/audio/conversations/conv8_3_line4.mp3"
+  },
+  "conv8_3_line5": {
+    "text": "لا بَعدُ، أَبحَثُ عَن أَفضَلِ العُروضِ الآن",
+    "path": "/audio/conversations/conv8_3_line5.mp3"
+  },
+  "conv8_3_line6": {
+    "text": "أَنصَحُكَ بِالحَجزِ مُبَكِّرًا لِأَنَّ الأَسعارَ تَرتَفِع",
+    "path": "/audio/conversations/conv8_3_line6.mp3"
+  },
+  "conv8_3_line7": {
+    "text": "نَصيحَةٌ جَيِّدَة، ما هِيَ الميزانيَّةُ المُناسِبَةُ بِرَأيِكَ؟",
+    "path": "/audio/conversations/conv8_3_line7.mp3"
+  },
+  "conv8_3_line8": {
+    "text": "أَعتَقِدُ أَنَّ أَلفَي دولارٍ كافِيَةٌ لِرِحلَةٍ مُريحَة",
+    "path": "/audio/conversations/conv8_3_line8.mp3"
+  },
+  "conv8_3_line9": {
+    "text": "وَماذا عَنِ الأَماكِنِ الَّتي يَجِبُ زِيارَتُها؟",
+    "path": "/audio/conversations/conv8_3_line9.mp3"
+  },
+  "conv8_3_line10": {
+    "text": "لا تَفوتْ آيا صوفيا وَالبازارَ الكَبيرَ وَالبوسفور",
+    "path": "/audio/conversations/conv8_3_line10.mp3"
+  },
+  "conv8_3_line11": {
+    "text": "شُكرًا عَلى النَّصائِح، هَل سَبَقَ أَن زُرتِ تُركِيا؟",
+    "path": "/audio/conversations/conv8_3_line11.mp3"
+  },
+  "conv8_3_line12": {
+    "text": "نَعَم، زُرتُها العامَ الماضي وَكانَت تَجرِبَةً لا تُنسى",
+    "path": "/audio/conversations/conv8_3_line12.mp3"
+  },
+  "conv8_4_line1": {
+    "text": "أَهلًا بِكَ، ما الَّذي يُزعِجُكَ اليَوم؟",
+    "path": "/audio/conversations/conv8_4_line1.mp3"
+  },
+  "conv8_4_line2": {
+    "text": "دُكتور، أَشعُرُ بِأَلَمٍ شَديدٍ في المَعِدَةِ مُنذُ ثَلاثَةِ أَيّام",
+    "path": "/audio/conversations/conv8_4_line2.mp3"
+  },
+  "conv8_4_line3": {
+    "text": "هَلِ الأَلَمُ مُستَمِرٌّ أَم يَأتي وَيَذهَب؟",
+    "path": "/audio/conversations/conv8_4_line3.mp3"
+  },
+  "conv8_4_line4": {
+    "text": "يَأتي وَيَذهَب، وَيَزدادُ بَعدَ الأَكل",
+    "path": "/audio/conversations/conv8_4_line4.mp3"
+  },
+  "conv8_4_line5": {
+    "text": "هَل لَدَيكَ أَعراضٌ أُخرى مِثلَ الغَثَيانِ أَوِ الحُمّى؟",
+    "path": "/audio/conversations/conv8_4_line5.mp3"
+  },
+  "conv8_4_line6": {
+    "text": "نَعَم، أَشعُرُ بِالغَثَيانِ أَحيانًا وَلَيسَ لَدَيَّ شَهِيَّة",
+    "path": "/audio/conversations/conv8_4_line6.mp3"
+  },
+  "conv8_4_line7": {
+    "text": "يَبدو أَنَّها التِهابٌ في المَعِدَة، هَل أَكَلتَ شَيئًا غَيرَ عادِيّ؟",
+    "path": "/audio/conversations/conv8_4_line7.mp3"
+  },
+  "conv8_4_line8": {
+    "text": "رُبَّما، أَكَلتُ طَعامًا حارًّا جِدًّا قَبلَ أَربَعَةِ أَيّام",
+    "path": "/audio/conversations/conv8_4_line8.mp3"
+  },
+  "conv8_4_line9": {
+    "text": "هَذا يُفَسِّرُ الأَمرَ، سَأَصِفُ لَكَ دَواءً وَنِظامًا غِذائِيًّا",
+    "path": "/audio/conversations/conv8_4_line9.mp3"
+  },
+  "conv8_4_line10": {
+    "text": "شُكرًا دُكتور، مَتى سَأَشعُرُ بِالتَّحَسُّن؟",
+    "path": "/audio/conversations/conv8_4_line10.mp3"
+  },
+  "conv8_4_line11": {
+    "text": "خِلالَ يَومَينِ إِن شاءَ الله، وَتَجَنَّبِ الطَّعامَ الحارّ",
+    "path": "/audio/conversations/conv8_4_line11.mp3"
+  },
+  "conv8_4_line12": {
+    "text": "حاضِرٌ، جَزاكَ اللهُ خَيرًا",
+    "path": "/audio/conversations/conv8_4_line12.mp3"
+  },
+  "conv8_5_line1": {
+    "text": "ما الَّذي تَدرُسُهُ في الجامِعَةِ يا يوسُف؟",
+    "path": "/audio/conversations/conv8_5_line1.mp3"
+  },
+  "conv8_5_line2": {
+    "text": "أَدرُسُ الهَندَسَةَ المَعماريَّةَ، وَأَنا في السَّنَةِ الثّالِثَة",
+    "path": "/audio/conversations/conv8_5_line2.mp3"
+  },
+  "conv8_5_line3": {
+    "text": "رائِعٌ، هَل تَستَمتِعُ بِدِراسَتِكَ؟",
+    "path": "/audio/conversations/conv8_5_line3.mp3"
+  },
+  "conv8_5_line4": {
+    "text": "نَعَم كَثيرًا، خاصَّةً مَوادَّ التَّصميمِ وَالرَّسمِ الهَندَسِيّ",
+    "path": "/audio/conversations/conv8_5_line4.mp3"
+  },
+  "conv8_5_line5": {
+    "text": "وَما هُوَ حُلمُكَ بَعدَ التَّخَرُّج؟",
+    "path": "/audio/conversations/conv8_5_line5.mp3"
+  },
+  "conv8_5_line6": {
+    "text": "أَحلُمُ بِتَصميمِ مَبانٍ صَديقَةٍ لِلبيئَةِ في العالَمِ العَرَبِيّ",
+    "path": "/audio/conversations/conv8_5_line6.mp3"
+  },
+  "conv8_5_line7": {
+    "text": "هَدَفٌ نَبيلٌ، أَنا أَدرُسُ الطِّبَّ وَأُريدُ أَن أُصبِحَ جَرّاحَة",
+    "path": "/audio/conversations/conv8_5_line7.mp3"
+  },
+  "conv8_5_line8": {
+    "text": "ما شاءَ الله، الطِّبُّ تَخَصُّصٌ صَعبٌ وَلَكِنَّهُ مُهِمّ",
+    "path": "/audio/conversations/conv8_5_line8.mp3"
+  },
+  "conv8_5_line9": {
+    "text": "نَعَم، أَدرُسُ كَثيرًا وَأَحيانًا أَسهَرُ اللَّيلَ كُلَّه",
+    "path": "/audio/conversations/conv8_5_line9.mp3"
+  },
+  "conv8_5_line10": {
+    "text": "اللهُ يُعينُكِ، المُستَقبَلُ سَيَكونُ مُشرِقًا بِإِذنِ الله",
+    "path": "/audio/conversations/conv8_5_line10.mp3"
+  },
+  "conv8_5_line11": {
+    "text": "آمين، هَل تُفَكِّرُ في إِكمالِ الدِّراساتِ العُليا؟",
+    "path": "/audio/conversations/conv8_5_line11.mp3"
+  },
+  "conv8_5_line12": {
+    "text": "رُبَّما، أُفَكِّرُ في الحُصولِ عَلى الماجِستيرِ في الخارِج",
+    "path": "/audio/conversations/conv8_5_line12.mp3"
+  },
+  "conv8_6_line1": {
+    "text": "كَم مَضى مِنَ الوَقتِ مُنذُ آخِرِ لِقاءٍ عائِلِيّ؟",
+    "path": "/audio/conversations/conv8_6_line1.mp3"
+  },
+  "conv8_6_line2": {
+    "text": "تَقريبًا سَنَةٌ كامِلَة، مُنذُ عيدِ الفِطرِ الماضي",
+    "path": "/audio/conversations/conv8_6_line2.mp3"
+  },
+  "conv8_6_line3": {
+    "text": "اشتَقتُ لِلجَميعِ كَثيرًا، خاصَّةً جَدَّتي وَأَعمامي",
+    "path": "/audio/conversations/conv8_6_line3.mp3"
+  },
+  "conv8_6_line4": {
+    "text": "أَنا أَيضًا، جَدَّتُنا دائِمًا تَسأَلُ عَنكِ وَعَن دِراسَتِكِ",
+    "path": "/audio/conversations/conv8_6_line4.mp3"
+  },
+  "conv8_6_line5": {
+    "text": "اللهُ يَحفَظُها، ما رَأيُكَ أَن نُنَظِّمَ لِقاءً قَريبًا؟",
+    "path": "/audio/conversations/conv8_6_line5.mp3"
+  },
+  "conv8_6_line6": {
+    "text": "فِكرَةٌ مُمتازَة، رُبَّما في نِهايَةِ هَذا الشَّهر",
+    "path": "/audio/conversations/conv8_6_line6.mp3"
+  },
+  "conv8_6_line7": {
+    "text": "أَينَ يُمكِنُ أَن نَجتَمِعَ؟ بَيتُ جَدَّتي أَم مَكانٌ آخَر؟",
+    "path": "/audio/conversations/conv8_6_line7.mp3"
+  },
+  "conv8_6_line8": {
+    "text": "بَيتُ جَدَّتِنا أَفضَل، هُوَ كَبيرٌ وَمُريحٌ لِلجَميع",
+    "path": "/audio/conversations/conv8_6_line8.mp3"
+  },
+  "conv8_6_line9": {
+    "text": "حَسَنًا، سَأَتَّصِلُ بِالعائِلَةِ وَأُخبِرُهُم بِالمَوعِد",
+    "path": "/audio/conversations/conv8_6_line9.mp3"
+  },
+  "conv8_6_line10": {
+    "text": "وَأَنا سَأُساعِدُ في تَحضيرِ الطَّعامِ وَالتَّرتيبات",
+    "path": "/audio/conversations/conv8_6_line10.mp3"
+  },
+  "conv8_6_line11": {
+    "text": "رائِعٌ، سَتَكونُ أَمسِيَةً جَميلَةً بِإِذنِ الله",
+    "path": "/audio/conversations/conv8_6_line11.mp3"
+  },
+  "conv8_6_line12": {
+    "text": "إِن شاءَ الله، العائِلَةُ هِيَ أَغلى ما نَملِك",
+    "path": "/audio/conversations/conv8_6_line12.mp3"
+  },
+  "conv8_7_line1": {
+    "text": "هَل قَرَأتَ الخَبَرَ عَنِ التَّطَوُّراتِ التِّقنِيَّةِ الجَديدَة؟",
+    "path": "/audio/conversations/conv8_7_line1.mp3"
+  },
+  "conv8_7_line2": {
+    "text": "نَعَم، التَّكنولوجِيا تَتَقَدَّمُ بِسُرعَةٍ مُذهِلَةٍ هَذِهِ الأَيّام",
+    "path": "/audio/conversations/conv8_7_line2.mp3"
+  },
+  "conv8_7_line3": {
+    "text": "صَحيحٌ، لَكِن أَشعُرُ أَنَّ النّاسَ أَصبَحوا مُدمِنينَ عَلى هَواتِفِهِم",
+    "path": "/audio/conversations/conv8_7_line3.mp3"
+  },
+  "conv8_7_line4": {
+    "text": "أُوافِقُكَ تَمامًا، وَسائِلُ التَّواصُلِ الاجتِماعِيِّ لَها إِيجابِيّاتٌ وَسَلبِيّات",
+    "path": "/audio/conversations/conv8_7_line4.mp3"
+  },
+  "conv8_7_line5": {
+    "text": "ما رَأيُكَ في تَأثيرِها عَلى الشَّبابِ وَالأَطفال؟",
+    "path": "/audio/conversations/conv8_7_line5.mp3"
+  },
+  "conv8_7_line6": {
+    "text": "أَعتَقِدُ أَنَّها سِلاحٌ ذو حَدَّين، يَجِبُ استِخدامُها بِحِكمَة",
+    "path": "/audio/conversations/conv8_7_line6.mp3"
+  },
+  "conv8_7_line7": {
+    "text": "كَلامٌ سَليمٌ، المُشكِلَةُ أَنَّ الكَثيرينَ يُضَيِّعونَ وَقتَهُم فيها",
+    "path": "/audio/conversations/conv8_7_line7.mp3"
+  },
+  "conv8_7_line8": {
+    "text": "نَعَم، وَيَنسَونَ أَهَمِّيَّةَ التَّواصُلِ الحَقيقِيِّ وَجهًا لِوَجه",
+    "path": "/audio/conversations/conv8_7_line8.mp3"
+  },
+  "conv8_7_line9": {
+    "text": "بِالضَّبط، يَجِبُ أَن نَجِدَ تَوازُنًا بَينَ العالَمَين",
+    "path": "/audio/conversations/conv8_7_line9.mp3"
+  },
+  "conv8_7_line10": {
+    "text": "وَأَيضًا يَجِبُ تَعليمُ الأَجيالِ الجَديدَةِ الاستِخدامَ الصَّحيح",
+    "path": "/audio/conversations/conv8_7_line10.mp3"
+  },
+  "conv8_7_line11": {
+    "text": "أَتَّفِقُ مَعَكَ، التَّربِيَةُ الرَّقمِيَّةُ أَصبَحَت ضَروريَّة",
+    "path": "/audio/conversations/conv8_7_line11.mp3"
+  },
+  "conv8_7_line12": {
+    "text": "تَمامًا، هَذا هُوَ تَحَدّي عَصرِنا الحالِيّ",
+    "path": "/audio/conversations/conv8_7_line12.mp3"
+  },
+  "conv8_8_line1": {
+    "text": "ما هُوَ مَفهومُكَ لِلسَّعادَةِ الحَقيقِيَّة؟",
+    "path": "/audio/conversations/conv8_8_line1.mp3"
+  },
+  "conv8_8_line2": {
+    "text": "سُؤالٌ عَميقٌ، أَعتَقِدُ أَنَّ السَّعادَةَ تَكمُنُ في الرِّضا وَالقَناعَة",
+    "path": "/audio/conversations/conv8_8_line2.mp3"
+  },
+  "conv8_8_line3": {
+    "text": "أُوافِقُكِ، لَكِن أَلَيسَ الطُّموحُ مُهِمًّا أَيضًا؟",
+    "path": "/audio/conversations/conv8_8_line3.mp3"
+  },
+  "conv8_8_line4": {
+    "text": "بَلى، المُهِمُّ هُوَ التَّوازُنُ بَينَ الطُّموحِ وَالرِّضا",
+    "path": "/audio/conversations/conv8_8_line4.mp3"
+  },
+  "conv8_8_line5": {
+    "text": "وَما رَأيُكِ في مَعنى النَّجاحِ في الحَياة؟",
+    "path": "/audio/conversations/conv8_8_line5.mp3"
+  },
+  "conv8_8_line6": {
+    "text": "النَّجاحُ لَيسَ فَقَط في المالِ وَالشُّهرَة، بَل في التَّأثيرِ الإِيجابِيّ",
+    "path": "/audio/conversations/conv8_8_line6.mp3"
+  },
+  "conv8_8_line7": {
+    "text": "كَلامٌ جَميلٌ، إِذًا النَّجاحُ يَرتَبِطُ بِخِدمَةِ الآخَرين؟",
+    "path": "/audio/conversations/conv8_8_line7.mp3"
+  },
+  "conv8_8_line8": {
+    "text": "نَعَم بِالتَّأكيد، وَأَيضًا في تَحقيقِ السَّلامِ الدّاخِلِيّ",
+    "path": "/audio/conversations/conv8_8_line8.mp3"
+  },
+  "conv8_8_line9": {
+    "text": "هَل تَعتَقِدينَ أَنَّ المالَ يَجلِبُ السَّعادَة؟",
+    "path": "/audio/conversations/conv8_8_line9.mp3"
+  },
+  "conv8_8_line10": {
+    "text": "المالُ وَسيلَةٌ وَلَيسَ غايَةً، يُساعِدُ لَكِنَّهُ لا يَضمَنُ السَّعادَة",
+    "path": "/audio/conversations/conv8_8_line10.mp3"
+  },
+  "conv8_8_line11": {
+    "text": "حِكمَةٌ بالِغَة، الصِّحَّةُ وَالعائِلَةُ أَهَمُّ مِنَ المال",
+    "path": "/audio/conversations/conv8_8_line11.mp3"
+  },
+  "conv8_8_line12": {
+    "text": "تَمامًا، هَذِهِ هِيَ الكُنوزُ الحَقيقِيَّةُ في الحَياة",
+    "path": "/audio/conversations/conv8_8_line12.mp3"
+  },
+  "quran_1_1": {
+    "text": "بِسمِ اللَّهِ الرَّحمَٰنِ الرَّحيم",
+    "path": "/audio/quran/quran_1_1.mp3"
+  },
+  "quran_1_2": {
+    "text": "الحَمدُ لِلَّهِ رَبِّ العالَمين",
+    "path": "/audio/quran/quran_1_2.mp3"
+  },
+  "quran_112_1": {
+    "text": "قُل هُوَ اللَّهُ أَحَد",
+    "path": "/audio/quran/quran_112_1.mp3"
+  },
+  "quran_112_2": {
+    "text": "اللَّهُ الصَّمَد",
+    "path": "/audio/quran/quran_112_2.mp3"
+  },
+  "quran_112_3": {
+    "text": "لَم يَلِد وَلَم يولَد",
+    "path": "/audio/quran/quran_112_3.mp3"
+  },
+  "quran_112_4": {
+    "text": "وَلَم يَكُن لَّهُ كُفُوًا أَحَد",
+    "path": "/audio/quran/quran_112_4.mp3"
+  },
+  "quran_113_1": {
+    "text": "قُل أَعوذُ بِرَبِّ الفَلَق",
+    "path": "/audio/quran/quran_113_1.mp3"
+  },
+  "quran_113_2": {
+    "text": "مِن شَرِّ ما خَلَق",
+    "path": "/audio/quran/quran_113_2.mp3"
+  },
+  "quran_114_1": {
+    "text": "قُل أَعوذُ بِرَبِّ النّاس",
+    "path": "/audio/quran/quran_114_1.mp3"
+  },
+  "quran_114_2": {
+    "text": "مَلِكِ النّاس",
+    "path": "/audio/quran/quran_114_2.mp3"
+  },
+  "quran_114_3": {
+    "text": "إِلَٰهِ النّاس",
+    "path": "/audio/quran/quran_114_3.mp3"
+  },
+  "quran_103_1": {
+    "text": "وَالعَصر",
+    "path": "/audio/quran/quran_103_1.mp3"
+  },
+  "quran_103_2": {
+    "text": "إِنَّ الإِنسانَ لَفي خُسر",
+    "path": "/audio/quran/quran_103_2.mp3"
+  },
+  "quran_103_3": {
+    "text": "إِلَّا الَّذينَ آمَنوا وَعَمِلوا الصّالِحاتِ وَتَواصَوا بِالحَقِّ وَتَواصَوا بِالصَّبر",
+    "path": "/audio/quran/quran_103_3.mp3"
+  },
+  "quran_108_1": {
+    "text": "إِنّا أَعطَيناكَ الكَوثَر",
+    "path": "/audio/quran/quran_108_1.mp3"
+  },
+  "quran_108_2": {
+    "text": "فَصَلِّ لِرَبِّكَ وَانحَر",
+    "path": "/audio/quran/quran_108_2.mp3"
+  },
+  "quran_108_3": {
+    "text": "إِنَّ شانِئَكَ هُوَ الأَبتَر",
+    "path": "/audio/quran/quran_108_3.mp3"
   }
 }

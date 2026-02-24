@@ -147,6 +147,142 @@ function pick<T>(arr: T[], n: number): T[] {
     return shuffle(arr).slice(0, n);
 }
 
+// ═══════════════════════════════════════════════════════════
+// DUOLINGO-STYLE REPETITION SYSTEM
+// ═══════════════════════════════════════════════════════════
+
+/**
+ * Global storage for learned content to enable cross-unit repetition
+ */
+const LEARNED_CONTENT = {
+    letters: [] as LetterInfo[],
+    vowels: [] as any[],
+    words: [] as any[],
+    sentences: [] as any[],
+};
+
+/**
+ * Generate letter refresher exercises from previously learned letters
+ * Used to inject old content into new lessons (Duolingo-style)
+ */
+function makeLetterRefreshers(count: number, nodeId: string): Exercise[] {
+    if (LEARNED_CONTENT.letters.length === 0) return [];
+    
+    const refreshers: Exercise[] = [];
+    const oldLetters = pick(LEARNED_CONTENT.letters, Math.min(count, LEARNED_CONTENT.letters.length));
+    const letterPool = ALL_LETTERS.map(l => l.letter);
+    
+    for (const l of oldLetters) {
+        // Alternate between different exercise types
+        if (Math.random() > 0.5) {
+            refreshers.push({
+                id: nextId(`${nodeId}-letter-refresh`),
+                type: 'tap_letter',
+                prompt: `Refresher: Tap "${l.name}"`,
+                correctAnswer: l.letter,
+                choices: makeChoices(l.letter, letterPool),
+            });
+        } else {
+            refreshers.push({
+                id: nextId(`${nodeId}-letter-refresh`),
+                type: 'hear_choose',
+                prompt: `Refresher: Listen and select`,
+                promptAudio: l.letter + 'َ',
+                correctAnswer: l.letter,
+                choices: makeChoices(l.letter, letterPool),
+            });
+        }
+    }
+    
+    return refreshers;
+}
+
+/**
+ * Generate vowel refresher exercises
+ */
+function makeVowelRefreshers(count: number, nodeId: string, letters: any[]): Exercise[] {
+    if (LEARNED_CONTENT.vowels.length === 0 || letters.length === 0) return [];
+    
+    const refreshers: Exercise[] = [];
+    const oldVowels = pick(LEARNED_CONTENT.vowels, Math.min(count, LEARNED_CONTENT.vowels.length));
+    
+    for (const v of oldVowels) {
+        const l = letters[Math.floor(Math.random() * letters.length)];
+        const combo = l.letter + v.mark;
+        const syllable = l.name.toLowerCase().slice(0, 2) + v.translit;
+        
+        refreshers.push({
+            id: nextId(`${nodeId}-vowel-refresh`),
+            type: 'multiple_choice',
+            prompt: `Refresher: What sound?`,
+            correctAnswer: syllable,
+            choices: shuffle([syllable, ...LEARNED_CONTENT.vowels.filter(vv => vv.name !== v.name).map(vv => l.name.toLowerCase().slice(0, 2) + vv.translit)]),
+            hint: combo,
+        });
+    }
+    
+    return refreshers;
+}
+
+/**
+ * Generate word refresher exercises
+ */
+function makeWordRefreshers(count: number, nodeId: string): Exercise[] {
+    if (LEARNED_CONTENT.words.length === 0) return [];
+    
+    const refreshers: Exercise[] = [];
+    const oldWords = pick(LEARNED_CONTENT.words, Math.min(count, LEARNED_CONTENT.words.length));
+    
+    for (const w of oldWords) {
+        // Alternate between hearing and meaning exercises
+        if (Math.random() > 0.5) {
+            refreshers.push({
+                id: nextId(`${nodeId}-word-refresh`),
+                type: 'hear_choose',
+                prompt: `Refresher: Listen and select`,
+                promptAudio: w.audio,
+                correctAnswer: w.arabic,
+                choices: shuffle([w.arabic, ...pick(LEARNED_CONTENT.words.filter(ww => ww.arabic !== w.arabic).map(ww => ww.arabic), 3)]),
+            });
+        } else {
+            refreshers.push({
+                id: nextId(`${nodeId}-word-refresh`),
+                type: 'multiple_choice',
+                prompt: `Refresher: What does this mean?`,
+                correctAnswer: w.english,
+                choices: shuffle([w.english, ...pick(LEARNED_CONTENT.words.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+                hint: w.arabic,
+            });
+        }
+    }
+    
+    return refreshers;
+}
+
+/**
+ * Generate sentence refresher exercises
+ */
+function makeSentenceRefreshers(count: number, nodeId: string): Exercise[] {
+    if (LEARNED_CONTENT.sentences.length === 0) return [];
+    
+    const refreshers: Exercise[] = [];
+    const oldSentences = pick(LEARNED_CONTENT.sentences, Math.min(count, LEARNED_CONTENT.sentences.length));
+    
+    for (const s of oldSentences) {
+        refreshers.push({
+            id: nextId(`${nodeId}-sent-refresh`),
+            type: 'multiple_choice',
+            prompt: `Refresher: What does this mean?`,
+            correctAnswer: s.english,
+            choices: shuffle([s.english, ...pick(LEARNED_CONTENT.sentences.filter(ss => ss.english !== s.english).map(ss => ss.english), 3)]),
+            hint: s.arabic,
+            promptAudio: s.audio,
+        });
+    }
+    
+    return refreshers;
+}
+
 /**
  * Build 6+ choices with TRAP letters prioritised as distractors.
  * 1. Always include confusable (visual + sound) lookalikes first.
@@ -205,6 +341,10 @@ function makeNameChoices(correct: string, pool: string[], minCount: number = 6):
 let exId = 0;
 function nextId(prefix: string) { return `${prefix}-${++exId}`; }
 
+// ═══════════════════════════════════════════════════════════
+// TRAP EXERCISE GENERATORS
+// ═══════════════════════════════════════════════════════════
+
 function makeTrapExercise(correctInfo: LetterInfo, nodeId: string, isAudio: boolean = false): Exercise | null {
     const vTraps = VISUAL_TRAPS[correctInfo.letter] || [];
     const sTraps = SOUND_TRAPS[correctInfo.letter] || [];
@@ -240,6 +380,96 @@ function makeTrapExercise(correctInfo: LetterInfo, nodeId: string, isAudio: bool
         correctAnswer: correctInfo.letter,
         choices: shuffle(choices),
         trapExplanation: `${explanationMain}<br/><br/><div style="font-size:18px; color:#666">Watch out for:<br/><br/>${trapExplanations}</div>`,
+    };
+}
+
+/**
+ * VOWEL CONFUSION TRAP - Tests vowel mark discrimination
+ * Critical for preventing Fatha/Kasra/Damma confusion
+ */
+function makeVowelTrapExercise(letter: LetterInfo, correctVowel: any, allVowels: any[], nodeId: string, isAudio: boolean = false): Exercise {
+    const wrongVowels = allVowels.filter(v => v.name !== correctVowel.name);
+    const correctCombo = letter.letter + correctVowel.mark;
+    const wrongCombos = wrongVowels.map(v => letter.letter + v.mark);
+    
+    const trapExplanations = wrongVowels.map(v => 
+        `<strong class="arabic-text">${v.mark}</strong> (${v.name}) makes "${v.sound}" - not "${correctVowel.sound}"`
+    ).join('<br/>');
+    
+    return {
+        id: nextId(`${nodeId}-vowel-trap`),
+        type: 'trap_select',
+        prompt: isAudio 
+            ? `Listen carefully! Which syllable?`
+            : `Careful! Which syllable makes "${letter.name.toLowerCase().slice(0, 2)}${correctVowel.translit}"?`,
+        promptAudio: isAudio ? correctCombo : undefined,
+        correctAnswer: correctCombo,
+        choices: shuffle([correctCombo, ...wrongCombos]),
+        trapExplanation: `<strong class="arabic-text">${correctVowel.mark}</strong> (${correctVowel.name}) makes the "${correctVowel.sound}" sound.<br/><br/><div style="font-size:18px; color:#666">Watch out for:<br/><br/>${trapExplanations}</div>`,
+    };
+}
+
+/**
+ * WORD CONFUSION TRAP - Tests similar-looking or similar-sounding words
+ * Critical for preventing vocabulary confusion
+ */
+function makeWordConfusionTrap(correctWord: any, confusableWords: any[], nodeId: string, isAudio: boolean = false): Exercise {
+    const trapExplanations = confusableWords.map(w => 
+        `<strong class="arabic-text">${w.arabic}</strong> means "${w.english}" - not "${correctWord.english}"`
+    ).join('<br/>');
+    
+    return {
+        id: nextId(`${nodeId}-word-trap`),
+        type: 'trap_select',
+        prompt: isAudio
+            ? `Listen carefully! Which word?`
+            : `Careful! Which word means "${correctWord.english}"?`,
+        promptAudio: isAudio ? correctWord.audio : undefined,
+        correctAnswer: correctWord.arabic,
+        choices: shuffle([correctWord.arabic, ...confusableWords.map(w => w.arabic)]),
+        trapExplanation: `<strong class="arabic-text">${correctWord.arabic}</strong> (${correctWord.translit}) means "${correctWord.english}".<br/><br/><div style="font-size:18px; color:#666">Watch out for:<br/><br/>${trapExplanations}</div>`,
+    };
+}
+
+/**
+ * SENTENCE CONFUSION TRAP - Tests similar sentences
+ * Critical for preventing sentence confusion
+ */
+function makeSentenceConfusionTrap(correctSent: any, confusableSents: any[], nodeId: string, isAudio: boolean = false): Exercise {
+    const trapExplanations = confusableSents.map(s => 
+        `<strong class="arabic-text">${s.arabic}</strong> means "${s.english}" - not "${correctSent.english}"`
+    ).join('<br/>');
+    
+    return {
+        id: nextId(`${nodeId}-sent-trap`),
+        type: 'trap_select',
+        prompt: isAudio
+            ? `Listen carefully! Which sentence?`
+            : `Careful! Which sentence means "${correctSent.english}"?`,
+        promptAudio: isAudio ? correctSent.audio : undefined,
+        correctAnswer: correctSent.arabic,
+        choices: shuffle([correctSent.arabic, ...confusableSents.map(s => s.arabic)]),
+        trapExplanation: `<strong class="arabic-text">${correctSent.arabic}</strong> means "${correctSent.english}".<br/><br/><div style="font-size:18px; color:#666">Watch out for:<br/><br/>${trapExplanations}</div>`,
+    };
+}
+
+/**
+ * CONVERSATION LINE TRAP - Tests speaker/context confusion
+ * Critical for conversation comprehension
+ */
+function makeConversationLineTrap(correctLine: any, confusableLines: any[], nodeId: string, context: string): Exercise {
+    const trapExplanations = confusableLines.map(l => 
+        `<strong class="arabic-text">${l.arabic}</strong> - "${l.english}" (different line)`
+    ).join('<br/>');
+    
+    return {
+        id: nextId(`${nodeId}-conv-trap`),
+        type: 'trap_select',
+        prompt: `Careful! ${context}`,
+        promptAudio: correctLine.audio,
+        correctAnswer: correctLine.arabic,
+        choices: shuffle([correctLine.arabic, ...confusableLines.map(l => l.arabic)]),
+        trapExplanation: `<strong class="arabic-text">${correctLine.arabic}</strong> means "${correctLine.english}".<br/><br/><div style="font-size:18px; color:#666">Watch out for:<br/><br/>${trapExplanations}</div>`,
     };
 }
 
@@ -297,7 +527,7 @@ function makeRound1(letters: LetterInfo[], nodeId: string): Lesson {
 }
 
 // ═══════════════════════════════════════════════════════════
-// ROUND 2: SOUNDS — Audio exercises (6 choices, traps)
+// ROUND 2: SOUNDS — Audio exercises (6 choices, traps) + LETTER REFRESHERS
 // ═══════════════════════════════════════════════════════════
 
 function makeRound2(letters: LetterInfo[], nodeId: string): Lesson {
@@ -305,6 +535,10 @@ function makeRound2(letters: LetterInfo[], nodeId: string): Lesson {
     const namePool = ALL_LETTERS.map(l => l.name);
 
     const exercises: Exercise[] = [];
+    
+    // Add letter refreshers from previous nodes (DUOLINGO-STYLE)
+    exercises.push(...makeLetterRefreshers(4, nodeId));
+    
     for (const l of letters) {
         exercises.push({
             id: nextId(`${nodeId}-r2`),
@@ -364,7 +598,7 @@ function makeRound2(letters: LetterInfo[], nodeId: string): Lesson {
 }
 
 // ═══════════════════════════════════════════════════════════
-// ROUND 3: DISCRIMINATION — Mixed with OLD letters (refresher + traps)
+// ROUND 3: DISCRIMINATION — Mixed with OLD letters (refresher + traps) + MORE REFRESHERS
 // ═══════════════════════════════════════════════════════════
 
 function makeRound3(letters: LetterInfo[], nodeId: string, prevLetters: LetterInfo[]): Lesson {
@@ -375,6 +609,9 @@ function makeRound3(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
     const namePool = allPool.map(x => x.name);
 
     const exercises: Exercise[] = [];
+    
+    // Add MORE letter refreshers (DUOLINGO-STYLE)
+    exercises.push(...makeLetterRefreshers(6, nodeId));
 
     // The Philosophy Intro
     exercises.push({
@@ -458,7 +695,7 @@ function makeRound3(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
 }
 
 // ═══════════════════════════════════════════════════════════
-// ROUND 4: REVIEW — Heavy mix of old + new (6 choices, traps)
+// ROUND 4: REVIEW — Heavy mix of old + new (6 choices, traps) + EVEN MORE REFRESHERS
 // ═══════════════════════════════════════════════════════════
 
 function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterInfo[]): Lesson {
@@ -469,6 +706,9 @@ function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
     const bigNamePool = allLetters.map(x => x.name);
 
     const exercises: Exercise[] = [];
+    
+    // Add EVEN MORE letter refreshers (DUOLINGO-STYLE)
+    exercises.push(...makeLetterRefreshers(8, nodeId));
 
     // Test ALL letters (current + old) — no distinction
     for (const l of allLetters) {
@@ -548,7 +788,7 @@ function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
 }
 
 // ═══════════════════════════════════════════════════════════
-// ROUND 5: ASSESSMENT — Match pairs + rapid recall (traps + refresher)
+// ROUND 5: ASSESSMENT — Match pairs + rapid recall (traps + refresher) + MAXIMUM REFRESHERS
 // ═══════════════════════════════════════════════════════════
 
 function makeRound5(letters: LetterInfo[], nodeId: string, prevLetters: LetterInfo[]): Lesson {
@@ -557,6 +797,9 @@ function makeRound5(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
     const namePool = allForTest.map(x => x.name);
 
     const exercises: Exercise[] = [];
+    
+    // Add MAXIMUM letter refreshers (DUOLINGO-STYLE)
+    exercises.push(...makeLetterRefreshers(10, nodeId));
 
     // Match pairs: letter ↔ name
     const mpLetters = pick(allForTest, Math.min(allForTest.length, 6));
@@ -633,6 +876,13 @@ function makeLetterGroupNode(
     const prevLetters = getPreviousLetters(nodeIndex);
     const letterLabels = letters.map(l => l.letter).join(' ');
     const nameLabels = letters.map(l => l.name).join(', ');
+    
+    // Register these letters as learned (DUOLINGO-STYLE)
+    letters.forEach(l => {
+        if (!LEARNED_CONTENT.letters.find(ll => ll.letter === l.letter)) {
+            LEARNED_CONTENT.letters.push(l);
+        }
+    });
 
     return {
         id,
@@ -826,6 +1076,10 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
 
     // ── Round 1: Intro vowel + batch 1 ──
     const r1: Exercise[] = [];
+    
+    // Add letter refreshers (DUOLINGO-STYLE)
+    r1.push(...makeLetterRefreshers(3, nodeId));
+    
     r1.push({
         id: nextId(`${nodeId}-r1-intro`),
         type: 'introduction',
@@ -875,10 +1129,19 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     
+    // Add MORE vowel confusion traps (AGGRESSIVE)
+    for (const l of pick(batch1, 2)) {
+        r1.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, false));
+    }
+    
     const round1: Lesson = { id: `${nodeId}-l1`, title: `Round 1: Meet ${vowel.name}`, description: `Introduction to ${vowel.name}`, exercises: shuffle(r1) };
 
     // ── Round 2: Intro batch 2 ──
     const r2: Exercise[] = [];
+    
+    // Add letter refreshers (DUOLINGO-STYLE)
+    r2.push(...makeLetterRefreshers(3, nodeId));
+    
     for (const l of batch2) {
         r2.push({
             id: nextId(`${nodeId}-r2-link`),
@@ -908,10 +1171,20 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r2.push(...getRefresher('r2'));
+    
+    // Add vowel confusion traps (AGGRESSIVE)
+    for (const l of pick([...batch1, ...batch2], 3)) {
+        r2.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, false));
+    }
+    
     const round2: Lesson = { id: `${nodeId}-l2`, title: `Round 2: More Letters`, description: `Practice ${vowel.name} with new letters`, exercises: shuffle(r2) };
 
     // ── Round 3: batch 3 + audio ──
     const r3: Exercise[] = [];
+    
+    // Add letter refreshers (DUOLINGO-STYLE)
+    r3.push(...makeLetterRefreshers(4, nodeId));
+    
     for (const l of batch3) {
         r3.push({
             id: nextId(`${nodeId}-r3-link`),
@@ -941,10 +1214,20 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r3.push(...getRefresher('r3'));
+    
+    // Add AUDIO vowel confusion traps (AGGRESSIVE)
+    for (const l of pick(letters, 3)) {
+        r3.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, true));
+    }
+    
     const round3: Lesson = { id: `${nodeId}-l3`, title: `Round 3: Audio Mastery`, description: `Hear and identify ${vowel.name}`, exercises: shuffle(r3) };
 
     // ── Round 4: Speed Quiz ──
     const r4: Exercise[] = [];
+    
+    // Add letter refreshers (DUOLINGO-STYLE)
+    r4.push(...makeLetterRefreshers(5, nodeId));
+    
     for (const l of letters) {
         if (Math.random() > 0.5) {
             r4.push({
@@ -967,10 +1250,20 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
     }
     r4.push(...getRefresher('r4'));
     r4.push(...getRefresher('r4')); // Add even more review here
+    
+    // Add MORE vowel confusion traps (AGGRESSIVE)
+    for (const l of pick(letters, 4)) {
+        r4.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, Math.random() > 0.5));
+    }
+    
     const round4: Lesson = { id: `${nodeId}-l4`, title: `Round 4: Speed Review`, description: `All letters with ${vowel.name}`, exercises: shuffle(r4) };
 
     // ── Round 5: Assessment + Match Pairs ──
     const r5: Exercise[] = [];
+    
+    // Add letter refreshers (DUOLINGO-STYLE)
+    r5.push(...makeLetterRefreshers(6, nodeId));
+    
     r5.push({
         id: nextId(`${nodeId}-r5-mp`),
         type: 'match_pairs',
@@ -990,6 +1283,11 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r5.push(...getRefresher('r5'));
+    
+    // Add FINAL vowel confusion traps (AGGRESSIVE)
+    for (const l of pick(letters, 5)) {
+        r5.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, Math.random() > 0.5));
+    }
     
     // Add word assembly with vowels
     const vowelWord = pick(letters, 2).map(l => vowelCombo(l.letter, vowel)).join('');
@@ -1017,6 +1315,11 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
     const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Assessment`, description: `Prove your ${vowel.name} fluency!`, exercises: shuffle(r5) };
 
     const title = batch1.map(l => vowelCombo(l.letter, vowel)).join(' ');
+    
+    // Register this vowel as learned (DUOLINGO-STYLE)
+    if (!LEARNED_CONTENT.vowels.find(v => v.name === vowel.name)) {
+        LEARNED_CONTENT.vowels.push(vowel);
+    }
 
     return {
         id: nodeId,
@@ -1035,6 +1338,10 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 1: Mixing Fatha & Kasra
     const r1: Exercise[] = [];
+    
+    // Add letter refreshers (DUOLINGO-STYLE)
+    r1.push(...makeLetterRefreshers(4, nodeId));
+    
     r1.push({
         id: nextId(`${nodeId}-r1-intro`),
         type: 'introduction',
@@ -1065,6 +1372,11 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 2: Mixing all 3
     const r2: Exercise[] = [];
+    
+    // Add letter + vowel refreshers (DUOLINGO-STYLE)
+    r2.push(...makeLetterRefreshers(3, nodeId));
+    r2.push(...makeVowelRefreshers(2, nodeId, letters));
+    
     r2.push({
         id: nextId(`${nodeId}-r2-intro`),
         type: 'introduction',
@@ -1087,6 +1399,11 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 3: Audio discrimination
     const r3: Exercise[] = [];
+    
+    // Add letter + vowel refreshers (DUOLINGO-STYLE)
+    r3.push(...makeLetterRefreshers(4, nodeId));
+    r3.push(...makeVowelRefreshers(3, nodeId, letters));
+    
     for (const l of letters) {
         const v = VOWELS[Math.floor(Math.random() * 3)];
         r3.push({
@@ -1102,6 +1419,11 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 4: Match Pairs
     const r4: Exercise[] = [];
+    
+    // Add letter + vowel refreshers (DUOLINGO-STYLE)
+    r4.push(...makeLetterRefreshers(5, nodeId));
+    r4.push(...makeVowelRefreshers(4, nodeId, letters));
+    
     r4.push({
         id: nextId(`${nodeId}-r4-mp`),
         type: 'match_pairs',
@@ -1136,9 +1458,20 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
         choices: shuffle([vowelCombo(trapLetter.letter, VOWELS[0]), vowelCombo(trapLetter.letter, VOWELS[1]), vowelCombo(trapLetter.letter, VOWELS[2])]),
         trapExplanation: `Watch the vowel mark! <strong class="arabic-text">${VOWELS[0].mark}</strong> (Fatha) = "a", <strong class="arabic-text">${VOWELS[1].mark}</strong> (Kasra) = "i", <strong class="arabic-text">${VOWELS[2].mark}</strong> (Damma) = "u".`,
     });
+    
+    // Add MORE mixed vowel traps (AGGRESSIVE)
+    for (const l of pick(letters, 4)) {
+        const randomVowel = VOWELS[Math.floor(Math.random() * 3)];
+        r4.push(makeVowelTrapExercise(l, randomVowel, VOWELS, nodeId, Math.random() > 0.5));
+    }
 
     // Round 5: Assessment
     const r5: Exercise[] = [];
+    
+    // Add letter + vowel refreshers (DUOLINGO-STYLE)
+    r5.push(...makeLetterRefreshers(6, nodeId));
+    r5.push(...makeVowelRefreshers(5, nodeId, letters));
+    
     for (const l of pick(letters, 6)) {
         for (const v of VOWELS) {
             r5.push({
@@ -1151,6 +1484,13 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
             });
         }
     }
+    
+    // Add FINAL mixed vowel traps (AGGRESSIVE)
+    for (const l of pick(letters, 5)) {
+        const randomVowel = VOWELS[Math.floor(Math.random() * 3)];
+        r5.push(makeVowelTrapExercise(l, randomVowel, VOWELS, nodeId, Math.random() > 0.5));
+    }
+    
     const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Mixed Assessment`, description: `Show you've mastered them all!`, exercises: shuffle(r5) };
 
     return {
@@ -1310,6 +1650,57 @@ const UNIT4_WORDS: WordData[] = [
     { arabic: 'سُوقٌ', translit: 'Suqun', english: 'Market', audio: '/audio/words/place_market.mp3' }
 ];
 
+// ═══════════════════════════════════════════════════════════
+// WORD CONFUSION PAIRS - For trap exercises
+// ═══════════════════════════════════════════════════════════
+
+const WORD_CONFUSION_GROUPS: Record<string, string[]> = {
+    // Similar letters
+    'باب': ['بيت', 'بنت'],  // door vs house vs girl (all start with ب)
+    'بيت': ['باب', 'بنت'],  // house vs door vs girl
+    'بنت': ['باب', 'بيت'],  // girl vs door vs house
+    
+    // Similar shapes
+    'كلب': ['كتب', 'قلب'],  // dog vs books vs heart (ك/ق confusion)
+    'شمس': ['شهر', 'سمك'],  // sun vs month vs fish (س/ش confusion)
+    'قمر': ['قلب', 'كلب'],  // moon vs heart vs dog (ق/ك confusion)
+    
+    // Similar sounds
+    'تمر': ['تمن', 'ثمر'],  // dates vs price vs fruit (ت/ث confusion)
+    'ولد': ['والد', 'ولد'],  // boy vs father (vowel confusion)
+    'رجل': ['رجال', 'رحل'],  // man vs men vs departed
+    
+    // Body parts (similar structure)
+    'عين': ['أذن', 'يد'],   // eye vs ear vs hand
+    'وجه': ['فم', 'رأس'],   // face vs mouth vs head
+    'يد': ['رجل', 'عين'],   // hand vs leg vs eye
+    
+    // Adjectives (similar patterns)
+    'كبير': ['صغير', 'كثير'],  // big vs small vs many
+    'صغير': ['كبير', 'قصير'],  // small vs big vs short
+    'جديد': ['قديم', 'بعيد'],  // new vs old vs far
+    'قديم': ['جديد', 'كريم'],  // old vs new vs generous
+    'جميل': ['جليل', 'قليل'],  // beautiful vs great vs few
+    
+    // Family (similar structure)
+    'أب': ['أم', 'أخ'],      // father vs mother vs brother
+    'أم': ['أب', 'أخت'],     // mother vs father vs sister
+    'أخ': ['أب', 'أخت'],     // brother vs father vs sister
+    'أخت': ['أم', 'أخ'],     // sister vs mother vs brother
+    
+    // Food (similar structure)
+    'ماء': ['حليب', 'خبز'],  // water vs milk vs bread
+    'خبز': ['ماء', 'تمر'],   // bread vs water vs dates
+    'تفاح': ['تمر', 'خبز'],  // apple vs dates vs bread
+    'حليب': ['ماء', 'خبز'],  // milk vs water vs bread
+    
+    // Places (all start with م)
+    'مدرسة': ['مسجد', 'مستشفى'],  // school vs mosque vs hospital
+    'مسجد': ['مدرسة', 'سوق'],     // mosque vs school vs market
+    'مستشفى': ['مدرسة', 'مسجد'],  // hospital vs school vs mosque
+    'سوق': ['مسجد', 'مدرسة'],     // market vs mosque vs school
+};
+
 function makeWordAssemblyExercises(word: WordData, nodeId: string): Exercise[] {
     const letters = word.arabic.split(''); // Breaks into char array
     // Add one distractor letter
@@ -1357,6 +1748,14 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
     });
 
     const refreshers: Exercise[] = [];
+    
+    // ALWAYS add letter and vowel refreshers (DUOLINGO-STYLE)
+    refreshers.push(...makeLetterRefreshers(3, nodeId));
+    refreshers.push(...makeVowelRefreshers(2, nodeId, PRACTICE_LETTERS));
+    
+    // Add word refreshers from PREVIOUS nodes (CRITICAL FOR RETENTION)
+    refreshers.push(...makeWordRefreshers(4, nodeId));
+    
     if (requireReview) {
         // Add some basic letter/vowel refreshers
         const reviewLetters = pick(ALL_LETTERS, 3);
@@ -1370,6 +1769,13 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
             });
         });
     }
+    
+    // Register these words as learned (DUOLINGO-STYLE)
+    words.forEach(w => {
+        if (!LEARNED_CONTENT.words.find(ww => ww.arabic === w.arabic)) {
+            LEARNED_CONTENT.words.push(w);
+        }
+    });
 
     const lessons: Lesson[] = [];
 
@@ -1378,28 +1784,28 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
         id: `${nodeId}-l1`,
         title: `Round 1: Meet the Words`,
         description: `Learn the connecting letters.`,
-        exercises: [...intros, ...shuffle(assemblies)]
+        exercises: [...intros, ...shuffle([...assemblies, ...refreshers.slice(0, 3)])]
     });
 
     lessons.push({
         id: `${nodeId}-l2`,
         title: `Round 2: Hearing`,
         description: `Listen and select.`,
-        exercises: [...shuffle(hears), ...shuffle(refreshers)]
+        exercises: [...shuffle([...hears, ...refreshers.slice(3, 7)])]
     });
 
     lessons.push({
         id: `${nodeId}-l3`,
         title: `Round 3: Assembly Review`,
         description: `Build words from scratch.`,
-        exercises: shuffle([...assemblies, ...hears])
+        exercises: shuffle([...assemblies, ...assemblies, ...hears, ...refreshers.slice(7, 10)])
     });
 
     lessons.push({
         id: `${nodeId}-l4`,
         title: `Round 4: More Assembly`,
         description: `Build and listen.`,
-        exercises: shuffle([...assemblies, ...hears])
+        exercises: shuffle([...assemblies, ...assemblies, ...hears, ...refreshers.slice(10)])
     });
 
     // Add match pairs for word meanings
@@ -1423,18 +1829,33 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
             trapExplanation: `<strong class="arabic-text">${words[0].arabic}</strong> means "${words[0].english}", not "${words[1].english}".`,
         };
         
+        // Add MORE word confusion traps (AGGRESSIVE)
+        const wordTraps: Exercise[] = [trapEx];
+        for (const w of words) {
+            // Find confusable words from the confusion groups
+            const confusables = WORD_CONFUSION_GROUPS[w.arabic.replace(/[ًٌٍَُِّْ]/g, '')];
+            if (confusables) {
+                const confusableWords = words.filter(ww => 
+                    confusables.some(c => ww.arabic.replace(/[ًٌٍَُِّْ]/g, '').includes(c))
+                );
+                if (confusableWords.length > 0) {
+                    wordTraps.push(makeWordConfusionTrap(w, confusableWords.slice(0, 2), nodeId, Math.random() > 0.5));
+                }
+            }
+        }
+        
         lessons.push({
             id: `${nodeId}-l5`,
             title: `Round 5: Full Mastery`,
             description: `Mix it all together.`,
-            exercises: shuffle([matchPairsEx, trapEx, ...assemblies, ...hears])
+            exercises: shuffle([matchPairsEx, ...wordTraps, ...assemblies, ...hears, ...makeWordRefreshers(6, nodeId)])
         });
     } else {
         lessons.push({
             id: `${nodeId}-l5`,
             title: `Round 5: Full Mastery`,
             description: `Mix it all together.`,
-            exercises: shuffle([matchPairsEx, ...assemblies, ...hears])
+            exercises: shuffle([matchPairsEx, ...assemblies, ...hears, ...makeWordRefreshers(6, nodeId)])
         });
     }
 
@@ -1504,20 +1925,30 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         reads.push(exs[1]);
         hears.push(exs[2]);
     });
+    
+    // Register these words as learned (DUOLINGO-STYLE)
+    words.forEach(w => {
+        if (!LEARNED_CONTENT.words.find(ww => ww.arabic === w.arabic)) {
+            LEARNED_CONTENT.words.push(w);
+        }
+    });
 
     const lessons: Lesson[] = [];
+    
     lessons.push({
         id: `${nodeId}-l1`,
         title: `Round 1: Stripping Vowels`,
         description: `See the naked words.`,
-        exercises: [...intros, ...shuffle(reads)]
+        exercises: [...intros, ...shuffle([...reads, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(3, nodeId)])]
     });
+    
     lessons.push({
         id: `${nodeId}-l2`,
         title: `Round 2: Hearing Unvowelled`,
         description: `Match audio to plain text.`,
-        exercises: shuffle(hears)
+        exercises: shuffle([...hears, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(4, nodeId)])
     });
+    
     lessons.push({
         id: `${nodeId}-l3`,
         title: `Round 3: Match Pairs`,
@@ -1529,13 +1960,14 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
             correctAnswer: '',
             choices: [],
             pairs: pick(words, 4).map(w => ({ left: stripHarakat(w.arabic), right: w.english }))
-        }, ...shuffle(reads)]
+        }, ...shuffle([...reads, ...reads, ...makeWordRefreshers(5, nodeId)])]
     });
+    
     lessons.push({
         id: `${nodeId}-l4`,
         title: `Round 4: More Practice`,
         description: `Repetition builds memory.`,
-        exercises: shuffle([...reads, ...hears])
+        exercises: shuffle([...reads, ...reads, ...hears, ...makeLetterRefreshers(4, nodeId), ...makeWordRefreshers(5, nodeId)])
     });
     // Add word assembly for unvowelled words
     const asmWord = words[0];
@@ -1558,6 +1990,20 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         trapExplanation: `Without vowels, <strong class="arabic-text">${stripHarakat(words[0].arabic)}</strong> means "${words[0].english}".`,
     };
     
+    // Add MORE unvowelled word traps (AGGRESSIVE)
+    const unvowelledTraps: Exercise[] = [trapEx];
+    for (const w of pick(words, 3)) {
+        const confusables = words.filter(ww => ww.arabic !== w.arabic);
+        if (confusables.length >= 2) {
+            unvowelledTraps.push(makeWordConfusionTrap(
+                { ...w, arabic: stripHarakat(w.arabic) },
+                confusables.slice(0, 2).map(ww => ({ ...ww, arabic: stripHarakat(ww.arabic) })),
+                nodeId,
+                Math.random() > 0.5
+            ));
+        }
+    }
+    
     // Add sentence assembly with unvowelled words
     const sentWords = pick(words, 2);
     const sentWordsEnglish = sentWords.map(w => w.english).join(' + ');
@@ -1574,7 +2020,7 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         id: `${nodeId}-l5`,
         title: `Round 5: Mastery`,
         description: `You can read real Arabic!`,
-        exercises: shuffle([asmEx, trapEx, sentEx, ...reads, ...hears])
+        exercises: shuffle([asmEx, ...unvowelledTraps, sentEx, ...reads, ...hears])
     });
 
     return {
@@ -1711,6 +2157,13 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         graded.push(...exs.slice(1));
     });
     
+    // Register these sentences as learned (DUOLINGO-STYLE)
+    sentences.forEach(s => {
+        if (!LEARNED_CONTENT.sentences.find(ss => ss.arabic === s.arabic)) {
+            LEARNED_CONTENT.sentences.push(s);
+        }
+    });
+    
     // Add match pairs for sentence meanings
     const matchEx: Exercise = {
         id: nextId(`${nodeId}-mp`),
@@ -1739,6 +2192,20 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         correctAnswer: sentences[0].words[0],
         choices: shuffle([...sentences[0].words[0].split(''), 'م']),
     };
+    
+    // Add MORE sentence confusion traps (AGGRESSIVE)
+    const sentenceTraps: Exercise[] = [trapEx];
+    for (const s of pick(sentences, Math.min(3, sentences.length))) {
+        const confusables = sentences.filter(ss => ss.arabic !== s.arabic);
+        if (confusables.length >= 2) {
+            sentenceTraps.push(makeSentenceConfusionTrap(
+                s,
+                confusables.slice(0, 2),
+                nodeId,
+                Math.random() > 0.5
+            ));
+        }
+    }
 
     return {
         id: nodeId,
@@ -1746,12 +2213,39 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         description: `Learn basic sentences`,
         type: 'lesson',
         status: 'locked',
-        totalRounds: 3,
+        totalRounds: 5,
         completedRounds: 0,
         lessons: [
-            { id: `${nodeId}-r1`, title: 'Introduction', description: 'Meet the sentences', exercises: [...intros, ...shuffle(graded).slice(0, 5), matchEx] },
-            { id: `${nodeId}-r2`, title: 'Practice', description: 'Build your skills', exercises: shuffle([...graded, trapEx, wordAsmEx]) },
-            { id: `${nodeId}-r3`, title: 'Mastery', description: 'Assemble them all', exercises: shuffle([...graded, matchEx, trapEx]) }
+            { 
+                id: `${nodeId}-r1`, 
+                title: 'Round 1: Introduction', 
+                description: 'Meet the sentences', 
+                exercises: [...intros, ...shuffle([...graded.slice(0, 5), matchEx, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(3, nodeId)])] 
+            },
+            { 
+                id: `${nodeId}-r2`, 
+                title: 'Round 2: Practice', 
+                description: 'Build your skills', 
+                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), ...sentenceTraps.slice(0, 2), wordAsmEx, ...makeLetterRefreshers(4, nodeId), ...makeWordRefreshers(4, nodeId)]) 
+            },
+            { 
+                id: `${nodeId}-r3`, 
+                title: 'Round 3: More Practice', 
+                description: 'Keep building', 
+                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), matchEx, ...sentenceTraps.slice(2, 4), ...makeWordRefreshers(5, nodeId), ...makeSentenceRefreshers(3, nodeId)]) 
+            },
+            { 
+                id: `${nodeId}-r4`, 
+                title: 'Round 4: Assembly', 
+                description: 'Assemble them all', 
+                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), ...sentenceTraps.slice(4), ...makeWordRefreshers(5, nodeId), ...makeSentenceRefreshers(4, nodeId)]) 
+            },
+            { 
+                id: `${nodeId}-r5`, 
+                title: 'Round 5: Mastery', 
+                description: 'Final review', 
+                exercises: shuffle([...graded, matchEx, ...sentenceTraps, ...makeWordRefreshers(6, nodeId), ...makeSentenceRefreshers(5, nodeId)]) 
+            }
         ]
     };
 }
@@ -1851,6 +2345,165 @@ const UNIT7_CONVERSATIONS: ConversationData[] = [
             { speaker: 'لَيْلَى', arabic: 'أَنَا بِخَيْرٍ، الحَمْدُ لِلّهِ', english: 'I am fine, praise be to God', audio: '/audio/conversations/conv6_line4.mp3' },
             { speaker: 'يُوسُف', arabic: 'جَيِّدٌ', english: 'Good', audio: '/audio/conversations/conv6_line5.mp3' },
             { speaker: 'لَيْلَى', arabic: 'مَعَ السَّلامَةِ', english: 'Goodbye', audio: '/audio/conversations/conv6_line6.mp3' }
+        ]
+    }
+];
+
+// ═══════════════════════════════════════════════════════════
+// UNIT 8: ADVANCED CONVERSATIONS (STAGE 8)
+// ═══════════════════════════════════════════════════════════
+
+const UNIT8_CONVERSATIONS: ConversationData[] = [
+    {
+        id: 'conv8_1',
+        title: 'At the Restaurant',
+        context: 'A detailed conversation about ordering food, discussing preferences, and paying',
+        lines: [
+            { speaker: 'نَادِل', arabic: 'أَهْلًا وَسَهْلًا بِكَ فِي مَطْعَمِنَا', english: 'Welcome to our restaurant', audio: '/audio/conversations/conv8_1_line1.mp3' },
+            { speaker: 'زَبُون', arabic: 'شُكْرًا، هَذَا الْمَكَانُ جَمِيلٌ جِدًّا', english: 'Thank you, this place is very beautiful', audio: '/audio/conversations/conv8_1_line2.mp3' },
+            { speaker: 'نَادِل', arabic: 'نَحْنُ سُعَدَاءُ بِزِيَارَتِكَ، مَا الَّذِي تُفَضِّلُهُ الْيَوْمَ؟', english: 'We are happy with your visit, what do you prefer today?', audio: '/audio/conversations/conv8_1_line3.mp3' },
+            { speaker: 'زَبُون', arabic: 'مَا هُوَ أَشْهَرُ طَبَقٍ عِنْدَكُمْ؟', english: 'What is your most famous dish?', audio: '/audio/conversations/conv8_1_line4.mp3' },
+            { speaker: 'نَادِل', arabic: 'الْكَبْسَةُ بِاللَّحْمِ هِيَ الأَشْهَرُ وَالأَلَذُّ', english: 'Kabsa with meat is the most famous and most delicious', audio: '/audio/conversations/conv8_1_line5.mp3' },
+            { speaker: 'زَبُون', arabic: 'مُمْتَازٌ، سَآخُذُ الْكَبْسَةَ مَعَ سَلَطَةٍ وَعَصِيرِ بُرْتُقَالٍ', english: 'Excellent, I will take kabsa with salad and orange juice', audio: '/audio/conversations/conv8_1_line6.mp3' },
+            { speaker: 'نَادِل', arabic: 'اخْتِيَارٌ رَائِعٌ، هَلْ تُرِيدُ الطَّبَقَ حَارًّا أَمْ مُتَوَسِّطًا؟', english: 'Wonderful choice, do you want the dish hot or medium?', audio: '/audio/conversations/conv8_1_line7.mp3' },
+            { speaker: 'زَبُون', arabic: 'مُتَوَسِّطًا مِنْ فَضْلِكَ، وَكَمْ يَسْتَغْرِقُ التَّحْضِيرُ؟', english: 'Medium please, and how long does preparation take?', audio: '/audio/conversations/conv8_1_line8.mp3' },
+            { speaker: 'نَادِل', arabic: 'حَوَالَيْ عِشْرِينَ دَقِيقَةً، هَلْ تُرِيدُ مُقَبِّلَاتٍ أَثْنَاءَ الانْتِظَارِ؟', english: 'About twenty minutes, do you want appetizers while waiting?', audio: '/audio/conversations/conv8_1_line9.mp3' },
+            { speaker: 'زَبُون', arabic: 'نَعَمْ، أَحْضِرْ لِي حُمُّصًا وَخُبْزًا طَازَجًا', english: 'Yes, bring me hummus and fresh bread', audio: '/audio/conversations/conv8_1_line10.mp3' },
+            { speaker: 'نَادِل', arabic: 'حَاضِرٌ، سَأُحْضِرُهَا فَوْرًا، بِالْهَنَاءِ وَالشِّفَاءِ', english: 'Right away, I will bring it immediately, enjoy your meal', audio: '/audio/conversations/conv8_1_line11.mp3' },
+            { speaker: 'زَبُون', arabic: 'شُكْرًا جَزِيلًا، اللهُ يُبَارِكُ فِيكَ', english: 'Thank you very much, may God bless you', audio: '/audio/conversations/conv8_1_line12.mp3' }
+        ]
+    },
+    {
+        id: 'conv8_2',
+        title: 'Job Interview',
+        context: 'A formal job interview with detailed questions about experience and qualifications',
+        lines: [
+            { speaker: 'مُدِير', arabic: 'صَبَاحُ الْخَيْرِ، تَفَضَّلْ بِالْجُلُوسِ', english: 'Good morning, please have a seat', audio: '/audio/conversations/conv8_2_line1.mp3' },
+            { speaker: 'مُتَقَدِّم', arabic: 'صَبَاحُ النُّورِ، شُكْرًا لِإِتَاحَةِ هَذِهِ الْفُرْصَةِ', english: 'Morning of light, thank you for this opportunity', audio: '/audio/conversations/conv8_2_line2.mp3' },
+            { speaker: 'مُدِير', arabic: 'أَخْبِرْنِي عَنْ خِبْرَتِكَ الْعَمَلِيَّةِ السَّابِقَةِ', english: 'Tell me about your previous work experience', audio: '/audio/conversations/conv8_2_line3.mp3' },
+            { speaker: 'مُتَقَدِّم', arabic: 'عَمِلْتُ خَمْسَ سَنَوَاتٍ فِي شَرِكَةٍ كَبِيرَةٍ كَمُهَنْدِسٍ', english: 'I worked five years in a large company as an engineer', audio: '/audio/conversations/conv8_2_line4.mp3' },
+            { speaker: 'مُدِير', arabic: 'مُمْتَازٌ، وَمَا هِيَ أَهَمُّ إِنْجَازَاتِكَ هُنَاكَ؟', english: 'Excellent, and what are your most important achievements there?', audio: '/audio/conversations/conv8_2_line5.mp3' },
+            { speaker: 'مُتَقَدِّم', arabic: 'قُدْتُ فَرِيقًا نَجَحَ فِي تَطْوِيرِ نِظَامٍ جَدِيدٍ', english: 'I led a team that succeeded in developing a new system', audio: '/audio/conversations/conv8_2_line6.mp3' },
+            { speaker: 'مُدِير', arabic: 'رَائِعٌ، لِمَاذَا تُرِيدُ الْعَمَلَ مَعَنَا بِالتَّحْدِيدِ؟', english: 'Wonderful, why do you want to work with us specifically?', audio: '/audio/conversations/conv8_2_line7.mp3' },
+            { speaker: 'مُتَقَدِّم', arabic: 'لِأَنَّ شَرِكَتَكُمْ رَائِدَةٌ فِي الْمَجَالِ وَلَدَيْهَا سُمْعَةٌ مُمْتَازَةٌ', english: 'Because your company is a leader in the field and has an excellent reputation', audio: '/audio/conversations/conv8_2_line8.mp3' },
+            { speaker: 'مُدِير', arabic: 'مَا هِيَ نِقَاطُ قُوَّتِكَ وَضَعْفِكَ؟', english: 'What are your strengths and weaknesses?', audio: '/audio/conversations/conv8_2_line9.mp3' },
+            { speaker: 'مُتَقَدِّم', arabic: 'أَنَا مُجْتَهِدٌ وَمُنَظَّمٌ، لَكِنِّي أَحْيَانًا أَكُونُ مُتَطَلِّبًا جِدًّا', english: 'I am hardworking and organized, but sometimes I am too demanding', audio: '/audio/conversations/conv8_2_line10.mp3' },
+            { speaker: 'مُدِير', arabic: 'جَيِّدٌ، سَنَتَّصِلُ بِكَ خِلَالَ أُسْبُوعٍ بِإِذْنِ اللهِ', english: 'Good, we will contact you within a week God willing', audio: '/audio/conversations/conv8_2_line11.mp3' },
+            { speaker: 'مُتَقَدِّم', arabic: 'شُكْرًا جَزِيلًا، فِي انْتِظَارِ رَدِّكُمْ', english: 'Thank you very much, awaiting your response', audio: '/audio/conversations/conv8_2_line12.mp3' }
+        ]
+    },
+    {
+        id: 'conv8_3',
+        title: 'Discussing Travel Plans',
+        context: 'Friends planning a detailed vacation with budget and activities',
+        lines: [
+            { speaker: 'أَحْمَد', arabic: 'أُفَكِّرُ فِي السَّفَرِ إِلَى تُرْكِيَا الشَّهْرَ الْقَادِمَ', english: 'I am thinking of traveling to Turkey next month', audio: '/audio/conversations/conv8_3_line1.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'فِكْرَةٌ رَائِعَةٌ، كَمْ يَوْمًا سَتَبْقَى هُنَاكَ؟', english: 'Wonderful idea, how many days will you stay there?', audio: '/audio/conversations/conv8_3_line2.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'أُخَطِّطُ لِلْبَقَاءِ عَشَرَةَ أَيَّامٍ لِزِيَارَةِ إِسْطَنْبُولَ وَأَنْطَالْيَا', english: 'I plan to stay ten days to visit Istanbul and Antalya', audio: '/audio/conversations/conv8_3_line3.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'هَلْ حَجَزْتَ الْفُنْدُقَ وَالطَّيَرَانَ بِالْفِعْلِ؟', english: 'Have you already booked the hotel and flight?', audio: '/audio/conversations/conv8_3_line4.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'لَا بَعْدُ، أَبْحَثُ عَنْ أَفْضَلِ الْعُرُوضِ الآنَ', english: 'Not yet, I am searching for the best offers now', audio: '/audio/conversations/conv8_3_line5.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'أَنْصَحُكَ بِالْحَجْزِ مُبَكِّرًا لِأَنَّ الأَسْعَارَ تَرْتَفِعُ', english: 'I advise you to book early because prices rise', audio: '/audio/conversations/conv8_3_line6.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'نَصِيحَةٌ جَيِّدَةٌ، مَا هِيَ الْمِيزَانِيَّةُ الْمُنَاسِبَةُ بِرَأْيِكِ؟', english: 'Good advice, what is the appropriate budget in your opinion?', audio: '/audio/conversations/conv8_3_line7.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'أَعْتَقِدُ أَنَّ أَلْفَيْ دُولَارٍ كَافِيَةٌ لِرِحْلَةٍ مُرِيحَةٍ', english: 'I think two thousand dollars is enough for a comfortable trip', audio: '/audio/conversations/conv8_3_line8.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'وَمَاذَا عَنِ الأَمَاكِنِ الَّتِي يَجِبُ زِيَارَتُهَا؟', english: 'And what about the places that must be visited?', audio: '/audio/conversations/conv8_3_line9.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'لَا تَفُوتْ آيَا صُوفْيَا وَالْبَازَارَ الْكَبِيرَ وَالْبُوسْفُورَ', english: 'Do not miss Hagia Sophia, the Grand Bazaar, and the Bosphorus', audio: '/audio/conversations/conv8_3_line10.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'شُكْرًا عَلَى النَّصَائِحِ، هَلْ سَبَقَ أَنْ زُرْتِ تُرْكِيَا؟', english: 'Thank you for the advice, have you visited Turkey before?', audio: '/audio/conversations/conv8_3_line11.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'نَعَمْ، زُرْتُهَا الْعَامَ الْمَاضِي وَكَانَتْ تَجْرِبَةً لَا تُنْسَى', english: 'Yes, I visited it last year and it was an unforgettable experience', audio: '/audio/conversations/conv8_3_line12.mp3' }
+        ]
+    },
+    {
+        id: 'conv8_4',
+        title: 'At the Doctor - Detailed Consultation',
+        context: 'A comprehensive medical consultation with symptoms, diagnosis, and treatment',
+        lines: [
+            { speaker: 'طَبِيب', arabic: 'أَهْلًا بِكَ، مَا الَّذِي يُزْعِجُكَ الْيَوْمَ؟', english: 'Welcome, what is bothering you today?', audio: '/audio/conversations/conv8_4_line1.mp3' },
+            { speaker: 'مَرِيض', arabic: 'دُكْتُور، أَشْعُرُ بِأَلَمٍ شَدِيدٍ فِي الْمَعِدَةِ مُنْذُ ثَلَاثَةِ أَيَّامٍ', english: 'Doctor, I feel severe pain in my stomach for three days', audio: '/audio/conversations/conv8_4_line2.mp3' },
+            { speaker: 'طَبِيب', arabic: 'هَلِ الأَلَمُ مُسْتَمِرٌّ أَمْ يَأْتِي وَيَذْهَبُ؟', english: 'Is the pain continuous or does it come and go?', audio: '/audio/conversations/conv8_4_line3.mp3' },
+            { speaker: 'مَرِيض', arabic: 'يَأْتِي وَيَذْهَبُ، وَيَزْدَادُ بَعْدَ الأَكْلِ', english: 'It comes and goes, and increases after eating', audio: '/audio/conversations/conv8_4_line4.mp3' },
+            { speaker: 'طَبِيب', arabic: 'هَلْ لَدَيْكَ أَعْرَاضٌ أُخْرَى مِثْلَ الْغَثَيَانِ أَوِ الْحُمَّى؟', english: 'Do you have other symptoms like nausea or fever?', audio: '/audio/conversations/conv8_4_line5.mp3' },
+            { speaker: 'مَرِيض', arabic: 'نَعَمْ، أَشْعُرُ بِالْغَثَيَانِ أَحْيَانًا وَلَيْسَ لَدَيَّ شَهِيَّةٌ', english: 'Yes, I feel nauseous sometimes and I have no appetite', audio: '/audio/conversations/conv8_4_line6.mp3' },
+            { speaker: 'طَبِيب', arabic: 'يَبْدُو أَنَّهَا الْتِهَابٌ فِي الْمَعِدَةِ، هَلْ أَكَلْتَ شَيْئًا غَيْرَ عَادِيٍّ؟', english: 'It seems to be stomach inflammation, did you eat something unusual?', audio: '/audio/conversations/conv8_4_line7.mp3' },
+            { speaker: 'مَرِيض', arabic: 'رُبَّمَا، أَكَلْتُ طَعَامًا حَارًّا جِدًّا قَبْلَ أَرْبَعَةِ أَيَّامٍ', english: 'Perhaps, I ate very spicy food four days ago', audio: '/audio/conversations/conv8_4_line8.mp3' },
+            { speaker: 'طَبِيب', arabic: 'هَذَا يُفَسِّرُ الأَمْرَ، سَأَصِفُ لَكَ دَوَاءً وَنِظَامًا غِذَائِيًّا', english: 'This explains it, I will prescribe medicine and a diet for you', audio: '/audio/conversations/conv8_4_line9.mp3' },
+            { speaker: 'مَرِيض', arabic: 'شُكْرًا دُكْتُور، مَتَى سَأَشْعُرُ بِالتَّحَسُّنِ؟', english: 'Thank you doctor, when will I feel better?', audio: '/audio/conversations/conv8_4_line10.mp3' },
+            { speaker: 'طَبِيب', arabic: 'خِلَالَ يَوْمَيْنِ إِنْ شَاءَ اللهُ، وَتَجَنَّبِ الطَّعَامَ الْحَارَّ', english: 'Within two days God willing, and avoid spicy food', audio: '/audio/conversations/conv8_4_line11.mp3' },
+            { speaker: 'مَرِيض', arabic: 'حَاضِرٌ، جَزَاكَ اللهُ خَيْرًا', english: 'Understood, may God reward you with goodness', audio: '/audio/conversations/conv8_4_line12.mp3' }
+        ]
+    },
+    {
+        id: 'conv8_5',
+        title: 'Discussing Education and Dreams',
+        context: 'Students discussing their studies, future plans, and career aspirations',
+        lines: [
+            { speaker: 'لَيْلَى', arabic: 'مَا الَّذِي تَدْرُسُهُ فِي الْجَامِعَةِ يَا يُوسُفُ؟', english: 'What are you studying at university, Yusuf?', audio: '/audio/conversations/conv8_5_line1.mp3' },
+            { speaker: 'يُوسُف', arabic: 'أَدْرُسُ الْهَنْدَسَةَ الْمَعْمَارِيَّةَ، وَأَنَا فِي السَّنَةِ الثَّالِثَةِ', english: 'I study architectural engineering, and I am in the third year', audio: '/audio/conversations/conv8_5_line2.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'رَائِعٌ، هَلْ تَسْتَمْتِعُ بِدِرَاسَتِكَ؟', english: 'Wonderful, do you enjoy your studies?', audio: '/audio/conversations/conv8_5_line3.mp3' },
+            { speaker: 'يُوسُف', arabic: 'نَعَمْ كَثِيرًا، خَاصَّةً مَوَادَّ التَّصْمِيمِ وَالرَّسْمِ الْهَنْدَسِيِّ', english: 'Yes very much, especially design and engineering drawing subjects', audio: '/audio/conversations/conv8_5_line4.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'وَمَا هُوَ حُلْمُكَ بَعْدَ التَّخَرُّجِ؟', english: 'And what is your dream after graduation?', audio: '/audio/conversations/conv8_5_line5.mp3' },
+            { speaker: 'يُوسُف', arabic: 'أَحْلُمُ بِتَصْمِيمِ مَبَانٍ صَدِيقَةٍ لِلْبِيئَةِ فِي الْعَالَمِ الْعَرَبِيِّ', english: 'I dream of designing environmentally friendly buildings in the Arab world', audio: '/audio/conversations/conv8_5_line6.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'هَدَفٌ نَبِيلٌ، أَنَا أَدْرُسُ الطِّبَّ وَأُرِيدُ أَنْ أُصْبِحَ جَرَّاحَةً', english: 'A noble goal, I study medicine and want to become a surgeon', audio: '/audio/conversations/conv8_5_line7.mp3' },
+            { speaker: 'يُوسُف', arabic: 'مَا شَاءَ اللهُ، الطِّبُّ تَخَصُّصٌ صَعْبٌ وَلَكِنَّهُ مُهِمٌّ', english: 'God has willed it, medicine is a difficult but important specialization', audio: '/audio/conversations/conv8_5_line8.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'نَعَمْ، أَدْرُسُ كَثِيرًا وَأَحْيَانًا أَسْهَرُ اللَّيْلَ كُلَّهُ', english: 'Yes, I study a lot and sometimes stay up all night', audio: '/audio/conversations/conv8_5_line9.mp3' },
+            { speaker: 'يُوسُف', arabic: 'اللهُ يُعِينُكِ، الْمُسْتَقْبَلُ سَيَكُونُ مُشْرِقًا بِإِذْنِ اللهِ', english: 'May God help you, the future will be bright God willing', audio: '/audio/conversations/conv8_5_line10.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'آمِينَ، هَلْ تُفَكِّرُ فِي إِكْمَالِ الدِّرَاسَاتِ الْعُلْيَا؟', english: 'Amen, are you thinking of completing graduate studies?', audio: '/audio/conversations/conv8_5_line11.mp3' },
+            { speaker: 'يُوسُف', arabic: 'رُبَّمَا، أُفَكِّرُ فِي الْحُصُولِ عَلَى الْمَاجِسْتِيرِ فِي الْخَارِجِ', english: 'Perhaps, I am thinking of getting a master\'s degree abroad', audio: '/audio/conversations/conv8_5_line12.mp3' }
+        ]
+    },
+    {
+        id: 'conv8_6',
+        title: 'Family Gathering Discussion',
+        context: 'Extended family discussing memories, relationships, and planning a reunion',
+        lines: [
+            { speaker: 'سَارَة', arabic: 'كَمْ مَضَى مِنَ الْوَقْتِ مُنْذُ آخِرِ لِقَاءٍ عَائِلِيٍّ؟', english: 'How much time has passed since the last family gathering?', audio: '/audio/conversations/conv8_6_line1.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'تَقْرِيبًا سَنَةٌ كَامِلَةٌ، مُنْذُ عِيدِ الْفِطْرِ الْمَاضِي', english: 'About a full year, since last Eid al-Fitr', audio: '/audio/conversations/conv8_6_line2.mp3' },
+            { speaker: 'سَارَة', arabic: 'اشْتَقْتُ لِلْجَمِيعِ كَثِيرًا، خَاصَّةً جَدَّتِي وَأَعْمَامِي', english: 'I missed everyone a lot, especially my grandmother and uncles', audio: '/audio/conversations/conv8_6_line3.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'أَنَا أَيْضًا، جَدَّتُنَا دَائِمًا تَسْأَلُ عَنْكِ وَعَنْ دِرَاسَتِكِ', english: 'Me too, our grandmother always asks about you and your studies', audio: '/audio/conversations/conv8_6_line4.mp3' },
+            { speaker: 'سَارَة', arabic: 'اللهُ يَحْفَظُهَا، مَا رَأْيُكَ أَنْ نُنَظِّمَ لِقَاءً قَرِيبًا؟', english: 'May God protect her, what do you think about organizing a gathering soon?', audio: '/audio/conversations/conv8_6_line5.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'فِكْرَةٌ مُمْتَازَةٌ، رُبَّمَا فِي نِهَايَةِ هَذَا الشَّهْرِ', english: 'Excellent idea, perhaps at the end of this month', audio: '/audio/conversations/conv8_6_line6.mp3' },
+            { speaker: 'سَارَة', arabic: 'أَيْنَ يُمْكِنُ أَنْ نَجْتَمِعَ؟ بَيْتُ جَدَّتِي أَمْ مَكَانٌ آخَرُ؟', english: 'Where can we gather? My grandmother\'s house or another place?', audio: '/audio/conversations/conv8_6_line7.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'بَيْتُ جَدَّتِنَا أَفْضَلُ، هُوَ كَبِيرٌ وَمُرِيحٌ لِلْجَمِيعِ', english: 'Our grandmother\'s house is better, it is large and comfortable for everyone', audio: '/audio/conversations/conv8_6_line8.mp3' },
+            { speaker: 'سَارَة', arabic: 'حَسَنًا، سَأَتَّصِلُ بِالْعَائِلَةِ وَأُخْبِرُهُمْ بِالْمَوْعِدِ', english: 'Okay, I will call the family and inform them of the date', audio: '/audio/conversations/conv8_6_line9.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'وَأَنَا سَأُسَاعِدُ فِي تَحْضِيرِ الطَّعَامِ وَالتَّرْتِيبَاتِ', english: 'And I will help in preparing the food and arrangements', audio: '/audio/conversations/conv8_6_line10.mp3' },
+            { speaker: 'سَارَة', arabic: 'رَائِعٌ، سَتَكُونُ أَمْسِيَةً جَمِيلَةً بِإِذْنِ اللهِ', english: 'Wonderful, it will be a beautiful evening God willing', audio: '/audio/conversations/conv8_6_line11.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'إِنْ شَاءَ اللهُ، الْعَائِلَةُ هِيَ أَغْلَى مَا نَمْلِكُ', english: 'God willing, family is the most precious thing we have', audio: '/audio/conversations/conv8_6_line12.mp3' }
+        ]
+    },
+    {
+        id: 'conv8_7',
+        title: 'Discussing Current Events and Society',
+        context: 'Friends discussing technology, social media, and modern life challenges',
+        lines: [
+            { speaker: 'خَالِد', arabic: 'هَلْ قَرَأْتَ الْخَبَرَ عَنِ التَّطَوُّرَاتِ التِّقْنِيَّةِ الْجَدِيدَةِ؟', english: 'Did you read the news about the new technological developments?', audio: '/audio/conversations/conv8_7_line1.mp3' },
+            { speaker: 'عُمَر', arabic: 'نَعَمْ، التَّكْنُولُوجِيَا تَتَقَدَّمُ بِسُرْعَةٍ مُذْهِلَةٍ هَذِهِ الأَيَّامَ', english: 'Yes, technology is advancing at an amazing speed these days', audio: '/audio/conversations/conv8_7_line2.mp3' },
+            { speaker: 'خَالِد', arabic: 'صَحِيحٌ، لَكِنْ أَشْعُرُ أَنَّ النَّاسَ أَصْبَحُوا مُدْمِنِينَ عَلَى هَوَاتِفِهِمْ', english: 'True, but I feel that people have become addicted to their phones', audio: '/audio/conversations/conv8_7_line3.mp3' },
+            { speaker: 'عُمَر', arabic: 'أُوَافِقُكَ تَمَامًا، وَسَائِلُ التَّوَاصُلِ الاجْتِمَاعِيِّ لَهَا إِيجَابِيَّاتٌ وَسَلْبِيَّاتٌ', english: 'I completely agree with you, social media has positives and negatives', audio: '/audio/conversations/conv8_7_line4.mp3' },
+            { speaker: 'خَالِد', arabic: 'مَا رَأْيُكَ فِي تَأْثِيرِهَا عَلَى الشَّبَابِ وَالأَطْفَالِ؟', english: 'What is your opinion on its effect on youth and children?', audio: '/audio/conversations/conv8_7_line5.mp3' },
+            { speaker: 'عُمَر', arabic: 'أَعْتَقِدُ أَنَّهَا سِلَاحٌ ذُو حَدَّيْنِ، يَجِبُ اسْتِخْدَامُهَا بِحِكْمَةٍ', english: 'I think it is a double-edged sword, it must be used wisely', audio: '/audio/conversations/conv8_7_line6.mp3' },
+            { speaker: 'خَالِد', arabic: 'كَلَامٌ سَلِيمٌ، الْمُشْكِلَةُ أَنَّ الْكَثِيرِينَ يُضَيِّعُونَ وَقْتَهُمْ فِيهَا', english: 'Sound words, the problem is that many waste their time on it', audio: '/audio/conversations/conv8_7_line7.mp3' },
+            { speaker: 'عُمَر', arabic: 'نَعَمْ، وَيَنْسَوْنَ أَهَمِّيَّةَ التَّوَاصُلِ الْحَقِيقِيِّ وَجْهًا لِوَجْهٍ', english: 'Yes, and they forget the importance of real face-to-face communication', audio: '/audio/conversations/conv8_7_line8.mp3' },
+            { speaker: 'خَالِد', arabic: 'بِالضَّبْطِ، يَجِبُ أَنْ نَجِدَ تَوَازُنًا بَيْنَ الْعَالَمَيْنِ', english: 'Exactly, we must find a balance between the two worlds', audio: '/audio/conversations/conv8_7_line9.mp3' },
+            { speaker: 'عُمَر', arabic: 'وَأَيْضًا يَجِبُ تَعْلِيمُ الأَجْيَالِ الْجَدِيدَةِ الاسْتِخْدَامَ الصَّحِيحَ', english: 'And also we must teach new generations the correct usage', audio: '/audio/conversations/conv8_7_line10.mp3' },
+            { speaker: 'خَالِد', arabic: 'أَتَّفِقُ مَعَكَ، التَّرْبِيَةُ الرَّقْمِيَّةُ أَصْبَحَتْ ضَرُورِيَّةً', english: 'I agree with you, digital education has become necessary', audio: '/audio/conversations/conv8_7_line11.mp3' },
+            { speaker: 'عُمَر', arabic: 'تَمَامًا، هَذَا هُوَ تَحَدِّي عَصْرِنَا الْحَالِيِّ', english: 'Exactly, this is the challenge of our current era', audio: '/audio/conversations/conv8_7_line12.mp3' }
+        ]
+    },
+    {
+        id: 'conv8_8',
+        title: 'Philosophical Discussion About Life',
+        context: 'Deep conversation about happiness, success, and the meaning of life',
+        lines: [
+            { speaker: 'فَاطِمَة', arabic: 'مَا هُوَ مَفْهُومُكَ لِلسَّعَادَةِ الْحَقِيقِيَّةِ؟', english: 'What is your concept of true happiness?', audio: '/audio/conversations/conv8_8_line1.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'سُؤَالٌ عَمِيقٌ، أَعْتَقِدُ أَنَّ السَّعَادَةَ تَكْمُنُ فِي الرِّضَا وَالْقَنَاعَةِ', english: 'A deep question, I think happiness lies in contentment and satisfaction', audio: '/audio/conversations/conv8_8_line2.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'أُوَافِقُكِ، لَكِنْ أَلَيْسَ الطُّمُوحُ مُهِمًّا أَيْضًا؟', english: 'I agree with you, but is not ambition also important?', audio: '/audio/conversations/conv8_8_line3.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'بَلَى، الْمُهِمُّ هُوَ التَّوَازُنُ بَيْنَ الطُّمُوحِ وَالرِّضَا', english: 'Yes, what is important is the balance between ambition and contentment', audio: '/audio/conversations/conv8_8_line4.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'وَمَا رَأْيُكِ فِي مَعْنَى النَّجَاحِ فِي الْحَيَاةِ؟', english: 'And what is your opinion on the meaning of success in life?', audio: '/audio/conversations/conv8_8_line5.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'النَّجَاحُ لَيْسَ فَقَطْ فِي الْمَالِ وَالشُّهْرَةِ، بَلْ فِي التَّأْثِيرِ الإِيجَابِيِّ', english: 'Success is not only in money and fame, but in positive impact', audio: '/audio/conversations/conv8_8_line6.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'كَلَامٌ جَمِيلٌ، إِذًا النَّجَاحُ يَرْتَبِطُ بِخِدْمَةِ الآخَرِينَ؟', english: 'Beautiful words, so success is connected to serving others?', audio: '/audio/conversations/conv8_8_line7.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'نَعَمْ بِالتَّأْكِيدِ، وَأَيْضًا فِي تَحْقِيقِ السَّلَامِ الدَّاخِلِيِّ', english: 'Yes certainly, and also in achieving inner peace', audio: '/audio/conversations/conv8_8_line8.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'هَلْ تَعْتَقِدِينَ أَنَّ الْمَالَ يَجْلِبُ السَّعَادَةَ؟', english: 'Do you think money brings happiness?', audio: '/audio/conversations/conv8_8_line9.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'الْمَالُ وَسِيلَةٌ وَلَيْسَ غَايَةً، يُسَاعِدُ لَكِنَّهُ لَا يَضْمَنُ السَّعَادَةَ', english: 'Money is a means and not an end, it helps but does not guarantee happiness', audio: '/audio/conversations/conv8_8_line10.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'حِكْمَةٌ بَالِغَةٌ، الصِّحَّةُ وَالْعَائِلَةُ أَهَمُّ مِنَ الْمَالِ', english: 'Great wisdom, health and family are more important than money', audio: '/audio/conversations/conv8_8_line11.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'تَمَامًا، هَذِهِ هِيَ الْكُنُوزُ الْحَقِيقِيَّةُ فِي الْحَيَاةِ', english: 'Exactly, these are the true treasures in life', audio: '/audio/conversations/conv8_8_line12.mp3' }
         ]
     }
 ];
@@ -1972,38 +2625,74 @@ function makeConversationNode(conv: ConversationData): CourseNode {
     const assembly = exercises.filter(e => e.type === 'sentence_assembly');
     const matching = exercises.filter(e => e.type === 'match_pairs');
     
+    // Create conversation line traps (AGGRESSIVE)
+    const conversationTraps: Exercise[] = [];
+    for (const line of pick(conv.lines, Math.min(4, conv.lines.length))) {
+        const otherLines = conv.lines.filter(l => l.arabic !== line.arabic);
+        if (otherLines.length >= 2) {
+            conversationTraps.push(makeConversationLineTrap(
+                line,
+                otherLines.slice(0, 2),
+                conv.id,
+                `What does ${line.speaker} say?`
+            ));
+        }
+    }
+    
+    // Add speaker confusion traps
+    for (const line of pick(conv.lines, Math.min(3, conv.lines.length))) {
+        const otherLines = conv.lines.filter(l => l.speaker !== line.speaker);
+        if (otherLines.length >= 2) {
+            conversationTraps.push({
+                id: nextId(`${conv.id}-speaker-trap`),
+                type: 'trap_select',
+                prompt: `Careful! Which line does ${line.speaker} say?`,
+                promptAudio: line.audio,
+                correctAnswer: line.arabic,
+                choices: shuffle([line.arabic, ...otherLines.slice(0, 2).map(l => l.arabic)]),
+                trapExplanation: `<strong>${line.speaker}</strong> says: <strong class="arabic-text">${line.arabic}</strong> - "${line.english}".`,
+            });
+        }
+    }
+    
     return {
         id: `u7-${conv.id}`,
         title: conv.title,
         description: conv.context,
         type: 'lesson',
         status: 'locked',
-        totalRounds: 4,
+        totalRounds: 5,
         completedRounds: 0,
         lessons: [
             {
                 id: `u7-${conv.id}-r1`,
-                title: 'Learn the Conversation',
+                title: 'Round 1: Learn the Conversation',
                 description: 'Listen to each line',
-                exercises: intros
+                exercises: [...intros, ...makeLetterRefreshers(3, conv.id), ...makeWordRefreshers(3, conv.id)]
             },
             {
                 id: `u7-${conv.id}-r2`,
-                title: 'Comprehension',
+                title: 'Round 2: Comprehension',
                 description: 'Understand what is said',
-                exercises: shuffle(comprehension.slice(0, Math.ceil(comprehension.length / 2)))
+                exercises: shuffle([...comprehension.slice(0, Math.ceil(comprehension.length / 2)), ...conversationTraps.slice(0, 2), ...makeWordRefreshers(4, conv.id), ...makeSentenceRefreshers(3, conv.id)])
             },
             {
                 id: `u7-${conv.id}-r3`,
-                title: 'Build Sentences',
+                title: 'Round 3: Build Sentences',
                 description: 'Assemble the conversation',
-                exercises: shuffle([...assembly, ...comprehension.slice(Math.ceil(comprehension.length / 2))])
+                exercises: shuffle([...assembly, ...assembly, ...comprehension.slice(Math.ceil(comprehension.length / 2)), ...conversationTraps.slice(2, 4), ...makeWordRefreshers(5, conv.id), ...makeSentenceRefreshers(4, conv.id)])
             },
             {
                 id: `u7-${conv.id}-r4`,
-                title: 'Master the Dialogue',
+                title: 'Round 4: Practice More',
+                description: 'Keep practicing',
+                exercises: shuffle([...matching, ...pick(comprehension, 3), ...pick(assembly, 2), ...pick(assembly, 2), ...conversationTraps.slice(4, 6), ...makeWordRefreshers(6, conv.id), ...makeSentenceRefreshers(5, conv.id)])
+            },
+            {
+                id: `u7-${conv.id}-r5`,
+                title: 'Round 5: Master the Dialogue',
                 description: 'Put it all together',
-                exercises: shuffle([...matching, ...pick(comprehension, 3), ...pick(assembly, 2)])
+                exercises: shuffle([...matching, ...pick(comprehension, 4), ...pick(assembly, 3), ...conversationTraps, ...makeLetterRefreshers(4, conv.id), ...makeWordRefreshers(6, conv.id), ...makeSentenceRefreshers(6, conv.id)])
             }
         ]
     };
@@ -2078,6 +2767,433 @@ function makeUnit7Test(): CourseNode {
             id: 'u7-test-lesson',
             title: 'Conversation Mastery',
             description: 'Show you can handle real conversations',
+            exercises: shuffle(exercises)
+        }]
+    };
+}
+
+function makeUnit8Test(): CourseNode {
+    const exercises: Exercise[] = [];
+    
+    // Test all advanced conversations
+    UNIT8_CONVERSATIONS.forEach(conv => {
+        // Translation questions
+        conv.lines.forEach(line => {
+            const otherLines = UNIT8_CONVERSATIONS
+                .flatMap(c => c.lines)
+                .filter(l => l.english !== line.english);
+            const distractors = pick(otherLines, 3).map(l => l.english);
+            
+            exercises.push({
+                id: nextId('u8t-trans'),
+                type: 'multiple_choice',
+                prompt: 'What does this mean?',
+                correctAnswer: line.english,
+                choices: shuffle([line.english, ...distractors]),
+                hint: line.arabic,
+                promptAudio: line.audio
+            });
+        });
+        
+        // Assembly questions for longer sentences
+        conv.lines.forEach(line => {
+            const words = line.arabic.split(' ');
+            if (words.length >= 2) {
+                const otherWords = UNIT8_CONVERSATIONS
+                    .flatMap(c => c.lines)
+                    .filter(l => l.arabic !== line.arabic)
+                    .flatMap(l => l.arabic.split(' '))
+                    .filter(w => !words.includes(w));
+                const distractors = pick(otherWords, Math.min(4, otherWords.length));
+                
+                exercises.push({
+                    id: nextId('u8t-asm'),
+                    type: 'sentence_assembly',
+                    prompt: `Assemble: "${line.english}"`,
+                    correctAnswer: line.arabic,
+                    choices: shuffle([...words, ...distractors]),
+                    promptAudio: line.audio
+                });
+            }
+        });
+    });
+    
+    // Match pairs from different conversations
+    const allLines = UNIT8_CONVERSATIONS.flatMap(c => c.lines);
+    exercises.push({
+        id: nextId('u8t-mp'),
+        type: 'match_pairs',
+        prompt: 'Match Arabic to English',
+        correctAnswer: '',
+        choices: [],
+        pairs: pick(allLines, 8).map(l => ({ left: l.arabic, right: l.english }))
+    });
+    
+    return {
+        id: 'u8-test',
+        title: '📝 Unit 8 Final Test',
+        description: 'Master advanced conversations!',
+        type: 'test',
+        status: 'locked',
+        totalRounds: 1,
+        completedRounds: 0,
+        lessons: [{
+            id: 'u8-test-lesson',
+            title: 'Advanced Conversation Mastery',
+            description: 'Show you can handle complex real-world conversations',
+            exercises: shuffle(exercises)
+        }]
+    };
+}
+
+// ═══════════════════════════════════════════════════════════
+// UNIT 9: QURANIC VERSES (STAGE 9)
+// ═══════════════════════════════════════════════════════════
+
+interface QuranVerse {
+    id: string;
+    surahNumber: number;
+    surahName: string;
+    surahNameArabic: string;
+    verseNumber: number;
+    arabic: string;
+    transliteration: string;
+    translation: string;
+    audio: string;
+    context?: string;
+}
+
+const UNIT9_QURAN_VERSES: QuranVerse[] = [
+    // Surah Al-Fatihah (The Opening) - Most important surah
+    {
+        id: 'quran_1_1',
+        surahNumber: 1,
+        surahName: 'Al-Fatihah',
+        surahNameArabic: 'الفَاتِحَة',
+        verseNumber: 1,
+        arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        transliteration: 'Bismillāhi r-raḥmāni r-raḥīm',
+        translation: 'In the name of Allah, the Most Gracious, the Most Merciful',
+        audio: '/audio/quran/quran_1_1.mp3',
+        context: 'The opening verse of every surah except one, recited before every action'
+    },
+    {
+        id: 'quran_1_2',
+        surahNumber: 1,
+        surahName: 'Al-Fatihah',
+        surahNameArabic: 'الفَاتِحَة',
+        verseNumber: 2,
+        arabic: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+        transliteration: 'Al-ḥamdu lillāhi rabbi l-ʿālamīn',
+        translation: 'All praise is due to Allah, Lord of all the worlds',
+        audio: '/audio/quran/quran_1_2.mp3'
+    },
+    
+    // Surah Al-Ikhlas (Sincerity) - Short and fundamental
+    {
+        id: 'quran_112_1',
+        surahNumber: 112,
+        surahName: 'Al-Ikhlas',
+        surahNameArabic: 'الإِخْلَاص',
+        verseNumber: 1,
+        arabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ',
+        transliteration: 'Qul huwa Allāhu aḥad',
+        translation: 'Say: He is Allah, the One',
+        audio: '/audio/quran/quran_112_1.mp3',
+        context: 'Describes the oneness of Allah, equals 1/3 of the Quran in reward'
+    },
+    {
+        id: 'quran_112_2',
+        surahNumber: 112,
+        surahName: 'Al-Ikhlas',
+        surahNameArabic: 'الإِخْلَاص',
+        verseNumber: 2,
+        arabic: 'اللَّهُ الصَّمَدُ',
+        transliteration: 'Allāhu ṣ-ṣamad',
+        translation: 'Allah, the Eternal Refuge',
+        audio: '/audio/quran/quran_112_2.mp3'
+    },
+    {
+        id: 'quran_112_3',
+        surahNumber: 112,
+        surahName: 'Al-Ikhlas',
+        surahNameArabic: 'الإِخْلَاص',
+        verseNumber: 3,
+        arabic: 'لَمْ يَلِدْ وَلَمْ يُولَدْ',
+        transliteration: 'Lam yalid wa lam yūlad',
+        translation: 'He neither begets nor is born',
+        audio: '/audio/quran/quran_112_3.mp3'
+    },
+    {
+        id: 'quran_112_4',
+        surahNumber: 112,
+        surahName: 'Al-Ikhlas',
+        surahNameArabic: 'الإِخْلَاص',
+        verseNumber: 4,
+        arabic: 'وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',
+        transliteration: 'Wa lam yakun lahu kufuwan aḥad',
+        translation: 'Nor is there to Him any equivalent',
+        audio: '/audio/quran/quran_112_4.mp3'
+    },
+    
+    // Surah Al-Falaq (The Daybreak)
+    {
+        id: 'quran_113_1',
+        surahNumber: 113,
+        surahName: 'Al-Falaq',
+        surahNameArabic: 'الفَلَق',
+        verseNumber: 1,
+        arabic: 'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',
+        transliteration: 'Qul aʿūdhu bi-rabbi l-falaq',
+        translation: 'Say: I seek refuge in the Lord of daybreak',
+        audio: '/audio/quran/quran_113_1.mp3',
+        context: 'Seeking protection from evil, recited for protection'
+    },
+    {
+        id: 'quran_113_2',
+        surahNumber: 113,
+        surahName: 'Al-Falaq',
+        surahNameArabic: 'الفَلَق',
+        verseNumber: 2,
+        arabic: 'مِن شَرِّ مَا خَلَقَ',
+        transliteration: 'Min sharri mā khalaq',
+        translation: 'From the evil of what He created',
+        audio: '/audio/quran/quran_113_2.mp3'
+    },
+    
+    // Surah An-Nas (Mankind)
+    {
+        id: 'quran_114_1',
+        surahNumber: 114,
+        surahName: 'An-Nas',
+        surahNameArabic: 'النَّاس',
+        verseNumber: 1,
+        arabic: 'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',
+        transliteration: 'Qul aʿūdhu bi-rabbi n-nās',
+        translation: 'Say: I seek refuge in the Lord of mankind',
+        audio: '/audio/quran/quran_114_1.mp3',
+        context: 'Seeking protection from evil whispers'
+    },
+    {
+        id: 'quran_114_2',
+        surahNumber: 114,
+        surahName: 'An-Nas',
+        surahNameArabic: 'النَّاس',
+        verseNumber: 2,
+        arabic: 'مَلِكِ النَّاسِ',
+        transliteration: 'Maliki n-nās',
+        translation: 'The Sovereign of mankind',
+        audio: '/audio/quran/quran_114_2.mp3'
+    },
+    {
+        id: 'quran_114_3',
+        surahNumber: 114,
+        surahName: 'An-Nas',
+        surahNameArabic: 'النَّاس',
+        verseNumber: 3,
+        arabic: 'إِلَٰهِ النَّاسِ',
+        transliteration: 'Ilāhi n-nās',
+        translation: 'The God of mankind',
+        audio: '/audio/quran/quran_114_3.mp3'
+    },
+    
+    // Surah Al-Asr (The Time)
+    {
+        id: 'quran_103_1',
+        surahNumber: 103,
+        surahName: 'Al-Asr',
+        surahNameArabic: 'العَصْر',
+        verseNumber: 1,
+        arabic: 'وَالْعَصْرِ',
+        transliteration: 'Wa l-ʿaṣr',
+        translation: 'By time',
+        audio: '/audio/quran/quran_103_1.mp3',
+        context: 'A complete philosophy of life in 3 verses'
+    },
+    {
+        id: 'quran_103_2',
+        surahNumber: 103,
+        surahName: 'Al-Asr',
+        surahNameArabic: 'العَصْر',
+        verseNumber: 2,
+        arabic: 'إِنَّ الْإِنسَانَ لَفِي خُسْرٍ',
+        transliteration: 'Inna l-insāna la-fī khusr',
+        translation: 'Indeed, mankind is in loss',
+        audio: '/audio/quran/quran_103_2.mp3'
+    },
+    {
+        id: 'quran_103_3',
+        surahNumber: 103,
+        surahName: 'Al-Asr',
+        surahNameArabic: 'العَصْر',
+        verseNumber: 3,
+        arabic: 'إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ',
+        transliteration: 'Illā lladhīna āmanū wa ʿamilū ṣ-ṣāliḥāti wa tawāṣaw bi-l-ḥaqqi wa tawāṣaw bi-ṣ-ṣabr',
+        translation: 'Except for those who believe and do righteous deeds and advise each other to truth and advise each other to patience',
+        audio: '/audio/quran/quran_103_3.mp3'
+    },
+    
+    // Surah Al-Kawthar (Abundance)
+    {
+        id: 'quran_108_1',
+        surahNumber: 108,
+        surahName: 'Al-Kawthar',
+        surahNameArabic: 'الكَوْثَر',
+        verseNumber: 1,
+        arabic: 'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',
+        transliteration: 'Innā aʿṭaynāka l-kawthar',
+        translation: 'Indeed, We have granted you abundance',
+        audio: '/audio/quran/quran_108_1.mp3',
+        context: 'The shortest surah, about divine abundance'
+    },
+    {
+        id: 'quran_108_2',
+        surahNumber: 108,
+        surahName: 'Al-Kawthar',
+        surahNameArabic: 'الكَوْثَر',
+        verseNumber: 2,
+        arabic: 'فَصَلِّ لِرَبِّكَ وَانْحَرْ',
+        transliteration: 'Fa-ṣalli li-rabbika wa nḥar',
+        translation: 'So pray to your Lord and sacrifice',
+        audio: '/audio/quran/quran_108_2.mp3'
+    },
+    {
+        id: 'quran_108_3',
+        surahNumber: 108,
+        surahName: 'Al-Kawthar',
+        surahNameArabic: 'الكَوْثَر',
+        verseNumber: 3,
+        arabic: 'إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ',
+        transliteration: 'Inna shāniʾaka huwa l-abtar',
+        translation: 'Indeed, your enemy is the one cut off',
+        audio: '/audio/quran/quran_108_3.mp3'
+    }
+];
+
+function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] {
+    const exercises: Exercise[] = [];
+    
+    // 1. Reading exercise with audio
+    exercises.push({
+        id: nextId(`${nodeId}-read`),
+        type: 'hear_choose',
+        prompt: 'Listen and identify the correct verse',
+        promptAudio: verse.audio,
+        correctAnswer: verse.arabic,
+        choices: shuffle([
+            verse.arabic,
+            ...pick(UNIT9_QURAN_VERSES.filter(v => v.id !== verse.id).map(v => v.arabic), 3)
+        ])
+    });
+    
+    // 2. Translation matching
+    exercises.push({
+        id: nextId(`${nodeId}-trans`),
+        type: 'multiple_choice',
+        prompt: `What is the meaning of this verse?`,
+        hint: verse.arabic,
+        correctAnswer: verse.translation,
+        choices: shuffle([
+            verse.translation,
+            ...pick(UNIT9_QURAN_VERSES.filter(v => v.id !== verse.id).map(v => v.translation), 3)
+        ]),
+        promptAudio: verse.audio
+    });
+    
+    // 3. Transliteration matching (helps with pronunciation)
+    exercises.push({
+        id: nextId(`${nodeId}-translit`),
+        type: 'multiple_choice',
+        prompt: 'Choose the correct transliteration',
+        hint: verse.arabic,
+        correctAnswer: verse.transliteration,
+        choices: shuffle([
+            verse.transliteration,
+            ...pick(UNIT9_QURAN_VERSES.filter(v => v.id !== verse.id).map(v => v.transliteration), 3)
+        ])
+    });
+    
+    return exercises;
+}
+
+function makeQuranSurahNode(surahNumber: number, nodeId: string): CourseNode {
+    const surahVerses = UNIT9_QURAN_VERSES.filter(v => v.surahNumber === surahNumber);
+    const firstVerse = surahVerses[0];
+    
+    return {
+        id: nodeId,
+        title: `${firstVerse.surahNameArabic} (${firstVerse.surahName})`,
+        description: `Surah ${surahNumber}`,
+        type: 'lesson',
+        status: 'locked',
+        totalRounds: 2,
+        completedRounds: 0,
+        lessons: [
+            {
+                id: `${nodeId}-l1`,
+                title: 'Reading Practice',
+                description: 'Learn to read and understand the verses',
+                exercises: shuffle(surahVerses.flatMap(v => makeQuranVerseExercises(v, nodeId)))
+            }
+        ]
+    };
+}
+
+function makeUnit9Test(): CourseNode {
+    const exercises: Exercise[] = [];
+    
+    // Test all verses
+    UNIT9_QURAN_VERSES.forEach(verse => {
+        // Translation test
+        exercises.push({
+            id: nextId('u9t-trans'),
+            type: 'multiple_choice',
+            prompt: 'What does this verse mean?',
+            hint: verse.arabic,
+            correctAnswer: verse.translation,
+            choices: shuffle([
+                verse.translation,
+                ...pick(UNIT9_QURAN_VERSES.filter(v => v.id !== verse.id).map(v => v.translation), 3)
+            ]),
+            promptAudio: verse.audio
+        });
+        
+        // Audio recognition test
+        exercises.push({
+            id: nextId('u9t-audio'),
+            type: 'hear_choose',
+            prompt: 'Listen and choose the correct verse',
+            promptAudio: verse.audio,
+            correctAnswer: verse.arabic,
+            choices: shuffle([
+                verse.arabic,
+                ...pick(UNIT9_QURAN_VERSES.filter(v => v.id !== verse.id).map(v => v.arabic), 3)
+            ])
+        });
+    });
+    
+    // Match pairs
+    exercises.push({
+        id: nextId('u9t-mp'),
+        type: 'match_pairs',
+        prompt: 'Match Arabic verses to their English translations',
+        correctAnswer: '',
+        choices: [],
+        pairs: pick(UNIT9_QURAN_VERSES, 6).map(v => ({ left: v.arabic, right: v.translation }))
+    });
+    
+    return {
+        id: 'u9-test',
+        title: '📝 Unit 9 Final Test',
+        description: 'Master Quranic verses!',
+        type: 'test',
+        status: 'locked',
+        totalRounds: 1,
+        completedRounds: 0,
+        lessons: [{
+            id: 'u9-test-lesson',
+            title: 'Quran Reading Mastery',
+            description: 'Show you can read and understand Quranic verses',
             exercises: shuffle(exercises)
         }]
     };
@@ -2300,6 +3416,38 @@ const baseCourseData: Course = {
                 makeConversationNode(UNIT7_CONVERSATIONS[4]), // Asking for Help
                 makeConversationNode(UNIT7_CONVERSATIONS[5]), // Saying Goodbye
                 makeUnit7Test()
+            ]
+        },
+        {
+            id: 8,
+            title: 'Unit 8',
+            description: 'Advanced Conversations (Stage 8)',
+            color: '#E91E63', // Pink color for advanced mastery
+            nodes: [
+                makeConversationNode(UNIT8_CONVERSATIONS[0]), // At the Restaurant
+                makeConversationNode(UNIT8_CONVERSATIONS[1]), // Asking for Directions
+                makeConversationNode(UNIT8_CONVERSATIONS[2]), // At the Market
+                makeConversationNode(UNIT8_CONVERSATIONS[3]), // Making Plans
+                makeConversationNode(UNIT8_CONVERSATIONS[4]), // Talking About Hobbies
+                makeConversationNode(UNIT8_CONVERSATIONS[5]), // At the Doctor
+                makeConversationNode(UNIT8_CONVERSATIONS[6]), // Talking About Family
+                makeConversationNode(UNIT8_CONVERSATIONS[7]), // Planning a Trip
+                makeUnit8Test()
+            ]
+        },
+        {
+            id: 9,
+            title: 'Unit 9',
+            description: 'Quranic Verses (Stage 9)',
+            color: '#4CAF50', // Green color for spiritual mastery
+            nodes: [
+                makeQuranSurahNode(1, 'u9-n1'),    // Al-Fatihah (2 verses)
+                makeQuranSurahNode(112, 'u9-n2'),  // Al-Ikhlas (4 verses)
+                makeQuranSurahNode(113, 'u9-n3'),  // Al-Falaq (2 verses)
+                makeQuranSurahNode(114, 'u9-n4'),  // An-Nas (3 verses)
+                makeQuranSurahNode(103, 'u9-n5'),  // Al-Asr (3 verses)
+                makeQuranSurahNode(108, 'u9-n6'),  // Al-Kawthar (3 verses)
+                makeUnit9Test()
             ]
         }
     ],
