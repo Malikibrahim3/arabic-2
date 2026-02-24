@@ -16,14 +16,6 @@ import { test, expect, Page } from '@playwright/test';
 async function unlockApp(page: Page) {
     await page.goto('http://localhost:5173/');
     
-    // Set sessionStorage to bypass welcome screen (app uses sessionStorage not localStorage)
-    await page.evaluate(() => {
-        sessionStorage.setItem('yasmine_unlocked', 'true');
-    });
-    
-    // Reload to apply sessionStorage
-    await page.reload();
-    
     // Wait for the learn page to appear
     await page.waitForSelector('.learn-page, .lesson-page, .node', { timeout: 10000 });
     
@@ -91,10 +83,9 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
     });
 
     test('Unit 1 Node 1: First Letter Group - Complete Round 1', async ({ page }) => {
-        // Use sessionStorage for unlock
+        // Use God Mode for testing
         await page.goto('http://localhost:5173/');
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
@@ -1856,13 +1847,11 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
         // Start from home page and set bypass flag
         await page.goto('http://localhost:5173/');
         
-        // Set sessionStorage to bypass welcome screen (app uses sessionStorage not localStorage)
+        // Enable God Mode for testing
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         
-        // Reload to apply sessionStorage
         await page.reload();
         await page.waitForTimeout(500);
         
@@ -1896,7 +1885,6 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
     test('Functional & UI QA: User progress saved', async ({ page }) => {
         await page.goto('http://localhost:5173/');
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
@@ -1913,7 +1901,6 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
     test('Functional & UI QA: Audio placeholder plays', async ({ page }) => {
         await page.goto('http://localhost:5173/');
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
@@ -1931,7 +1918,6 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
     test('Functional & UI QA: Typing & matching inputs work', async ({ page }) => {
         await page.goto('http://localhost:5173/');
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
@@ -1949,7 +1935,6 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
     test('Audio & TTS QA: Audio plays when prompted', async ({ page }) => {
         await page.goto('http://localhost:5173/');
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
@@ -1994,7 +1979,6 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
     test('Audio & TTS QA: Audio matches lesson prompt text', async ({ page }) => {
         await page.goto('http://localhost:5173/');
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
@@ -2038,7 +2022,6 @@ test.describe('Comprehensive Arabic Learning App Tests', () => {
     test('Audio & TTS QA: Audio is cached/reused', async ({ page }) => {
         await page.goto('http://localhost:5173/');
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();

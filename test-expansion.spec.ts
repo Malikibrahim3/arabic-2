@@ -8,12 +8,6 @@ test.describe('Course Expansion Verification', () => {
     test('should have correct number of units', async ({ page }) => {
         await page.goto('http://localhost:5174/');
         
-        // Unlock the app
-        await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
-        });
-        await page.reload();
-        
         // Wait for units to load
         await page.waitForSelector('.unit-card, .unit', { timeout: 10000 });
         
@@ -28,9 +22,8 @@ test.describe('Course Expansion Verification', () => {
     test('should have Unit 4 with 40 words', async ({ page }) => {
         await page.goto('http://localhost:5174/');
         
-        // Unlock and enable God Mode
+        // Enable God Mode
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
@@ -54,11 +47,6 @@ test.describe('Course Expansion Verification', () => {
     test('should have Unit 4B', async ({ page }) => {
         await page.goto('http://localhost:5174/');
         
-        await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
-        });
-        await page.reload();
-        
         await page.waitForSelector('.unit-card, .unit', { timeout: 10000 });
         
         // Look for Unit 4B
@@ -68,11 +56,6 @@ test.describe('Course Expansion Verification', () => {
 
     test('should have Unit 4C', async ({ page }) => {
         await page.goto('http://localhost:5174/');
-        
-        await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
-        });
-        await page.reload();
         
         await page.waitForSelector('.unit-card, .unit', { timeout: 10000 });
         
@@ -85,7 +68,6 @@ test.describe('Course Expansion Verification', () => {
         await page.goto('http://localhost:5174/');
         
         await page.evaluate(() => {
-            sessionStorage.setItem('yasmine_unlocked', 'true');
             localStorage.setItem('godMode', 'true');
         });
         await page.reload();
