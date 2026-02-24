@@ -1347,6 +1347,252 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
     };
 }
 
+// ═══════════════════════════════════════════════════════════
+// UNIT 5: UNVOWELLED READING (STAGE 5)
+// ═══════════════════════════════════════════════════════════
+
+/** Removes common vowel marks (Fatha, Kasra, Damma, Sukun, Shadda, Tanween) */
+function stripHarakat(text: string): string {
+    return text.replace(/[\u064B-\u0652\u0654-\u0655]/g, '');
+}
+
+function makeUnvowelledExercises(word: WordData, nodeId: string): Exercise[] {
+    const unvowelled = stripHarakat(word.arabic);
+    const englishDistractors = pick(UNIT4_WORDS.map(w => w.english).filter(w => w !== word.english), 3);
+
+    return [
+        {
+            id: nextId(`${nodeId}-intro`),
+            type: 'introduction',
+            prompt: `Training wheels off!`,
+            promptAudio: word.audio,
+            correctAnswer: unvowelled,
+            choices: [],
+            hint: `${word.arabic} → ${unvowelled}\nMeans: ${word.english}`
+        },
+        {
+            id: nextId(`${nodeId}-read`),
+            type: 'multiple_choice',
+            prompt: `What does this word mean?`,
+            correctAnswer: word.english,
+            choices: shuffle([word.english, ...englishDistractors]),
+            hint: unvowelled,
+            promptAudio: word.audio,
+        },
+        {
+            id: nextId(`${nodeId}-hear`),
+            type: 'hear_choose',
+            prompt: `Listen and select the word`,
+            promptAudio: word.audio,
+            correctAnswer: unvowelled,
+            choices: shuffle([unvowelled, ...pick(UNIT4_WORDS.map(w => stripHarakat(w.arabic)).filter(w => w !== unvowelled), 3)]),
+        }
+    ];
+}
+
+function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): CourseNode {
+    const intros: Exercise[] = [];
+    const reads: Exercise[] = [];
+    const hears: Exercise[] = [];
+
+    words.forEach(w => {
+        const exs = makeUnvowelledExercises(w, nodeId);
+        intros.push(exs[0]);
+        reads.push(exs[1]);
+        hears.push(exs[2]);
+    });
+
+    const lessons: Lesson[] = [];
+    lessons.push({
+        id: `${nodeId}-l1`,
+        title: `Round 1: Stripping Vowels`,
+        description: `See the naked words.`,
+        exercises: [...intros, ...shuffle(reads)]
+    });
+    lessons.push({
+        id: `${nodeId}-l2`,
+        title: `Round 2: Hearing Unvowelled`,
+        description: `Match audio to plain text.`,
+        exercises: shuffle(hears)
+    });
+    lessons.push({
+        id: `${nodeId}-l3`,
+        title: `Round 3: Match Pairs`,
+        description: `Connect meaning to words.`,
+        exercises: [{
+            id: nextId(`${nodeId}-mp`),
+            type: 'match_pairs',
+            prompt: `Match the unvowelled words to English.`,
+            correctAnswer: '',
+            choices: [],
+            pairs: pick(words, 4).map(w => ({ left: stripHarakat(w.arabic), right: w.english }))
+        }, ...shuffle(reads)]
+    });
+    lessons.push({
+        id: `${nodeId}-l4`,
+        title: `Round 4: More Practice`,
+        description: `Repetition builds memory.`,
+        exercises: shuffle([...reads, ...hears])
+    });
+    lessons.push({
+        id: `${nodeId}-l5`,
+        title: `Round 5: Mastery`,
+        description: `You can read real Arabic!`,
+        exercises: shuffle([...reads, ...hears])
+    });
+
+    return {
+        id: nodeId,
+        title: title,
+        description: `Read without vowels`,
+        type: 'lesson',
+        status: 'locked',
+        totalRounds: 5,
+        completedRounds: 0,
+        lessons: lessons,
+    };
+}
+
+// ═══════════════════════════════════════════════════════════
+// UNIT 6: FULL SENTENCES (STAGE 6)
+// ═══════════════════════════════════════════════════════════
+
+interface SentenceData {
+    arabic: string;
+    english: string;
+    audio: string;
+    words: string[]; // For assembly
+}
+
+const UNIT6_SENTENCES: SentenceData[] = [
+    {
+        arabic: 'اَلسَّلامُ عَلَيكُم',
+        english: 'Peace be upon you',
+        audio: '/audio/sentences/sent_assalamu.mp3',
+        words: ['اَلسَّلامُ', 'عَلَيكُم']
+    },
+    {
+        arabic: 'بِسمِ اللّه',
+        english: 'In the name of Allah',
+        audio: '/audio/sentences/sent_bismillah.mp3',
+        words: ['بِسمِ', 'اللّه']
+    },
+    {
+        arabic: 'كَيفَ حالُك',
+        english: 'How are you?',
+        audio: '/audio/sentences/sent_kayf_halak.mp3',
+        words: ['كَيفَ', 'حالُك']
+    },
+    {
+        arabic: 'أَنا بِخَير',
+        english: 'I am fine',
+        audio: '/audio/sentences/sent_ana_bikhayr.mp3',
+        words: ['أَنا', 'بِخَير']
+    },
+    {
+        arabic: 'اِسمي',
+        english: 'My name is...',
+        audio: '/audio/sentences/sent_ismi.mp3',
+        words: ['اِسمي']
+    },
+    {
+        arabic: 'هذا كِتاب',
+        english: 'This is a book',
+        audio: '/audio/sentences/sent_hadha_kitab.mp3',
+        words: ['هذا', 'كِتاب']
+    },
+    {
+        arabic: 'هذِهِ مَدرَسة',
+        english: 'This is a school',
+        audio: '/audio/sentences/sent_hadhihi_madrasah.mp3',
+        words: ['هذِهِ', 'مَدرَسة']
+    },
+    {
+        arabic: 'مَعَ السَّلامة',
+        english: 'Goodbye',
+        audio: '/audio/sentences/sent_ma3a_salama.mp3',
+        words: ['مَعَ', 'السَّلامة']
+    },
+    {
+        arabic: 'صَباحُ الخَير',
+        english: 'Good morning',
+        audio: '/audio/sentences/sent_sabah_alkhayr.mp3',
+        words: ['صَباحُ', 'الخَير']
+    },
+    {
+        arabic: 'أَنا أُحِبُّ العَرَبيّة',
+        english: 'I love Arabic',
+        audio: '/audio/sentences/sent_ana_uhibb.mp3',
+        words: ['أَنا', 'أُحِبُّ', 'العَرَبيّة']
+    }
+];
+
+function makeSentenceExercises(sent: SentenceData, nodeId: string): Exercise[] {
+    const distractors = pick(UNIT6_SENTENCES.map(s => s.english).filter(e => e !== sent.english), 3);
+    
+    // Add distractor words from other sentences to make assembly harder
+    const allWords = UNIT6_SENTENCES.flatMap(s => s.words).filter(w => !sent.words.includes(w));
+    const distractorWords = pick(allWords, Math.min(3, allWords.length));
+    const assemblyChoices = shuffle([...sent.words, ...distractorWords]);
+
+    return [
+        {
+            id: nextId(`${nodeId}-intro`),
+            type: 'introduction',
+            prompt: `Let's learn a full sentence!\n**${sent.arabic}**`,
+            correctAnswer: sent.arabic,
+            choices: [],
+            hint: `Means: ${sent.english}`,
+            promptAudio: sent.audio
+        },
+        {
+            id: nextId(`${nodeId}-mc`),
+            type: 'multiple_choice',
+            prompt: `What does this sentence mean?`,
+            correctAnswer: sent.english,
+            choices: shuffle([sent.english, ...distractors]),
+            hint: sent.arabic,
+            promptAudio: sent.audio
+        },
+        {
+            id: nextId(`${nodeId}-asm`),
+            type: 'sentence_assembly',
+            prompt: `Assemble the sentence: "${sent.english}"`,
+            correctAnswer: sent.arabic,
+            choices: assemblyChoices, // Now includes distractors!
+            promptAudio: sent.audio
+        }
+    ];
+}
+
+function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData[]): CourseNode {
+    const intros: Exercise[] = [];
+    const graded: Exercise[] = [];
+
+    sentences.forEach(s => {
+        const exs = makeSentenceExercises(s, nodeId);
+        intros.push(exs[0]);
+        graded.push(...exs.slice(1));
+    });
+
+    return {
+        id: nodeId,
+        title: title,
+        description: `Learn basic sentences`,
+        type: 'lesson',
+        status: 'locked',
+        totalRounds: 3,
+        completedRounds: 0,
+        lessons: [
+            { id: `${nodeId}-r1`, title: 'Introduction', description: 'Meet the sentences', exercises: [...intros, ...shuffle(graded).slice(0, 5)] },
+            { id: `${nodeId}-r2`, title: 'Practice', description: 'Build your skills', exercises: shuffle(graded) },
+            { id: `${nodeId}-r3`, title: 'Mastery', description: 'Assemble them all', exercises: shuffle(graded) }
+        ]
+    };
+}
+
+
+
 // ─── Course Data ───────────────────────────────────────────
 
 const baseCourseData: Course = {
@@ -1474,6 +1720,77 @@ const baseCourseData: Course = {
                                 prompt: `What is the Arabic word for "${w.english}"?`,
                                 correctAnswer: w.arabic,
                                 choices: shuffle([w.arabic, ...pick(UNIT4_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
+                            }
+                        ])),
+                    }],
+                }
+            ]
+        },
+        {
+            id: 5,
+            title: 'Unit 5',
+            description: 'Unvowelled Reading (Stage 5)',
+            color: '#F5A623', // Bright vibrant orange
+            nodes: [
+                makeUnvowelledNode('u5-n1', 'Naked Words 1', UNIT4_WORDS.slice(0, 4)),
+                makeUnvowelledNode('u5-n2', 'Naked Words 2', UNIT4_WORDS.slice(4, 8)),
+                makeUnvowelledNode('u5-n3', 'Naked Words 3', UNIT4_WORDS.slice(8, 12)),
+                makeUnvowelledNode('u5-n4', 'Naked Words 4', UNIT4_WORDS.slice(12, 16)),
+                {
+                    id: 'u5-test',
+                    title: '📝 Stage 5 Checkpoint',
+                    description: 'Read without vowels',
+                    type: 'test',
+                    status: 'locked',
+                    totalRounds: 1,
+                    completedRounds: 0,
+                    lessons: [{
+                        id: 'u5-test-lesson',
+                        title: 'Unvowelled Reading Test',
+                        description: 'Translate unvowelled Arabic back to English.',
+                        exercises: shuffle(UNIT4_WORDS.flatMap(w => [
+                            {
+                                id: nextId('u5t-mul'),
+                                type: 'multiple_choice',
+                                prompt: `What does this word mean?`,
+                                correctAnswer: w.english,
+                                choices: shuffle([w.english, ...pick(UNIT4_WORDS.map(ww => ww.english).filter(a => a !== w.english), 3)]),
+                                hint: stripHarakat(w.arabic)
+                            }
+                        ])),
+                    }],
+                }
+            ]
+        },
+        {
+            id: 6,
+            title: 'Unit 6',
+            description: 'Full Sentences (Stage 6)',
+            color: '#FFD700', // Gold color for Stage 6 mastery
+            nodes: [
+                makeSentenceNode('u6-n1', 'Greetings', UNIT6_SENTENCES.slice(0, 4)),
+                makeSentenceNode('u6-n2', 'Common Phrases', UNIT6_SENTENCES.slice(4, 7)),
+                makeSentenceNode('u6-n3', 'Sayings', UNIT6_SENTENCES.slice(7, 10)),
+                {
+                    id: 'u6-test',
+                    title: '📝 Stage 6 Checkpoint',
+                    description: 'Final Sentence Mastery',
+                    type: 'test',
+                    status: 'locked',
+                    totalRounds: 1,
+                    completedRounds: 0,
+                    lessons: [{
+                        id: 'u6-test-lesson',
+                        title: 'Sentence Mastery Test',
+                        description: 'Assemble and translate complex sentences.',
+                        exercises: shuffle(UNIT6_SENTENCES.flatMap(s => [
+                            {
+                                id: nextId('u6t-asm'),
+                                type: 'sentence_assembly',
+                                prompt: `Assemble: "${s.english}"`,
+                                correctAnswer: s.arabic,
+                                choices: shuffle([...s.words]),
+                                promptAudio: s.audio
                             }
                         ])),
                     }],
