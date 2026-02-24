@@ -8,17 +8,8 @@
 .main-content {
     flex: 1;
     margin-top: var(--nav-height-top);
-    margin-bottom: var(--nav-height-bottom);
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
     background-color: var(--color-bg);
-}
-
-@media (min-width: 768px) {
-    .main-content {
-        margin-bottom: 0;
-        margin-left: 80px;
-        /* Tablet bottom nav moves to left */
-    }
 }

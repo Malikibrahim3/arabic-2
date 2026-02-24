@@ -85,7 +85,13 @@ export const LessonPage: React.FC = () => {
                     {Array.from({ length: totalRounds }, (_, i) => {
                         const isComplete = i < nextRound;
                         const isCurrent = i === nextRound;
-                        const isLocked = i > nextRound;
+
+                        const isGodMode = localStorage.getItem('godMode') === 'true';
+                        let isLocked = i > nextRound;
+                        if (isGodMode) {
+                            isLocked = false;
+                        }
+
                         const roundTitle = foundNode!.lessons[i]?.title || `Round ${i + 1}`;
 
                         return (

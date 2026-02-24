@@ -343,11 +343,23 @@ function makeRound2(letters: LetterInfo[], nodeId: string): Lesson {
         pairs: letters.map(l => ({ left: l.letter, right: l.sound })),
     });
 
+    // Add simple word assembly using letter combinations
+    const simpleWord = letters.slice(0, 2).map(l => l.letter).join('');
+    const letterNames = letters.slice(0, 2).map(l => l.name).join(' + ');
+    exercises.push({
+        id: nextId(`${nodeId}-r2-word-asm`),
+        type: 'word_assembly',
+        prompt: `Practice: Tap to combine ${letterNames}`,
+        correctAnswer: simpleWord,
+        choices: shuffle([...letters.slice(0, 2).map(l => l.letter), letters[2]?.letter || 'م']),
+        hint: `Tap the letters in order to see how they connect`,
+    });
+
     return {
         id: `${nodeId}-lesson2`,
         title: 'Round 2: Learn the Sounds',
         description: 'Connect letters to their sounds',
-        exercises: [...shuffle(exercises.slice(0, exercises.length - 1)), exercises[exercises.length - 1]],
+        exercises: [...shuffle(exercises.slice(0, exercises.length - 2)), exercises[exercises.length - 2], exercises[exercises.length - 1]],
     };
 }
 
@@ -513,6 +525,18 @@ function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
         correctAnswer: '',
         choices: [],
         pairs: pairSet.map(l => ({ left: l.letter, right: l.sound })),
+    });
+    
+    // Add sentence assembly with letters
+    const sentLetters = pick(allLetters, 3);
+    const sentLetterNames = sentLetters.map(l => l.name).join(', ');
+    exercises.push({
+        id: nextId(`${nodeId}-r4-sent`),
+        type: 'sentence_assembly',
+        prompt: `Practice: Arrange ${sentLetterNames} in alphabetical order`,
+        correctAnswer: sentLetters.map(l => l.letter).join(' '),
+        choices: shuffle([...sentLetters.map(l => l.letter), allLetters[0].letter]),
+        hint: `Tap the letters to put them in sequence`,
     });
 
     return {
@@ -836,6 +860,21 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r1.push(...getRefresher('r1'));
+    
+    // Add trap select for vowel confusion
+    if (prevVowels.length > 0) {
+        const l = batch1[0];
+        const trapVowel = prevVowels[0];
+        r1.push({
+            id: nextId(`${nodeId}-r1-trap`),
+            type: 'trap_select',
+            prompt: `Careful! Which one has ${vowel.name}?`,
+            correctAnswer: vowelCombo(l.letter, vowel),
+            choices: shuffle([vowelCombo(l.letter, vowel), vowelCombo(l.letter, trapVowel), vowelCombo(letters[1].letter, vowel)]),
+            trapExplanation: `<strong class="arabic-text">${vowel.name}</strong> (${vowel.mark}) makes the "${vowel.sound}" sound, not "${trapVowel.sound}".`,
+        });
+    }
+    
     const round1: Lesson = { id: `${nodeId}-l1`, title: `Round 1: Meet ${vowel.name}`, description: `Introduction to ${vowel.name}`, exercises: shuffle(r1) };
 
     // ── Round 2: Intro batch 2 ──
@@ -951,6 +990,30 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r5.push(...getRefresher('r5'));
+    
+    // Add word assembly with vowels
+    const vowelWord = pick(letters, 2).map(l => vowelCombo(l.letter, vowel)).join('');
+    const vowelLetterNames = pick(letters, 2).map(l => l.name).join(' + ');
+    r5.push({
+        id: nextId(`${nodeId}-r5-word-asm`),
+        type: 'word_assembly',
+        prompt: `Combine ${vowelLetterNames} with ${vowel.name}`,
+        correctAnswer: vowelWord,
+        choices: shuffle([...pick(letters, 2).map(l => vowelCombo(l.letter, vowel)), vowelCombo(letters[0].letter, VOWELS[(vowel === VOWELS[0] ? 1 : 0)])]),
+        hint: `Tap the syllables to build the word`,
+    });
+    
+    // Add sentence assembly with simple vowel combinations
+    const sentenceParts = pick(letters, 3).map(l => vowelCombo(l.letter, vowel));
+    r5.push({
+        id: nextId(`${nodeId}-r5-sent-asm`),
+        type: 'sentence_assembly',
+        prompt: `Practice: Arrange these ${vowel.name} syllables`,
+        correctAnswer: sentenceParts.join(' '),
+        choices: shuffle([...sentenceParts, vowelCombo(letters[0].letter, VOWELS[(vowel === VOWELS[0] ? 1 : 0)])]),
+        hint: `Tap to put the syllables in sequence`,
+    });
+    
     const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Assessment`, description: `Prove your ${vowel.name} fluency!`, exercises: shuffle(r5) };
 
     const title = batch1.map(l => vowelCombo(l.letter, vowel)).join(' ');
@@ -1062,6 +1125,17 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
         }),
     });
     const round4: Lesson = { id: `${nodeId}-l4`, title: `Round 4: Matching Mix`, description: `Connect the shapes and sounds`, exercises: r4 };
+    
+    // Add trap select for mixed vowels
+    const trapLetter = letters[0];
+    r4.push({
+        id: nextId(`${nodeId}-r4-trap`),
+        type: 'trap_select',
+        prompt: `Careful! Which syllable makes "ba"?`,
+        correctAnswer: vowelCombo(trapLetter.letter, VOWELS[0]),
+        choices: shuffle([vowelCombo(trapLetter.letter, VOWELS[0]), vowelCombo(trapLetter.letter, VOWELS[1]), vowelCombo(trapLetter.letter, VOWELS[2])]),
+        trapExplanation: `Watch the vowel mark! <strong class="arabic-text">${VOWELS[0].mark}</strong> (Fatha) = "a", <strong class="arabic-text">${VOWELS[1].mark}</strong> (Kasra) = "i", <strong class="arabic-text">${VOWELS[2].mark}</strong> (Damma) = "u".`,
+    });
 
     // Round 5: Assessment
     const r5: Exercise[] = [];
@@ -1177,63 +1251,63 @@ interface WordData {
 
 const UNIT3_WORDS: WordData[] = [
     // Node 1: First Words
-    { arabic: 'باب', translit: 'Baab', english: 'Door', audio: '/audio/words/word_bab.mp3' },
-    { arabic: 'بيت', translit: 'Bayt', english: 'House', audio: '/audio/words/word_bayt.mp3' },
-    { arabic: 'بنت', translit: 'Bint', english: 'Girl', audio: '/audio/words/word_bint.mp3' },
-    { arabic: 'تمر', translit: 'Tamr', english: 'Dates', audio: '/audio/words/word_tamr.mp3' },
+    { arabic: 'بَابٌ', translit: 'Baabun', english: 'Door', audio: '/audio/words/word_bab.mp3' },
+    { arabic: 'بَيْتٌ', translit: 'Baytun', english: 'House', audio: '/audio/words/word_bayt.mp3' },
+    { arabic: 'بِنْتٌ', translit: 'Bintun', english: 'Girl', audio: '/audio/words/word_bint.mp3' },
+    { arabic: 'تَمْرٌ', translit: 'Tamrun', english: 'Dates', audio: '/audio/words/word_tamr.mp3' },
 
     // Node 2: Nature & Animals
-    { arabic: 'كلب', translit: 'Kalb', english: 'Dog', audio: '/audio/words/word_kalb.mp3' },
-    { arabic: 'شمس', translit: 'Shams', english: 'Sun', audio: '/audio/words/word_shams.mp3' },
-    { arabic: 'قمر', translit: 'Qamar', english: 'Moon', audio: '/audio/words/word_qamar.mp3' },
-    { arabic: 'ماء', translit: 'Maa', english: 'Water', audio: '/audio/words/word_maa.mp3' },
+    { arabic: 'كَلْبٌ', translit: 'Kalbun', english: 'Dog', audio: '/audio/words/word_kalb.mp3' },
+    { arabic: 'شَمْسٌ', translit: 'Shamsun', english: 'Sun', audio: '/audio/words/word_shams.mp3' },
+    { arabic: 'قَمَرٌ', translit: 'Qamarun', english: 'Moon', audio: '/audio/words/word_qamar.mp3' },
+    { arabic: 'مَاءٌ', translit: 'Maa\'un', english: 'Water', audio: '/audio/words/word_maa.mp3' },
 
     // Node 3: People & Things
-    { arabic: 'ولد', translit: 'Walad', english: 'Boy', audio: '/audio/words/word_walad.mp3' },
-    { arabic: 'رجل', translit: 'Rajul', english: 'Man', audio: '/audio/words/word_rajul.mp3' },
-    { arabic: 'كتاب', translit: 'Kitaab', english: 'Book', audio: '/audio/words/word_kitab.mp3' },
-    { arabic: 'خبز', translit: 'Khubz', english: 'Bread', audio: '/audio/words/word_khubz.mp3' },
+    { arabic: 'وَلَدٌ', translit: 'Waladun', english: 'Boy', audio: '/audio/words/word_walad.mp3' },
+    { arabic: 'رَجُلٌ', translit: 'Rajulun', english: 'Man', audio: '/audio/words/word_rajul.mp3' },
+    { arabic: 'كِتَابٌ', translit: 'Kitaabun', english: 'Book', audio: '/audio/words/word_kitab.mp3' },
+    { arabic: 'خُبْزٌ', translit: 'Khubzun', english: 'Bread', audio: '/audio/words/word_khubz.mp3' },
 
     // Node 4: Body Parts (Tricky Connections: ع, ه, أ)
-    { arabic: 'عين', translit: 'Ayn', english: 'Eye', audio: '/audio/words/word_ayn.mp3' },     // Middle Ya, Initial Ayn
-    { arabic: 'وجه', translit: 'Wajh', english: 'Face', audio: '/audio/words/word_wajh.mp3' },   // Final Haa
-    { arabic: 'رأس', translit: 'Raas', english: 'Head', audio: '/audio/words/word_raas.mp3' },   // Non-connectors, Hamza on Alif
-    { arabic: 'فم', translit: 'Fam', english: 'Mouth', audio: '/audio/words/word_fam.mp3' },     // Initial Fa, Final Mim
-    { arabic: 'يد', translit: 'Yad', english: 'Hand', audio: '/audio/words/word_yad.mp3' },      // Initial Ya, Final Dal
+    { arabic: 'عَيْنٌ', translit: 'Aynun', english: 'Eye', audio: '/audio/words/word_ayn.mp3' },     // Middle Ya, Initial Ayn
+    { arabic: 'وَجْهٌ', translit: 'Wajhun', english: 'Face', audio: '/audio/words/word_wajh.mp3' },   // Final Haa
+    { arabic: 'رَأْسٌ', translit: 'Ra\'sun', english: 'Head', audio: '/audio/words/word_raas.mp3' },   // Non-connectors, Hamza on Alif
+    { arabic: 'فَمٌ', translit: 'Famun', english: 'Mouth', audio: '/audio/words/word_fam.mp3' },     // Initial Fa, Final Mim
+    { arabic: 'يَدٌ', translit: 'Yadun', english: 'Hand', audio: '/audio/words/word_yad.mp3' },      // Initial Ya, Final Dal
 
     // Node 5: Common Adjectives (Tricky Medial Connections)
-    { arabic: 'كبير', translit: 'Kabeer', english: 'Big', audio: '/audio/words/word_kabeer.mp3' },       // Initial Kaaf, Medial Baa
-    { arabic: 'صغير', translit: 'Sagheer', english: 'Small', audio: '/audio/words/word_sagheer.mp3' },   // Medial Ghayn
-    { arabic: 'جديد', translit: 'Jadeed', english: 'New', audio: '/audio/words/word_jadeed.mp3' },       // Medial Dal (non connector)
-    { arabic: 'قديم', translit: 'Qadeem', english: 'Old', audio: '/audio/words/word_qadeem.mp3' },       // Medial Dal, Final Mim
-    { arabic: 'جميل', translit: 'Jameel', english: 'Beautiful', audio: '/audio/words/word_jameel.mp3' }  // Medial Mim
+    { arabic: 'كَبِيرٌ', translit: 'Kabeerun', english: 'Big', audio: '/audio/words/word_kabeer.mp3' },       // Initial Kaaf, Medial Baa
+    { arabic: 'صَغِيرٌ', translit: 'Sagheerun', english: 'Small', audio: '/audio/words/word_sagheer.mp3' },   // Medial Ghayn
+    { arabic: 'جَدِيدٌ', translit: 'Jadeedun', english: 'New', audio: '/audio/words/word_jadeed.mp3' },       // Medial Dal (non connector)
+    { arabic: 'قَدِيمٌ', translit: 'Qadeemun', english: 'Old', audio: '/audio/words/word_qadeem.mp3' },       // Medial Dal, Final Mim
+    { arabic: 'جَمِيلٌ', translit: 'Jameelun', english: 'Beautiful', audio: '/audio/words/word_jameel.mp3' }  // Medial Mim
 ];
 
 // UNIT 4: CORE VOCABULARY (STAGE 4 EXPANSION)
 const UNIT4_WORDS: WordData[] = [
     // Category 1: Home & Basics
-    { arabic: 'بيت', translit: 'Bayt', english: 'House', audio: '/audio/words/word_bayt.mp3' },
-    { arabic: 'باب', translit: 'Baab', english: 'Door', audio: '/audio/words/word_bab.mp3' },
-    { arabic: 'كبير', translit: 'Kabeer', english: 'Big', audio: '/audio/words/word_kabeer.mp3' },
-    { arabic: 'صغير', translit: 'Sagheer', english: 'Small', audio: '/audio/words/word_sagheer.mp3' },
+    { arabic: 'بَيْتٌ', translit: 'Baytun', english: 'House', audio: '/audio/words/word_bayt.mp3' },
+    { arabic: 'بَابٌ', translit: 'Baabun', english: 'Door', audio: '/audio/words/word_bab.mp3' },
+    { arabic: 'كَبِيرٌ', translit: 'Kabeerun', english: 'Big', audio: '/audio/words/word_kabeer.mp3' },
+    { arabic: 'صَغِيرٌ', translit: 'Sagheerun', english: 'Small', audio: '/audio/words/word_sagheer.mp3' },
 
     // Category 2: Family
-    { arabic: 'أب', translit: 'Ab', english: 'Father', audio: '/audio/words/fam_father.mp3' },
-    { arabic: 'أم', translit: 'Umm', english: 'Mother', audio: '/audio/words/fam_mother.mp3' },
-    { arabic: 'أخ', translit: 'Akh', english: 'Brother', audio: '/audio/words/fam_brother.mp3' },
-    { arabic: 'أخت', translit: 'Ukht', english: 'Sister', audio: '/audio/words/fam_sister.mp3' },
+    { arabic: 'أَبٌ', translit: 'Abun', english: 'Father', audio: '/audio/words/fam_father.mp3' },
+    { arabic: 'أُمٌّ', translit: 'Ummun', english: 'Mother', audio: '/audio/words/fam_mother.mp3' },
+    { arabic: 'أَخٌ', translit: 'Akhun', english: 'Brother', audio: '/audio/words/fam_brother.mp3' },
+    { arabic: 'أُخْتٌ', translit: 'Ukhtun', english: 'Sister', audio: '/audio/words/fam_sister.mp3' },
 
     // Category 3: Eat & Drink
-    { arabic: 'ماء', translit: 'Maa', english: 'Water', audio: '/audio/words/word_maa.mp3' },
-    { arabic: 'خبز', translit: 'Khubz', english: 'Bread', audio: '/audio/words/word_khubz.mp3' },
-    { arabic: 'تفاح', translit: 'Tuffah', english: 'Apple', audio: '/audio/words/food_apple.mp3' },
-    { arabic: 'حليب', translit: 'Haleeb', english: 'Milk', audio: '/audio/words/drink_milk.mp3' },
+    { arabic: 'مَاءٌ', translit: 'Maa\'un', english: 'Water', audio: '/audio/words/word_maa.mp3' },
+    { arabic: 'خُبْزٌ', translit: 'Khubzun', english: 'Bread', audio: '/audio/words/word_khubz.mp3' },
+    { arabic: 'تُفَّاحٌ', translit: 'Tuffahun', english: 'Apple', audio: '/audio/words/food_apple.mp3' },
+    { arabic: 'حَلِيبٌ', translit: 'Haleebun', english: 'Milk', audio: '/audio/words/drink_milk.mp3' },
 
     // Category 4: Places
-    { arabic: 'مدرسة', translit: 'Madrasa', english: 'School', audio: '/audio/words/place_school.mp3' },
-    { arabic: 'مسجد', translit: 'Masjid', english: 'Mosque', audio: '/audio/words/place_mosque.mp3' },
-    { arabic: 'مستشفى', translit: 'Mustashfa', english: 'Hospital', audio: '/audio/words/place_hospital.mp3' },
-    { arabic: 'سوق', translit: 'Suq', english: 'Market', audio: '/audio/words/place_market.mp3' }
+    { arabic: 'مَدْرَسَةٌ', translit: 'Madrasatun', english: 'School', audio: '/audio/words/place_school.mp3' },
+    { arabic: 'مَسْجِدٌ', translit: 'Masjidun', english: 'Mosque', audio: '/audio/words/place_mosque.mp3' },
+    { arabic: 'مُسْتَشْفَى', translit: 'Mustashfa', english: 'Hospital', audio: '/audio/words/place_hospital.mp3' },
+    { arabic: 'سُوقٌ', translit: 'Suqun', english: 'Market', audio: '/audio/words/place_market.mp3' }
 ];
 
 function makeWordAssemblyExercises(word: WordData, nodeId: string): Exercise[] {
@@ -1328,12 +1402,41 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
         exercises: shuffle([...assemblies, ...hears])
     });
 
-    lessons.push({
-        id: `${nodeId}-l5`,
-        title: `Round 5: Full Mastery`,
-        description: `Mix it all together.`,
-        exercises: shuffle([...assemblies, ...hears])
-    });
+    // Add match pairs for word meanings
+    const matchPairsEx: Exercise = {
+        id: nextId(`${nodeId}-l5-mp`),
+        type: 'match_pairs',
+        prompt: `Match Arabic words to English meanings`,
+        correctAnswer: '',
+        choices: [],
+        pairs: words.map(w => ({ left: w.arabic, right: w.english })),
+    };
+    
+    // Add trap select for similar words
+    if (words.length >= 2) {
+        const trapEx: Exercise = {
+            id: nextId(`${nodeId}-l5-trap`),
+            type: 'trap_select',
+            prompt: `Careful! Which word means "${words[0].english}"?`,
+            correctAnswer: words[0].arabic,
+            choices: shuffle([words[0].arabic, words[1].arabic, words[2]?.arabic || words[1].arabic]),
+            trapExplanation: `<strong class="arabic-text">${words[0].arabic}</strong> means "${words[0].english}", not "${words[1].english}".`,
+        };
+        
+        lessons.push({
+            id: `${nodeId}-l5`,
+            title: `Round 5: Full Mastery`,
+            description: `Mix it all together.`,
+            exercises: shuffle([matchPairsEx, trapEx, ...assemblies, ...hears])
+        });
+    } else {
+        lessons.push({
+            id: `${nodeId}-l5`,
+            title: `Round 5: Full Mastery`,
+            description: `Mix it all together.`,
+            exercises: shuffle([matchPairsEx, ...assemblies, ...hears])
+        });
+    }
 
     return {
         id: nodeId,
@@ -1434,11 +1537,44 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         description: `Repetition builds memory.`,
         exercises: shuffle([...reads, ...hears])
     });
+    // Add word assembly for unvowelled words
+    const asmWord = words[0];
+    const asmEx: Exercise = {
+        id: nextId(`${nodeId}-l5-asm`),
+        type: 'word_assembly',
+        prompt: `Build the word: "${asmWord.english}" (${asmWord.translit})`,
+        correctAnswer: stripHarakat(asmWord.arabic),
+        choices: shuffle([...stripHarakat(asmWord.arabic).split(''), 'م']),
+        hint: `Tap the letters in order to spell ${asmWord.translit}`,
+    };
+    
+    // Add trap select for similar unvowelled words
+    const trapEx: Exercise = {
+        id: nextId(`${nodeId}-l5-trap`),
+        type: 'trap_select',
+        prompt: `Careful! Which word means "${words[0].english}"?`,
+        correctAnswer: stripHarakat(words[0].arabic),
+        choices: shuffle([stripHarakat(words[0].arabic), stripHarakat(words[1].arabic), stripHarakat(words[2]?.arabic || words[1].arabic)]),
+        trapExplanation: `Without vowels, <strong class="arabic-text">${stripHarakat(words[0].arabic)}</strong> means "${words[0].english}".`,
+    };
+    
+    // Add sentence assembly with unvowelled words
+    const sentWords = pick(words, 2);
+    const sentWordsEnglish = sentWords.map(w => w.english).join(' + ');
+    const sentEx: Exercise = {
+        id: nextId(`${nodeId}-l5-sent`),
+        type: 'sentence_assembly',
+        prompt: `Arrange: ${sentWordsEnglish}`,
+        correctAnswer: sentWords.map(w => stripHarakat(w.arabic)).join(' '),
+        choices: shuffle([...sentWords.map(w => stripHarakat(w.arabic)), stripHarakat(words[2]?.arabic || words[0].arabic)]),
+        hint: `Tap the words to put them in the right order`,
+    };
+    
     lessons.push({
         id: `${nodeId}-l5`,
         title: `Round 5: Mastery`,
         description: `You can read real Arabic!`,
-        exercises: shuffle([...reads, ...hears])
+        exercises: shuffle([asmEx, trapEx, sentEx, ...reads, ...hears])
     });
 
     return {
@@ -1466,58 +1602,58 @@ interface SentenceData {
 
 const UNIT6_SENTENCES: SentenceData[] = [
     {
-        arabic: 'اَلسَّلامُ عَلَيكُم',
+        arabic: 'اَلسَّلامُ عَلَيْكُم',
         english: 'Peace be upon you',
         audio: '/audio/sentences/sent_assalamu.mp3',
         words: ['اَلسَّلامُ', 'عَلَيكُم']
     },
     {
-        arabic: 'بِسمِ اللّه',
+        arabic: 'بِسْمِ اللّهِ',
         english: 'In the name of Allah',
         audio: '/audio/sentences/sent_bismillah.mp3',
-        words: ['بِسمِ', 'اللّه']
+        words: ['بِسْمِ', 'اللّهِ']
     },
     {
-        arabic: 'كَيفَ حالُك',
+        arabic: 'كَيْفَ حَالُكَ',
         english: 'How are you?',
         audio: '/audio/sentences/sent_kayf_halak.mp3',
-        words: ['كَيفَ', 'حالُك']
+        words: ['كَيْفَ', 'حَالُكَ']
     },
     {
-        arabic: 'أَنا بِخَير',
+        arabic: 'أَنَا بِخَيْرٍ',
         english: 'I am fine',
         audio: '/audio/sentences/sent_ana_bikhayr.mp3',
-        words: ['أَنا', 'بِخَير']
+        words: ['أَنَا', 'بِخَيْرٍ']
     },
     {
         arabic: 'اِسمي',
         english: 'My name is...',
         audio: '/audio/sentences/sent_ismi.mp3',
-        words: ['اِسمي']
+        words: ['اِسْمِي']
     },
     {
-        arabic: 'هذا كِتاب',
+        arabic: 'هَذَا كِتَابٌ',
         english: 'This is a book',
         audio: '/audio/sentences/sent_hadha_kitab.mp3',
-        words: ['هذا', 'كِتاب']
+        words: ['هَذَا', 'كِتَابٌ']
     },
     {
-        arabic: 'هذِهِ مَدرَسة',
+        arabic: 'هَذِهِ مَدْرَسَةٌ',
         english: 'This is a school',
         audio: '/audio/sentences/sent_hadhihi_madrasah.mp3',
-        words: ['هذِهِ', 'مَدرَسة']
+        words: ['هَذِهِ', 'مَدْرَسَةٌ']
     },
     {
-        arabic: 'مَعَ السَّلامة',
+        arabic: 'مَعَ السَّلامَةِ',
         english: 'Goodbye',
         audio: '/audio/sentences/sent_ma3a_salama.mp3',
         words: ['مَعَ', 'السَّلامة']
     },
     {
-        arabic: 'صَباحُ الخَير',
+        arabic: 'صَبَاحُ الخَيْرِ',
         english: 'Good morning',
         audio: '/audio/sentences/sent_sabah_alkhayr.mp3',
-        words: ['صَباحُ', 'الخَير']
+        words: ['صَبَاحُ', 'الخَيْرِ']
     },
     {
         arabic: 'أَنا أُحِبُّ العَرَبيّة',
@@ -1574,6 +1710,35 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         intros.push(exs[0]);
         graded.push(...exs.slice(1));
     });
+    
+    // Add match pairs for sentence meanings
+    const matchEx: Exercise = {
+        id: nextId(`${nodeId}-mp`),
+        type: 'match_pairs',
+        prompt: `Match sentences to meanings`,
+        correctAnswer: '',
+        choices: [],
+        pairs: pick(sentences, Math.min(4, sentences.length)).map(s => ({ left: s.arabic, right: s.english })),
+    };
+    
+    // Add trap select for similar sentences
+    const trapEx: Exercise = {
+        id: nextId(`${nodeId}-trap`),
+        type: 'trap_select',
+        prompt: `Careful! Which sentence means "${sentences[0].english}"?`,
+        correctAnswer: sentences[0].arabic,
+        choices: shuffle([sentences[0].arabic, sentences[1].arabic, sentences[2]?.arabic || sentences[1].arabic]),
+        trapExplanation: `<strong class="arabic-text">${sentences[0].arabic}</strong> means "${sentences[0].english}".`,
+    };
+    
+    // Add word assembly from sentence words
+    const wordAsmEx: Exercise = {
+        id: nextId(`${nodeId}-word-asm`),
+        type: 'word_assembly',
+        prompt: `Assemble the word: ${sentences[0].words[0]}`,
+        correctAnswer: sentences[0].words[0],
+        choices: shuffle([...sentences[0].words[0].split(''), 'م']),
+    };
 
     return {
         id: nodeId,
@@ -1584,14 +1749,340 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         totalRounds: 3,
         completedRounds: 0,
         lessons: [
-            { id: `${nodeId}-r1`, title: 'Introduction', description: 'Meet the sentences', exercises: [...intros, ...shuffle(graded).slice(0, 5)] },
-            { id: `${nodeId}-r2`, title: 'Practice', description: 'Build your skills', exercises: shuffle(graded) },
-            { id: `${nodeId}-r3`, title: 'Mastery', description: 'Assemble them all', exercises: shuffle(graded) }
+            { id: `${nodeId}-r1`, title: 'Introduction', description: 'Meet the sentences', exercises: [...intros, ...shuffle(graded).slice(0, 5), matchEx] },
+            { id: `${nodeId}-r2`, title: 'Practice', description: 'Build your skills', exercises: shuffle([...graded, trapEx, wordAsmEx]) },
+            { id: `${nodeId}-r3`, title: 'Mastery', description: 'Assemble them all', exercises: shuffle([...graded, matchEx, trapEx]) }
         ]
     };
 }
 
 
+
+// ═══════════════════════════════════════════════════════════
+// UNIT 7: CONVERSATIONS (STAGE 7)
+// ═══════════════════════════════════════════════════════════
+
+interface ConversationData {
+    id: string;
+    title: string;
+    context: string;
+    lines: Array<{
+        speaker: string;
+        arabic: string;
+        english: string;
+        audio: string;
+    }>;
+}
+
+const UNIT7_CONVERSATIONS: ConversationData[] = [
+    {
+        id: 'conv1',
+        title: 'Meeting Someone New',
+        context: 'Two people meet for the first time',
+        lines: [
+            { speaker: 'أَحْمَد', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/sentences/sent_assalamu.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'وَعَلَيْكُمُ السَّلامُ', english: 'And upon you peace', audio: '/audio/sentences/greet_reply.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'مَا اسْمُكِ؟', english: 'What is your name?', audio: '/audio/sentences/phrase_whats_your_name.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'اِسْمِي فَاطِمَة', english: 'My name is Fatima', audio: '/audio/sentences/sent_ismi.mp3' },
+            { speaker: 'أَحْمَد', arabic: 'أَنَا أَحْمَد', english: 'I am Ahmad', audio: '/audio/sentences/sent_ismi.mp3' },
+            { speaker: 'فَاطِمَة', arabic: 'تَشَرَّفْنَا', english: 'Nice to meet you', audio: '/audio/sentences/greet_reply.mp3' }
+        ]
+    },
+    {
+        id: 'conv2',
+        title: 'How Are You?',
+        context: 'Friends greeting each other',
+        lines: [
+            { speaker: 'عَلِي', arabic: 'صَبَاحُ الخَيْرِ', english: 'Good morning', audio: '/audio/sentences/sent_sabah_alkhayr.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'صَبَاحُ النُّورِ', english: 'Morning of light', audio: '/audio/sentences/greet_good_morning.mp3' },
+            { speaker: 'عَلِي', arabic: 'كَيْفَ حَالُكِ؟', english: 'How are you?', audio: '/audio/sentences/sent_kayf_halak.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'أَنَا بِخَيْرٍ، الحَمْدُ لِلّهِ', english: 'I am fine, praise be to God', audio: '/audio/sentences/sent_ana_bikhayr.mp3' },
+            { speaker: 'عَلِي', arabic: 'وَأَنْتِ؟', english: 'And you?', audio: '/audio/sentences/greet_how_are_you.mp3' },
+            { speaker: 'مَرْيَم', arabic: 'أَنَا بِخَيْرٍ أَيْضًا', english: 'I am also fine', audio: '/audio/sentences/greet_fine_thanks.mp3' }
+        ]
+    },
+    {
+        id: 'conv3',
+        title: 'At Home',
+        context: 'Talking about family and home',
+        lines: [
+            { speaker: 'خَالِد', arabic: 'هَذَا بَيْتِي', english: 'This is my house', audio: '/audio/sentences/sent_hadha_kitab.mp3' },
+            { speaker: 'سَارَة', arabic: 'بَيْتُكَ كَبِيرٌ', english: 'Your house is big', audio: '/audio/words/word_kabeer.mp3' },
+            { speaker: 'خَالِد', arabic: 'شُكْرًا، هَذَا أَبِي وَهَذِهِ أُمِّي', english: 'Thank you, this is my father and this is my mother', audio: '/audio/words/fam_father.mp3' },
+            { speaker: 'سَارَة', arabic: 'تَشَرَّفْنَا', english: 'Nice to meet you', audio: '/audio/sentences/greet_reply.mp3' },
+            { speaker: 'الأَب', arabic: 'أَهْلًا وَسَهْلًا', english: 'Welcome', audio: '/audio/sentences/greet_salam.mp3' },
+            { speaker: 'الأُم', arabic: 'تَفَضَّلِي', english: 'Please come in', audio: '/audio/sentences/greet_reply.mp3' }
+        ]
+    },
+    {
+        id: 'conv4',
+        title: 'At the Market',
+        context: 'Shopping for food',
+        lines: [
+            { speaker: 'زَبُون', arabic: 'اَلسَّلامُ عَلَيْكُم', english: 'Peace be upon you', audio: '/audio/sentences/sent_assalamu.mp3' },
+            { speaker: 'بَائِع', arabic: 'وَعَلَيْكُمُ السَّلامُ، مَاذَا تُرِيدُ؟', english: 'And upon you peace, what do you want?', audio: '/audio/sentences/greet_reply.mp3' },
+            { speaker: 'زَبُون', arabic: 'أُرِيدُ خُبْزًا وَحَلِيبًا', english: 'I want bread and milk', audio: '/audio/words/word_khubz.mp3' },
+            { speaker: 'بَائِع', arabic: 'تَفَضَّلْ، هَذَا خُبْزٌ وَهَذَا حَلِيبٌ', english: 'Here you go, this is bread and this is milk', audio: '/audio/words/drink_milk.mp3' },
+            { speaker: 'زَبُون', arabic: 'كَمْ الثَّمَنُ؟', english: 'How much is the price?', audio: '/audio/sentences/phrase_how_much.mp3' },
+            { speaker: 'بَائِع', arabic: 'عَشَرَةُ دَرَاهِمَ', english: 'Ten dirhams', audio: '/audio/sentences/greet_reply.mp3' },
+            { speaker: 'زَبُون', arabic: 'شُكْرًا', english: 'Thank you', audio: '/audio/sentences/sent_jazak_allah.mp3' }
+        ]
+    },
+    {
+        id: 'conv5',
+        title: 'Asking for Help',
+        context: 'Someone needs directions',
+        lines: [
+            { speaker: 'سَائِح', arabic: 'عَفْوًا، أَيْنَ المَسْجِدُ؟', english: 'Excuse me, where is the mosque?', audio: '/audio/sentences/phrase_where_bathroom.mp3' },
+            { speaker: 'رَجُل', arabic: 'المَسْجِدُ قَرِيبٌ مِنْ هُنَا', english: 'The mosque is near here', audio: '/audio/words/place_mosque.mp3' },
+            { speaker: 'سَائِح', arabic: 'هَلْ تَتَكَلَّمُ الإِنْجِلِيزِيَّةَ؟', english: 'Do you speak English?', audio: '/audio/sentences/phrase_do_you_speak_english.mp3' },
+            { speaker: 'رَجُل', arabic: 'نَعَمْ، قَلِيلًا', english: 'Yes, a little', audio: '/audio/sentences/greet_reply.mp3' },
+            { speaker: 'سَائِح', arabic: 'أَنَا لا أَفْهَمُ العَرَبِيَّةَ جَيِّدًا', english: 'I don\'t understand Arabic well', audio: '/audio/sentences/phrase_dont_understand.mp3' },
+            { speaker: 'رَجُل', arabic: 'لا بَأْسَ، تَعَالَ مَعِي', english: 'No problem, come with me', audio: '/audio/sentences/phrase_need_help.mp3' }
+        ]
+    },
+    {
+        id: 'conv6',
+        title: 'Saying Goodbye',
+        context: 'Friends parting ways',
+        lines: [
+            { speaker: 'يُوسُف', arabic: 'أَنَا ذَاهِبٌ الآنَ', english: 'I am going now', audio: '/audio/sentences/sent_ma3a_salama.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'إِلَى أَيْنَ؟', english: 'Where to?', audio: '/audio/sentences/phrase_where_from.mp3' },
+            { speaker: 'يُوسُف', arabic: 'إِلَى المَدْرَسَةِ', english: 'To the school', audio: '/audio/words/place_school.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'حَسَنًا، مَعَ السَّلامَةِ', english: 'Okay, goodbye', audio: '/audio/sentences/sent_ma3a_salama.mp3' },
+            { speaker: 'يُوسُف', arabic: 'اللهُ مَعَكِ', english: 'God be with you', audio: '/audio/sentences/sent_jazak_allah.mp3' },
+            { speaker: 'لَيْلَى', arabic: 'وَمَعَكَ أَيْضًا', english: 'And with you too', audio: '/audio/sentences/greet_reply.mp3' }
+        ]
+    }
+];
+
+function makeConversationExercises(conv: ConversationData, nodeId: string): Exercise[] {
+    const exercises: Exercise[] = [];
+    
+    // Introduction to the conversation
+    exercises.push({
+        id: nextId(`${nodeId}-intro`),
+        type: 'introduction',
+        prompt: `**${conv.title}**\n\n${conv.context}`,
+        correctAnswer: '',
+        choices: [],
+        hint: 'Listen to the full conversation and learn each line'
+    });
+    
+    // Present each line as an introduction
+    conv.lines.forEach((line, idx) => {
+        exercises.push({
+            id: nextId(`${nodeId}-line-${idx}`),
+            type: 'introduction',
+            prompt: `**${line.speaker}:** ${line.arabic}`,
+            correctAnswer: line.arabic,
+            choices: [],
+            hint: `Meaning: ${line.english}`,
+            promptAudio: line.audio
+        });
+    });
+    
+    // Comprehension: Match speaker to line
+    conv.lines.forEach((line, idx) => {
+        const otherLines = conv.lines.filter((_, i) => i !== idx);
+        const distractors = pick(otherLines, Math.min(2, otherLines.length)).map(l => l.arabic);
+        
+        exercises.push({
+            id: nextId(`${nodeId}-comp-${idx}`),
+            type: 'multiple_choice',
+            prompt: `What does ${line.speaker} say?`,
+            correctAnswer: line.arabic,
+            choices: shuffle([line.arabic, ...distractors]),
+            promptAudio: line.audio
+        });
+    });
+    
+    // Translation: Arabic to English
+    conv.lines.forEach((line, idx) => {
+        const otherLines = conv.lines.filter((_, i) => i !== idx);
+        const distractors = pick(otherLines, Math.min(2, otherLines.length)).map(l => l.english);
+        
+        exercises.push({
+            id: nextId(`${nodeId}-trans-${idx}`),
+            type: 'multiple_choice',
+            prompt: `What does this mean?`,
+            correctAnswer: line.english,
+            choices: shuffle([line.english, ...distractors]),
+            hint: line.arabic,
+            promptAudio: line.audio
+        });
+    });
+    
+    // Sentence assembly: Build the conversation lines
+    conv.lines.forEach((line, idx) => {
+        const words = line.arabic.split(' ');
+        if (words.length >= 2) {
+            const otherWords = conv.lines
+                .filter((_, i) => i !== idx)
+                .flatMap(l => l.arabic.split(' '))
+                .filter(w => !words.includes(w));
+            const distractors = pick(otherWords, Math.min(2, otherWords.length));
+            
+            exercises.push({
+                id: nextId(`${nodeId}-asm-${idx}`),
+                type: 'sentence_assembly',
+                prompt: `Assemble: "${line.english}"`,
+                correctAnswer: line.arabic,
+                choices: shuffle([...words, ...distractors]),
+                promptAudio: line.audio,
+                hint: `${line.speaker} says this`
+            });
+        }
+    });
+    
+    // Match pairs: Speaker to line
+    exercises.push({
+        id: nextId(`${nodeId}-mp-speaker`),
+        type: 'match_pairs',
+        prompt: `Match each speaker to what they say`,
+        correctAnswer: '',
+        choices: [],
+        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({ 
+            left: l.speaker, 
+            right: l.arabic 
+        }))
+    });
+    
+    // Match pairs: Arabic to English
+    exercises.push({
+        id: nextId(`${nodeId}-mp-trans`),
+        type: 'match_pairs',
+        prompt: `Match Arabic to English`,
+        correctAnswer: '',
+        choices: [],
+        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({ 
+            left: l.arabic, 
+            right: l.english 
+        }))
+    });
+    
+    return exercises;
+}
+
+function makeConversationNode(conv: ConversationData): CourseNode {
+    const exercises = makeConversationExercises(conv, conv.id);
+    
+    // Split into rounds
+    const intros = exercises.filter(e => e.type === 'introduction');
+    const comprehension = exercises.filter(e => e.type === 'multiple_choice');
+    const assembly = exercises.filter(e => e.type === 'sentence_assembly');
+    const matching = exercises.filter(e => e.type === 'match_pairs');
+    
+    return {
+        id: `u7-${conv.id}`,
+        title: conv.title,
+        description: conv.context,
+        type: 'lesson',
+        status: 'locked',
+        totalRounds: 4,
+        completedRounds: 0,
+        lessons: [
+            {
+                id: `u7-${conv.id}-r1`,
+                title: 'Learn the Conversation',
+                description: 'Listen to each line',
+                exercises: intros
+            },
+            {
+                id: `u7-${conv.id}-r2`,
+                title: 'Comprehension',
+                description: 'Understand what is said',
+                exercises: shuffle(comprehension.slice(0, Math.ceil(comprehension.length / 2)))
+            },
+            {
+                id: `u7-${conv.id}-r3`,
+                title: 'Build Sentences',
+                description: 'Assemble the conversation',
+                exercises: shuffle([...assembly, ...comprehension.slice(Math.ceil(comprehension.length / 2))])
+            },
+            {
+                id: `u7-${conv.id}-r4`,
+                title: 'Master the Dialogue',
+                description: 'Put it all together',
+                exercises: shuffle([...matching, ...pick(comprehension, 3), ...pick(assembly, 2)])
+            }
+        ]
+    };
+}
+
+function makeUnit7Test(): CourseNode {
+    const exercises: Exercise[] = [];
+    
+    // Test all conversations
+    UNIT7_CONVERSATIONS.forEach(conv => {
+        // Translation questions
+        conv.lines.forEach(line => {
+            const otherLines = UNIT7_CONVERSATIONS
+                .flatMap(c => c.lines)
+                .filter(l => l.english !== line.english);
+            const distractors = pick(otherLines, 3).map(l => l.english);
+            
+            exercises.push({
+                id: nextId('u7t-trans'),
+                type: 'multiple_choice',
+                prompt: 'What does this mean?',
+                correctAnswer: line.english,
+                choices: shuffle([line.english, ...distractors]),
+                hint: line.arabic,
+                promptAudio: line.audio
+            });
+        });
+        
+        // Assembly questions
+        conv.lines.forEach(line => {
+            const words = line.arabic.split(' ');
+            if (words.length >= 2) {
+                const otherWords = UNIT7_CONVERSATIONS
+                    .flatMap(c => c.lines)
+                    .filter(l => l.arabic !== line.arabic)
+                    .flatMap(l => l.arabic.split(' '))
+                    .filter(w => !words.includes(w));
+                const distractors = pick(otherWords, Math.min(3, otherWords.length));
+                
+                exercises.push({
+                    id: nextId('u7t-asm'),
+                    type: 'sentence_assembly',
+                    prompt: `Assemble: "${line.english}"`,
+                    correctAnswer: line.arabic,
+                    choices: shuffle([...words, ...distractors]),
+                    promptAudio: line.audio
+                });
+            }
+        });
+    });
+    
+    // Match pairs from different conversations
+    const allLines = UNIT7_CONVERSATIONS.flatMap(c => c.lines);
+    exercises.push({
+        id: nextId('u7t-mp'),
+        type: 'match_pairs',
+        prompt: 'Match Arabic to English',
+        correctAnswer: '',
+        choices: [],
+        pairs: pick(allLines, 6).map(l => ({ left: l.arabic, right: l.english }))
+    });
+    
+    return {
+        id: 'u7-test',
+        title: '📝 Unit 7 Final Test',
+        description: 'Master all conversations!',
+        type: 'test',
+        status: 'locked',
+        totalRounds: 1,
+        completedRounds: 0,
+        lessons: [{
+            id: 'u7-test-lesson',
+            title: 'Conversation Mastery',
+            description: 'Show you can handle real conversations',
+            exercises: shuffle(exercises)
+        }]
+    };
+}
 
 // ─── Course Data ───────────────────────────────────────────
 
@@ -1795,6 +2286,21 @@ const baseCourseData: Course = {
                         ])),
                     }],
                 }
+            ]
+        },
+        {
+            id: 7,
+            title: 'Unit 7',
+            description: 'Real Conversations (Stage 7)',
+            color: '#00BFA5', // Teal color for conversation mastery
+            nodes: [
+                makeConversationNode(UNIT7_CONVERSATIONS[0]), // Meeting Someone New
+                makeConversationNode(UNIT7_CONVERSATIONS[1]), // How Are You?
+                makeConversationNode(UNIT7_CONVERSATIONS[2]), // At Home
+                makeConversationNode(UNIT7_CONVERSATIONS[3]), // At the Market
+                makeConversationNode(UNIT7_CONVERSATIONS[4]), // Asking for Help
+                makeConversationNode(UNIT7_CONVERSATIONS[5]), // Saying Goodbye
+                makeUnit7Test()
             ]
         }
     ],

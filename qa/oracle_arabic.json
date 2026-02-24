@@ -1,0 +1,328 @@
+{
+  "kitaab": {
+    "bare": "كتاب",
+    "arabic": "كِتَابٌ",
+    "transliteration": "Kitaabun",
+    "english": "book",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "baab": {
+    "bare": "باب",
+    "arabic": "بَابٌ",
+    "transliteration": "Baabun",
+    "english": "door",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "bayt": {
+    "bare": "بيت",
+    "arabic": "بَيْتٌ",
+    "transliteration": "Baytun",
+    "english": "house",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "bint": {
+    "bare": "بنت",
+    "arabic": "بِنْتٌ",
+    "transliteration": "Bintun",
+    "english": "girl",
+    "type": "noun",
+    "gender": "fem"
+  },
+  "tamr": {
+    "bare": "تمر",
+    "arabic": "تَمْرٌ",
+    "transliteration": "Tamrun",
+    "english": "dates",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "kalb": {
+    "bare": "كلب",
+    "arabic": "كَلْبٌ",
+    "transliteration": "Kalbun",
+    "english": "dog",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "shams": {
+    "bare": "شمس",
+    "arabic": "شَمْسٌ",
+    "transliteration": "Shamsun",
+    "english": "sun",
+    "type": "noun",
+    "gender": "fem"
+  },
+  "qamar": {
+    "bare": "قمر",
+    "arabic": "قَمَرٌ",
+    "transliteration": "Qamarun",
+    "english": "moon",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "maa": {
+    "bare": "ماء",
+    "arabic": "مَاءٌ",
+    "transliteration": "Maa'un",
+    "english": "water",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "walad": {
+    "bare": "ولد",
+    "arabic": "وَلَدٌ",
+    "transliteration": "Waladun",
+    "english": "boy",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "rajul": {
+    "bare": "رجل",
+    "arabic": "رَجُلٌ",
+    "transliteration": "Rajulun",
+    "english": "man",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "khubz": {
+    "bare": "خبز",
+    "arabic": "خُبْزٌ",
+    "transliteration": "Khubzun",
+    "english": "bread",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "ayn": {
+    "bare": "عين",
+    "arabic": "عَيْنٌ",
+    "transliteration": "Aynun",
+    "english": "eye",
+    "type": "noun",
+    "gender": "fem"
+  },
+  "wajh": {
+    "bare": "وجه",
+    "arabic": "وَجْهٌ",
+    "transliteration": "Wajhun",
+    "english": "face",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "raas": {
+    "bare": "رأس",
+    "arabic": "رَأْسٌ",
+    "transliteration": "Ra'sun",
+    "english": "head",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "fam": {
+    "bare": "فم",
+    "arabic": "فَمٌ",
+    "transliteration": "Famun",
+    "english": "mouth",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "yad": {
+    "bare": "يد",
+    "arabic": "يَدٌ",
+    "transliteration": "Yadun",
+    "english": "hand",
+    "type": "noun",
+    "gender": "fem"
+  },
+  "kabeer": {
+    "bare": "كبير",
+    "arabic": "كَبِيرٌ",
+    "transliteration": "Kabeerun",
+    "english": "big",
+    "type": "adjective",
+    "gender": "masc"
+  },
+  "sagheer": {
+    "bare": "صغير",
+    "arabic": "صَغِيرٌ",
+    "transliteration": "Sagheerun",
+    "english": "small",
+    "type": "adjective",
+    "gender": "masc"
+  },
+  "jadeed": {
+    "bare": "جديد",
+    "arabic": "جَدِيدٌ",
+    "transliteration": "Jadeedun",
+    "english": "new",
+    "type": "adjective",
+    "gender": "masc"
+  },
+  "qadeem": {
+    "bare": "قديم",
+    "arabic": "قَدِيمٌ",
+    "transliteration": "Qadeemun",
+    "english": "old",
+    "type": "adjective",
+    "gender": "masc"
+  },
+  "jameel": {
+    "bare": "جميل",
+    "arabic": "جَمِيلٌ",
+    "transliteration": "Jameelun",
+    "english": "beautiful",
+    "type": "adjective",
+    "gender": "masc"
+  },
+  "ab": {
+    "bare": "أب",
+    "arabic": "أَبٌ",
+    "transliteration": "Abun",
+    "english": "father",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "umm": {
+    "bare": "أم",
+    "arabic": "أُمٌّ",
+    "transliteration": "Ummun",
+    "english": "mother",
+    "type": "noun",
+    "gender": "fem"
+  },
+  "akh": {
+    "bare": "أخ",
+    "arabic": "أَخٌ",
+    "transliteration": "Akhun",
+    "english": "brother",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "ukht": {
+    "bare": "أخت",
+    "arabic": "أُخْتٌ",
+    "transliteration": "Ukhtun",
+    "english": "sister",
+    "type": "noun",
+    "gender": "fem"
+  },
+  "tuffah": {
+    "bare": "تفاح",
+    "arabic": "تُفَّاحٌ",
+    "transliteration": "Tuffahun",
+    "english": "apple",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "haleeb": {
+    "bare": "حليب",
+    "arabic": "حَلِيبٌ",
+    "transliteration": "Haleebun",
+    "english": "milk",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "madrasa": {
+    "bare": "مدرسة",
+    "arabic": "مَدْرَسَةٌ",
+    "transliteration": "Madrasatun",
+    "english": "school",
+    "type": "noun",
+    "gender": "fem"
+  },
+  "masjid": {
+    "bare": "مسجد",
+    "arabic": "مَسْجِدٌ",
+    "transliteration": "Masjidun",
+    "english": "mosque",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "mustashfa": {
+    "bare": "مستشفى",
+    "arabic": "مُسْتَشْفَى",
+    "transliteration": "Mustashfa",
+    "english": "hospital",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "suq": {
+    "bare": "سوق",
+    "arabic": "سُوقٌ",
+    "transliteration": "Suqun",
+    "english": "market",
+    "type": "noun",
+    "gender": "masc"
+  },
+  "assalamu_alaykum": {
+    "bare": "السلام عليكم",
+    "arabic": "اَلسَّلامُ عَلَيْكُم",
+    "transliteration": "Assalamu alaykum",
+    "english": "Peace be upon you",
+    "type": "phrase"
+  },
+  "bismillah": {
+    "bare": "بسم الله",
+    "arabic": "بِسْمِ اللّهِ",
+    "transliteration": "Bismillah",
+    "english": "In the name of Allah",
+    "type": "phrase"
+  },
+  "kayfa_halak": {
+    "bare": "كيف حالك",
+    "arabic": "كَيْفَ حَالُكَ",
+    "transliteration": "Kayfa halak",
+    "english": "How are you?",
+    "type": "phrase"
+  },
+  "ana_bikhayr": {
+    "bare": "أنا بخير",
+    "arabic": "أَنَا بِخَيْرٍ",
+    "transliteration": "Ana bikhayr",
+    "english": "I am fine",
+    "type": "phrase"
+  },
+  "ismi": {
+    "bare": "اسمي",
+    "arabic": "اِسْمِي",
+    "transliteration": "Ismi",
+    "english": "My name",
+    "type": "phrase"
+  },
+  "hadha_kitaab": {
+    "bare": "هذا كتاب",
+    "arabic": "هَذَا كِتَابٌ",
+    "transliteration": "Hadha kitaab",
+    "english": "This is a book",
+    "type": "sentence"
+  },
+  "hadhihi_madrasa": {
+    "bare": "هذه مدرسة",
+    "arabic": "هَذِهِ مَدْرَسَةٌ",
+    "transliteration": "Hadhihi madrasa",
+    "english": "This is a school",
+    "type": "sentence"
+  },
+  "maa_salama": {
+    "bare": "مع السلامة",
+    "arabic": "مَعَ السَّلامَةِ",
+    "transliteration": "Ma'a salama",
+    "english": "Goodbye",
+    "type": "phrase"
+  },
+  "sabah_alkhayr": {
+    "bare": "صباح الخير",
+    "arabic": "صَبَاحُ الخَيْرِ",
+    "transliteration": "Sabah alkhayr",
+    "english": "Good morning",
+    "type": "phrase"
+  },
+  "ana_uhibb_alarabiya": {
+    "bare": "أنا أحب العربية",
+    "arabic": "أَنَا أُحِبُّ العَرَبِيَّةَ",
+    "transliteration": "Ana uhibb alarabiya",
+    "english": "I love Arabic",
+    "type": "sentence"
+  }
+}

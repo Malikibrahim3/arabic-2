@@ -16,7 +16,8 @@ export type ExerciseType =
     | 'build_from_syllables' // Build a word from syllable tiles
     | 'trap_select'         // Pick among highly confusable options
     | 'intro-trap-philosophy' // Intro card for trap philosophy
-    | 'word_assembly';      // Tap pieces to assemble a word
+    | 'word_assembly'        // Tap pieces to assemble a word
+    | 'sentence_assembly';  // Tap words to assemble a sentence
 
 export interface Exercise {
     id: string;

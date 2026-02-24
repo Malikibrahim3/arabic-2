@@ -48,7 +48,11 @@ const ProgressRing: React.FC<{ completed: number; total: number; color: string; 
 
 export const LearnPage: React.FC = () => {
     const [, setLocation] = useLocation();
-    const [isGodMode, setIsGodMode] = useState(false);
+    const [isGodMode, setIsGodMode] = useState(() => localStorage.getItem('godMode') === 'true');
+
+    useEffect(() => {
+        localStorage.setItem('godMode', String(isGodMode));
+    }, [isGodMode]);
 
     useEffect(() => {
         const activeNode = document.querySelector('.node.active');
@@ -68,10 +72,10 @@ export const LearnPage: React.FC = () => {
             return;
         }
 
-        // If clicking a locked test/checkpoint when God Mode is OFF, prompt to jump ahead
-        if (!isGodMode && node.type === 'test') {
+        // If clicking a locked node when God Mode is OFF, prompt to jump ahead
+        if (!isGodMode) {
             const confirmed = window.confirm(
-                "Are you sure you want to jump ahead to this checkpoint? This will permanently unlock all previous content."
+                "Are you sure you want to jump ahead? This will permanently unlock all previous content."
             );
 
             if (confirmed) {
@@ -84,6 +88,7 @@ export const LearnPage: React.FC = () => {
                         if (!foundTarget) {
                             if (n.id === node.id) {
                                 n.status = 'active';
+                                n.completedRounds = n.totalRounds;
                                 foundTarget = true;
                             } else {
                                 n.status = 'completed';
@@ -105,6 +110,28 @@ export const LearnPage: React.FC = () => {
         return Star;
     };
 
+    // Pre-compute linear progression locks
+    const allNodes = courseData.units.flatMap(u => u.nodes);
+    const computedStatus = new Map<string, string>();
+    let isPreviousCompleted = true; // First node is always unlocked
+
+    allNodes.forEach((node) => {
+        let derivedStatus = node.status;
+        if (isGodMode) {
+            derivedStatus = derivedStatus === 'completed' ? 'completed' : 'active';
+        } else {
+            if (isPreviousCompleted) {
+                if (derivedStatus !== 'completed') derivedStatus = 'active';
+            } else {
+                derivedStatus = 'locked';
+            }
+        }
+        computedStatus.set(node.id, derivedStatus);
+
+        // A node only unlocks the next one if it is fully completed in memory
+        isPreviousCompleted = (node.status === 'completed');
+    });
+
     return (
         <div className="learn-page">
             <div className="learn-page-header">
@@ -119,9 +146,9 @@ export const LearnPage: React.FC = () => {
             </div>
 
             {courseData.units.map((unit) => {
-                // A unit is fully locked if it has no completed nodes AND no active nodes (i.e. all nodes are locked)
-                // We simplify this by checking if the very first node is locked.
-                const isUnitLocked = unit.nodes.length > 0 && unit.nodes[0].status === 'locked' && !isGodMode;
+                // A unit is fully locked if its very first node is locked
+                const firstNodeId = unit.nodes.length > 0 ? unit.nodes[0].id : null;
+                const isUnitLocked = firstNodeId && computedStatus.get(firstNodeId) === 'locked';
 
                 return (
                     <div key={unit.id} className={`unit-container ${isUnitLocked ? 'unit-locked' : ''}`}>
@@ -135,28 +162,24 @@ export const LearnPage: React.FC = () => {
 
                         <div className="path-container" style={{ '--path-color': unit.color } as React.CSSProperties}>
                             {unit.nodes.map((node, index) => {
-                                const Icon = getIcon(node.status);
-                                let isLocked = node.status === 'locked';
-                                const isActive = node.status === 'active';
-                                const isCompleted = node.status === 'completed';
+                                const derivedStatus = computedStatus.get(node.id) || 'locked';
+                                const Icon = getIcon(derivedStatus);
+                                const isLocked = derivedStatus === 'locked';
+                                const isActive = derivedStatus === 'active';
+                                const isCompleted = derivedStatus === 'completed';
                                 const offsetX = getPathOffset(index);
-
-                                // God mode overrides locked visual status for navigation
-                                if (isGodMode && isLocked) {
-                                    isLocked = false;
-                                }
 
                                 let buttonClass = 'node-btn ';
                                 if (isCompleted && !isActive) buttonClass += 'completed ';
                                 else if (isLocked) buttonClass += 'locked ';
-                                else if (isActive || (isGodMode && (node.status === 'locked' || node.status === 'active'))) buttonClass += 'active ';
+                                else if (isActive) buttonClass += 'active ';
 
                                 const isDisabled = isLocked && !isGodMode;
 
                                 return (
                                     <div
                                         key={node.id}
-                                        className={`node ${node.status}`}
+                                        className={`node ${derivedStatus}`}
                                         style={{
                                             transform: `translateX(${offsetX}px)`,
                                             pointerEvents: isDisabled ? 'none' : 'auto'

@@ -10,8 +10,8 @@
     -webkit-backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
+    padding: 0 12px;
+    gap: 12px;
     border-bottom: 1px solid rgba(212, 175, 55, 0.15);
     /* Subtle gold border */
     z-index: 100;
@@ -31,6 +31,7 @@
 
 .gems-container {
     color: var(--color-secondary);
+    margin-left: auto;
 }
 
 .icon-gem {
@@ -50,5 +51,24 @@
 }
 
 .streak-container {
-    flex-grow: 1;
+    display: none;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #d4af37;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.logout-btn:hover {
+    color: var(--color-danger);
+    background: rgba(204, 60, 60, 0.1);
 }

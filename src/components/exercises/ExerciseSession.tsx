@@ -5,6 +5,7 @@ import { useAudio } from '../../hooks/useAudio';
 import { MatchPairs } from './MatchPairs';
 import { TrapSelect } from './TrapSelect';
 import { WordAssembly } from './WordAssembly';
+import { SentenceAssembly } from './SentenceAssembly';
 import './ExerciseSession.css';
 
 interface ExerciseSessionProps {
@@ -23,6 +24,45 @@ function shuffle<T>(arr: T[]): T[] {
     return a;
 }
 
+// Add distractor pieces to make assembly exercises more challenging
+function addDistractors(choices: string[], correctAnswer: string, exerciseType: string): string[] {
+    // For word assembly, if we have too few pieces (2 or less), add distractors
+    if (exerciseType === 'word_assembly' && choices.length <= 2) {
+        const distractors: string[] = [];
+        const arabicLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي'];
+        
+        // Add 2-3 distractor letters that aren't in the correct answer
+        const needed = Math.max(0, 4 - choices.length); // Aim for 4-5 total pieces
+        let attempts = 0;
+        while (distractors.length < needed && attempts < 50) {
+            const candidate = arabicLetters[Math.floor(Math.random() * arabicLetters.length)];
+            if (!correctAnswer.includes(candidate) && !choices.includes(candidate) && !distractors.includes(candidate)) {
+                distractors.push(candidate);
+            }
+            attempts++;
+        }
+        
+        return shuffle([...choices, ...distractors]);
+    }
+    
+    // For sentence assembly with 2 words, add a distractor word
+    if (exerciseType === 'sentence_assembly' && choices.length === 2) {
+        const distractorWords = ['في', 'من', 'إلى', 'على', 'هو', 'هي', 'أنا', 'أنت'];
+        const distractors: string[] = [];
+        
+        for (const word of distractorWords) {
+            if (!choices.includes(word) && !correctAnswer.includes(word)) {
+                distractors.push(word);
+                break; // Just add one distractor
+            }
+        }
+        
+        return shuffle([...choices, ...distractors]);
+    }
+    
+    return choices;
+}
+
 type FeedbackState = null | 'correct' | 'incorrect';
 
 export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: initialExercises, isTest = false, onComplete, onQuit }) => {
@@ -33,9 +73,11 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
     const [totalAnswered, setTotalAnswered] = useState(0);
     const [selected, setSelected] = useState<string | null>(null);
     const [feedback, setFeedback] = useState<FeedbackState>(null);
-    const [shuffledChoices, setShuffledChoices] = useState<string[]>(() =>
-        shuffle(initialExercises[0]?.choices || [])
-    );
+    const [shuffledChoices, setShuffledChoices] = useState<string[]>(() => {
+        const choices = initialExercises[0]?.choices || [];
+        const enhanced = addDistractors(choices, initialExercises[0]?.correctAnswer || '', initialExercises[0]?.type || '');
+        return shuffle(enhanced);
+    });
     const [sessionDone, setSessionDone] = useState(false);
     const [failedQueue, setFailedQueue] = useState<Exercise[]>([]);
     const [isReviewPhase, setIsReviewPhase] = useState(false);
@@ -54,8 +96,8 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
     // Auto-play audio for intro cards and hear_choose exercises
     useEffect(() => {
         if (!exercise) return;
-        if (exercise.type === 'introduction' && exercise.correctAnswer) {
-            const timer = setTimeout(() => play(exercise.correctAnswer), 500);
+        if (exercise.type === 'introduction' && (exercise.promptAudio || exercise.correctAnswer)) {
+            const timer = setTimeout(() => play(exercise.promptAudio || exercise.correctAnswer), 500);
             return () => clearTimeout(timer);
         }
         if (exercise.promptAudio) {
@@ -92,7 +134,11 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
         setCurrentIndex(nextIndex);
         setSelected(null);
         setFeedback(null);
-        setShuffledChoices(shuffle(exerciseQueue[nextIndex]?.choices || []));
+        const nextChoices = exerciseQueue[nextIndex]?.choices || [];
+        const nextAnswer = exerciseQueue[nextIndex]?.correctAnswer || '';
+        const nextType = exerciseQueue[nextIndex]?.type || '';
+        const enhanced = addDistractors(nextChoices, nextAnswer, nextType);
+        setShuffledChoices(shuffle(enhanced));
     }, [currentIndex, hearts, exerciseQueue, failedQueue]);
 
     const handleSelect = useCallback((choice: string) => {
@@ -163,6 +209,33 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
         advanceToNext();
     }, [exercise, isReviewPhase, advanceToNext, currentIndex]);
 
+    const handleSentenceAssemblyComplete = useCallback((isCorrect: boolean) => {
+        if (isCorrect) {
+            setCorrectCount(c => c + 1);
+        } else {
+            setHearts(h => h - 1);
+            if (!isReviewPhase) {
+                const baseId = exercise.id.replace(/-retry$/, '');
+                setFailedQueue(prev => {
+                    if (prev.some(e => e.id.startsWith(baseId))) return prev;
+                    return [...prev, { ...exercise, id: baseId }];
+                });
+
+                setExerciseQueue(prev => {
+                    const copy = [...prev];
+                    const retry = { ...exercise, id: exercise.id + '-retry' };
+                    const insertAt = Math.min(currentIndex + 4, copy.length);
+                    copy.splice(insertAt, 0, retry);
+                    return copy;
+                });
+            } else {
+                setExerciseQueue(prev => [...prev, { ...exercise, id: exercise.id + '-review-retry' }]);
+            }
+        }
+        setTotalAnswered(t => t + 1);
+        advanceToNext();
+    }, [exercise, isReviewPhase, advanceToNext, currentIndex]);
+
     // ─── Session Complete ───────────────────────────────────
     if (showMistakeInterstitial) {
         return (
@@ -175,7 +248,11 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
                     </p>
                     <button className="complete-continue-btn" onClick={() => {
                         setShowMistakeInterstitial(false);
-                        setShuffledChoices(shuffle(exerciseQueue[0]?.choices || []));
+                        const firstChoices = exerciseQueue[0]?.choices || [];
+                        const firstAnswer = exerciseQueue[0]?.correctAnswer || '';
+                        const firstType = exerciseQueue[0]?.type || '';
+                        const enhanced = addDistractors(firstChoices, firstAnswer, firstType);
+                        setShuffledChoices(shuffle(enhanced));
                     }}>
                         Let's Go
                     </button>
@@ -324,6 +401,20 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
         );
     }
 
+    // ─── Sentence Assembly ────────────────────────────────────
+    if (exercise.type === 'sentence_assembly') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <SentenceAssembly
+                    exercise={exercise}
+                    shuffledWords={shuffledChoices}
+                    onComplete={handleSentenceAssemblyComplete}
+                />
+            </div>
+        );
+    }
+
     // ─── Introduction Card & Philosophy ─────────────────────
     if (exercise.type === 'introduction' || exercise.type === 'intro-trap-philosophy' as any) {
         if (exercise.type === 'intro-trap-philosophy' as any) {
@@ -386,9 +477,9 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
                                 <p key={i} className="intro-hint-line">{line}</p>
                             ))}
                         </div>
-                        {exercise.correctAnswer && (
+                        {(exercise.promptAudio || exercise.correctAnswer) && (
                             <button className="intro-audio-btn" onClick={() => {
-                                play(exercise.correctAnswer);
+                                play(exercise.promptAudio || exercise.correctAnswer);
                             }}>
                                 <Volume2 size={24} />
                                 <span>Listen</span>
@@ -404,7 +495,7 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
     }
 
     // ─── Graded Exercise ────────────────────────────────────
-    const showHero = exercise.hint && exercise.hint.length <= 4 && exercise.hint !== 'odd_one_out';
+    const showHero = exercise.hint && exercise.hint !== 'odd_one_out';
     const isAudioExercise = exercise.type === 'hear_choose';
 
     return (

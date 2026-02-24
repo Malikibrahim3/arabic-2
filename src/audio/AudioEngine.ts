@@ -172,6 +172,12 @@ export function stopAudio(): void {
 export async function play(input: string, speed: PlaybackSpeed = PlaybackSpeed.Normal): Promise<void> {
     stopAudio();
 
+    // If input is already a direct path, try playing it immediately
+    if (input.startsWith('/') && input.endsWith('.mp3')) {
+        const played = await tryPlayMP3Path(input, speed);
+        if (played) return;
+    }
+
     const audioId = resolveAudioId(input);
     if (audioId) {
         const played = await tryPlayMP3(audioId, speed);

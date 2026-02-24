@@ -1,10 +1,17 @@
 import React from 'react';
-import { Heart, Diamond } from 'lucide-react';
+import { Heart, Diamond, LogOut } from 'lucide-react';
 import './TopNav.css';
 
-export const TopNav: React.FC = () => {
+interface TopNavProps {
+    onLogout?: () => void;
+}
+
+export const TopNav: React.FC<TopNavProps> = ({ onLogout }) => {
     return (
         <div className="top-nav">
+            <button className="logout-btn" onClick={onLogout} title="Logout">
+                <LogOut size={20} />
+            </button>
             <div className="top-nav-item">
                 {/* Placeholder Flag for Arabic */}
                 <div className="flag-icon">🇸🇦</div>
