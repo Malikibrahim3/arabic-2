@@ -3648,7 +3648,7 @@ function makeQuranSurahNode(surahNumber: number, nodeId: string): CourseNode {
         description: `Surah ${surahNumber}`,
         type: 'lesson',
         status: 'locked',
-        totalRounds: 2,
+        totalRounds: 1,  // Fixed: Only 1 round exists
         completedRounds: 0,
         lessons: [
             {
