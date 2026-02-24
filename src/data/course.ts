@@ -788,7 +788,7 @@ function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
 }
 
 // ═══════════════════════════════════════════════════════════
-// ROUND 5: ASSESSMENT — Match pairs + rapid recall (traps + refresher) + MAXIMUM REFRESHERS
+// ROUND 5: MASTERY PRACTICE — Match pairs + rapid recall (traps + refresher) + MAXIMUM REFRESHERS
 // ═══════════════════════════════════════════════════════════
 
 function makeRound5(letters: LetterInfo[], nodeId: string, prevLetters: LetterInfo[]): Lesson {
@@ -859,8 +859,8 @@ function makeRound5(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
 
     return {
         id: `${nodeId}-lesson5`,
-        title: 'Round 5: Assessment',
-        description: 'Prove you know these letters!',
+        title: 'Round 5: Mastery Practice',
+        description: 'Practice everything you learned!',
         exercises: shuffle(exercises),
     };
 }
@@ -1258,7 +1258,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
     
     const round4: Lesson = { id: `${nodeId}-l4`, title: `Round 4: Speed Review`, description: `All letters with ${vowel.name}`, exercises: shuffle(r4) };
 
-    // ── Round 5: Assessment + Match Pairs ──
+    // ── Round 5: Mastery Practice + Match Pairs ──
     const r5: Exercise[] = [];
     
     // Add letter refreshers (DUOLINGO-STYLE)
@@ -1312,7 +1312,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         hint: `Tap to put the syllables in sequence`,
     });
     
-    const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Assessment`, description: `Prove your ${vowel.name} fluency!`, exercises: shuffle(r5) };
+    const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Mastery Practice`, description: `Prove your ${vowel.name} fluency!`, exercises: shuffle(r5) };
 
     const title = batch1.map(l => vowelCombo(l.letter, vowel)).join(' ');
     
@@ -1465,7 +1465,7 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
         r4.push(makeVowelTrapExercise(l, randomVowel, VOWELS, nodeId, Math.random() > 0.5));
     }
 
-    // Round 5: Assessment
+    // Round 5: Mastery Practice
     const r5: Exercise[] = [];
     
     // Add letter + vowel refreshers (DUOLINGO-STYLE)
@@ -1491,7 +1491,7 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
         r5.push(makeVowelTrapExercise(l, randomVowel, VOWELS, nodeId, Math.random() > 0.5));
     }
     
-    const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Mixed Assessment`, description: `Show you've mastered them all!`, exercises: shuffle(r5) };
+    const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Mastery Practice`, description: `Show you've mastered them all!`, exercises: shuffle(r5) };
 
     return {
         id: nodeId,
@@ -1573,6 +1573,306 @@ function makeUnit2Test(): CourseNode {
             id: 'u2-test-lesson',
             title: 'Unit 2 Test',
             description: 'Prove you know all three short vowels',
+            exercises: shuffle(exercises),
+        }],
+    };
+}
+
+// ═══════════════════════════════════════════════════════════
+// CUMULATIVE TESTS — Cross-unit retention checks
+// ═══════════════════════════════════════════════════════════
+
+/**
+ * CUMULATIVE TEST 1: After Unit 3 (Before Unit 4)
+ * Tests: Letters (Unit 1) + Vowels (Unit 2) + Words (Unit 3)
+ * Purpose: Ensure foundation is solid before vocabulary expansion
+ */
+function makeCumulativeTest1(): CourseNode {
+    const exercises: Exercise[] = [];
+    const letterPool = ALL_LETTERS.map(l => l.letter);
+    const practiceLetters = pick(PRACTICE_LETTERS, 6);
+
+    // === LETTERS (Unit 1) - 10 questions ===
+    for (const l of pick(ALL_LETTERS, 5)) {
+        exercises.push({
+            id: nextId('cum1-letter'),
+            type: 'tap_letter',
+            prompt: `Refresher: Tap "${l.name}"`,
+            correctAnswer: l.letter,
+            choices: makeChoices(l.letter, letterPool),
+        });
+        exercises.push({
+            id: nextId('cum1-letter-audio'),
+            type: 'hear_choose',
+            prompt: `Refresher: Listen and select`,
+            promptAudio: l.letter + 'َ',
+            correctAnswer: l.letter,
+            choices: makeChoices(l.letter, letterPool),
+        });
+    }
+
+    // === VOWELS (Unit 2) - 10 questions ===
+    for (const l of practiceLetters) {
+        const v = VOWELS[Math.floor(Math.random() * 3)];
+        exercises.push({
+            id: nextId('cum1-vowel'),
+            type: 'multiple_choice',
+            prompt: 'Refresher: What sound?',
+            correctAnswer: vowelSyllable(l, v),
+            choices: shuffle([vowelSyllable(l, v), ...syllableDistractors(l, v, practiceLetters)]),
+            hint: vowelCombo(l.letter, v),
+        });
+    }
+    for (const l of pick(practiceLetters, 4)) {
+        const v = VOWELS[Math.floor(Math.random() * 3)];
+        exercises.push({
+            id: nextId('cum1-vowel-audio'),
+            type: 'hear_choose',
+            prompt: 'Refresher: Listen — what sound?',
+            promptAudio: vowelCombo(l.letter, v),
+            correctAnswer: vowelCombo(l.letter, v),
+            choices: shuffle([vowelCombo(l.letter, v), ...vowelDistractors(l, v, practiceLetters)]),
+        });
+    }
+
+    // === WORDS (Unit 3) - 10 questions ===
+    for (const w of pick(UNIT3_WORDS, 5)) {
+        exercises.push({
+            id: nextId('cum1-word'),
+            type: 'multiple_choice',
+            prompt: `Refresher: What does this mean?`,
+            correctAnswer: w.english,
+            choices: shuffle([w.english, ...pick(UNIT3_WORDS.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+            hint: w.arabic,
+        });
+        exercises.push({
+            id: nextId('cum1-word-audio'),
+            type: 'hear_choose',
+            prompt: `Refresher: Listen and select`,
+            promptAudio: w.audio,
+            correctAnswer: w.arabic,
+            choices: shuffle([w.arabic, ...pick(UNIT3_WORDS.filter(ww => ww.arabic !== w.arabic).map(ww => ww.arabic), 3)]),
+        });
+    }
+
+    return {
+        id: 'cumulative-test-1',
+        title: '📝 Cumulative Test 1',
+        description: 'Review: Letters + Vowels + Words',
+        type: 'test',
+        status: 'locked',
+        totalRounds: 1,
+        completedRounds: 0,
+        lessons: [{
+            id: 'cum1-lesson',
+            title: 'Foundation Review',
+            description: 'Make sure you remember everything!',
+            exercises: shuffle(exercises),
+        }],
+    };
+}
+
+/**
+ * CUMULATIVE TEST 2: After Unit 6 (Before Unit 7)
+ * Tests: Letters + Vowels + Voweled Words + Unvowelled Words + Sentences
+ * Purpose: Ensure reading fluency before conversations
+ */
+function makeCumulativeTest2(): CourseNode {
+    const exercises: Exercise[] = [];
+    const letterPool = ALL_LETTERS.map(l => l.letter);
+    const practiceLetters = pick(PRACTICE_LETTERS, 4);
+
+    // === LETTERS + VOWELS - 5 questions ===
+    for (const l of pick(ALL_LETTERS, 3)) {
+        exercises.push({
+            id: nextId('cum2-letter'),
+            type: 'hear_choose',
+            prompt: `Quick review: Listen`,
+            promptAudio: l.letter + 'َ',
+            correctAnswer: l.letter,
+            choices: makeChoices(l.letter, letterPool),
+        });
+    }
+    for (const l of pick(practiceLetters, 2)) {
+        const v = VOWELS[Math.floor(Math.random() * 3)];
+        exercises.push({
+            id: nextId('cum2-vowel'),
+            type: 'hear_choose',
+            prompt: 'Quick review: What sound?',
+            promptAudio: vowelCombo(l.letter, v),
+            correctAnswer: vowelCombo(l.letter, v),
+            choices: shuffle([vowelCombo(l.letter, v), ...vowelDistractors(l, v, practiceLetters)]),
+        });
+    }
+
+    // === VOWELED WORDS (Unit 4) - 10 questions ===
+    for (const w of pick(UNIT4_WORDS, 10)) {
+        exercises.push({
+            id: nextId('cum2-word'),
+            type: 'multiple_choice',
+            prompt: `Review: What does this mean?`,
+            correctAnswer: w.english,
+            choices: shuffle([w.english, ...pick(UNIT4_WORDS.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+            hint: w.arabic,
+            promptAudio: w.audio,
+        });
+    }
+
+    // === UNVOWELLED WORDS (Unit 5) - 10 questions ===
+    for (const w of pick(UNIT4_WORDS, 10)) {
+        exercises.push({
+            id: nextId('cum2-unvowelled'),
+            type: 'multiple_choice',
+            prompt: `Review: What does this mean?`,
+            correctAnswer: w.english,
+            choices: shuffle([w.english, ...pick(UNIT4_WORDS.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+            hint: stripHarakat(w.arabic),
+            promptAudio: w.audio,
+        });
+    }
+
+    // === SENTENCES (Unit 6) - 10 questions ===
+    for (const s of pick(UNIT6_SENTENCES, 10)) {
+        exercises.push({
+            id: nextId('cum2-sentence'),
+            type: 'multiple_choice',
+            prompt: `Review: What does this mean?`,
+            correctAnswer: s.english,
+            choices: shuffle([s.english, ...pick(UNIT6_SENTENCES.filter(ss => ss.english !== s.english).map(ss => ss.english), 3)]),
+            hint: s.arabic,
+            promptAudio: s.audio,
+        });
+    }
+
+    return {
+        id: 'cumulative-test-2',
+        title: '📝 Cumulative Test 2',
+        description: 'Review: Reading Mastery',
+        type: 'test',
+        status: 'locked',
+        totalRounds: 1,
+        completedRounds: 0,
+        lessons: [{
+            id: 'cum2-lesson',
+            title: 'Reading Fluency Check',
+            description: 'Prove you can read everything!',
+            exercises: shuffle(exercises),
+        }],
+    };
+}
+
+/**
+ * FINAL COMPREHENSIVE TEST: After Unit 9
+ * Tests: Everything from all 9 units
+ * Purpose: Certificate of completion
+ */
+function makeFinalComprehensiveTest(): CourseNode {
+    const exercises: Exercise[] = [];
+    const letterPool = ALL_LETTERS.map(l => l.letter);
+    const practiceLetters = pick(PRACTICE_LETTERS, 3);
+
+    // === LETTERS - 5 questions ===
+    for (const l of pick(ALL_LETTERS, 5)) {
+        exercises.push({
+            id: nextId('final-letter'),
+            type: 'hear_choose',
+            prompt: `Final check: Listen`,
+            promptAudio: l.letter + 'َ',
+            correctAnswer: l.letter,
+            choices: makeChoices(l.letter, letterPool),
+        });
+    }
+
+    // === VOWELS - 5 questions ===
+    for (const l of practiceLetters) {
+        const v = VOWELS[Math.floor(Math.random() * 3)];
+        exercises.push({
+            id: nextId('final-vowel'),
+            type: 'multiple_choice',
+            prompt: 'Final check: What sound?',
+            correctAnswer: vowelSyllable(l, v),
+            choices: shuffle([vowelSyllable(l, v), ...syllableDistractors(l, v, practiceLetters)]),
+            hint: vowelCombo(l.letter, v),
+        });
+    }
+    for (const l of pick(practiceLetters, 2)) {
+        const v = VOWELS[Math.floor(Math.random() * 3)];
+        exercises.push({
+            id: nextId('final-vowel-audio'),
+            type: 'hear_choose',
+            prompt: 'Final check: Listen',
+            promptAudio: vowelCombo(l.letter, v),
+            correctAnswer: vowelCombo(l.letter, v),
+            choices: shuffle([vowelCombo(l.letter, v), ...vowelDistractors(l, v, practiceLetters)]),
+        });
+    }
+
+    // === VOCABULARY - 15 questions ===
+    for (const w of pick([...UNIT3_WORDS, ...UNIT4_WORDS], 15)) {
+        exercises.push({
+            id: nextId('final-vocab'),
+            type: 'multiple_choice',
+            prompt: `What does this mean?`,
+            correctAnswer: w.english,
+            choices: shuffle([w.english, ...pick([...UNIT3_WORDS, ...UNIT4_WORDS].filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
+            hint: stripHarakat(w.arabic),
+            promptAudio: w.audio,
+        });
+    }
+
+    // === SENTENCES - 10 questions ===
+    for (const s of pick(UNIT6_SENTENCES, 10)) {
+        exercises.push({
+            id: nextId('final-sentence'),
+            type: 'multiple_choice',
+            prompt: `What does this mean?`,
+            correctAnswer: s.english,
+            choices: shuffle([s.english, ...pick(UNIT6_SENTENCES.filter(ss => ss.english !== s.english).map(ss => ss.english), 3)]),
+            hint: s.arabic,
+            promptAudio: s.audio,
+        });
+    }
+
+    // === CONVERSATIONS - 10 questions ===
+    const allConvLines = [...UNIT7_CONVERSATIONS, ...UNIT8_CONVERSATIONS].flatMap(c => c.lines);
+    for (const line of pick(allConvLines, 10)) {
+        exercises.push({
+            id: nextId('final-conv'),
+            type: 'multiple_choice',
+            prompt: `What does this mean?`,
+            correctAnswer: line.english,
+            choices: shuffle([line.english, ...pick(allConvLines.filter(l => l.english !== line.english).map(l => l.english), 3)]),
+            hint: line.arabic,
+            promptAudio: line.audio,
+        });
+    }
+
+    // === QURAN - 5 questions ===
+    const allVerses = UNIT9_QURAN_VERSES.filter(v => [1, 103, 108, 112, 113, 114].includes(v.surahNumber));
+    for (const verse of pick(allVerses, 5)) {
+        exercises.push({
+            id: nextId('final-quran'),
+            type: 'multiple_choice',
+            prompt: `What does this verse mean?`,
+            correctAnswer: verse.translation,
+            choices: shuffle([verse.translation, ...pick(allVerses.filter(v => v.translation !== verse.translation).map(v => v.translation), 3)]),
+            hint: verse.arabic,
+            promptAudio: verse.audio,
+        });
+    }
+
+    return {
+        id: 'final-comprehensive-test',
+        title: '🏆 Final Comprehensive Test',
+        description: 'Complete Mastery Assessment',
+        type: 'test',
+        status: 'locked',
+        totalRounds: 1,
+        completedRounds: 0,
+        lessons: [{
+            id: 'final-lesson',
+            title: 'Certificate of Completion',
+            description: 'Prove you have mastered Arabic reading!',
             exercises: shuffle(exercises),
         }],
     };
@@ -2719,15 +3019,15 @@ function makeUnit7Test(): CourseNode {
     
     return {
         id: 'u7-test',
-        title: '📝 Unit 7 Final Test',
-        description: 'Master all conversations!',
+        title: '📝 Unit 7 Test',
+        description: 'Test all conversations',
         type: 'test',
         status: 'locked',
         totalRounds: 1,
         completedRounds: 0,
         lessons: [{
             id: 'u7-test-lesson',
-            title: 'Conversation Mastery',
+            title: 'Unit 7 Test',
             description: 'Show you can handle real conversations',
             exercises: shuffle(exercises)
         }]
@@ -2793,15 +3093,15 @@ function makeUnit8Test(): CourseNode {
     
     return {
         id: 'u8-test',
-        title: '📝 Unit 8 Final Test',
-        description: 'Master advanced conversations!',
+        title: '📝 Unit 8 Test',
+        description: 'Test advanced conversations',
         type: 'test',
         status: 'locked',
         totalRounds: 1,
         completedRounds: 0,
         lessons: [{
             id: 'u8-test-lesson',
-            title: 'Advanced Conversation Mastery',
+            title: 'Unit 8 Test',
             description: 'Show you can handle complex real-world conversations',
             exercises: shuffle(exercises)
         }]
@@ -3146,15 +3446,15 @@ function makeUnit9Test(): CourseNode {
     
     return {
         id: 'u9-test',
-        title: '📝 Unit 9 Final Test',
-        description: 'Master Quranic verses!',
+        title: '📝 Unit 9 Test',
+        description: 'Test Quranic verses',
         type: 'test',
         status: 'locked',
         totalRounds: 1,
         completedRounds: 0,
         lessons: [{
             id: 'u9-test-lesson',
-            title: 'Quran Reading Mastery',
+            title: 'Unit 9 Test',
             description: 'Show you can read and understand Quranic verses',
             exercises: shuffle(exercises)
         }]
@@ -3230,7 +3530,8 @@ const baseCourseData: Course = {
                             }
                         ])),
                     }],
-                }
+                },
+                makeCumulativeTest1()
             ],
         },
         {
@@ -3271,15 +3572,15 @@ const baseCourseData: Course = {
                 makeWordAssemblyNode('u4-n4', 'Places', UNIT4_WORDS.slice(12, 16), true),
                 {
                     id: 'u4-test',
-                    title: '📝 Stage 4A Checkpoint',
-                    description: 'Prove your vocabulary knowledge',
+                    title: '📝 Unit 4 Test',
+                    description: 'Test all vocabulary',
                     type: 'test',
                     status: 'locked',
                     totalRounds: 1,
                     completedRounds: 0,
                     lessons: [{
                         id: 'u4-test-lesson',
-                        title: 'Checkpoint Test',
+                        title: 'Unit 4 Test',
                         description: 'Translate and assemble the core words.',
                         exercises: shuffle(UNIT4_WORDS.flatMap(w => [
                             {
@@ -3306,15 +3607,15 @@ const baseCourseData: Course = {
                 makeUnvowelledNode('u5-n4', 'Naked Words 4', UNIT4_WORDS.slice(12, 16)),
                 {
                     id: 'u5-test',
-                    title: '📝 Stage 5 Checkpoint',
-                    description: 'Read without vowels',
+                    title: '📝 Unit 5 Test',
+                    description: 'Test unvowelled reading',
                     type: 'test',
                     status: 'locked',
                     totalRounds: 1,
                     completedRounds: 0,
                     lessons: [{
                         id: 'u5-test-lesson',
-                        title: 'Unvowelled Reading Test',
+                        title: 'Unit 5 Test',
                         description: 'Translate unvowelled Arabic back to English.',
                         exercises: shuffle(UNIT4_WORDS.flatMap(w => [
                             {
@@ -3341,15 +3642,15 @@ const baseCourseData: Course = {
                 makeSentenceNode('u6-n3', 'Sayings', UNIT6_SENTENCES.slice(7, 10)),
                 {
                     id: 'u6-test',
-                    title: '📝 Stage 6 Checkpoint',
-                    description: 'Final Sentence Mastery',
+                    title: '📝 Unit 6 Test',
+                    description: 'Test sentence mastery',
                     type: 'test',
                     status: 'locked',
                     totalRounds: 1,
                     completedRounds: 0,
                     lessons: [{
                         id: 'u6-test-lesson',
-                        title: 'Sentence Mastery Test',
+                        title: 'Unit 6 Test',
                         description: 'Assemble and translate complex sentences.',
                         exercises: shuffle(UNIT6_SENTENCES.flatMap(s => [
                             {
@@ -3362,7 +3663,8 @@ const baseCourseData: Course = {
                             }
                         ])),
                     }],
-                }
+                },
+                makeCumulativeTest2()
             ]
         },
         {
@@ -3409,7 +3711,8 @@ const baseCourseData: Course = {
                 makeQuranSurahNode(114, 'u9-n4'),  // An-Nas (3 verses)
                 makeQuranSurahNode(103, 'u9-n5'),  // Al-Asr (3 verses)
                 makeQuranSurahNode(108, 'u9-n6'),  // Al-Kawthar (3 verses)
-                makeUnit9Test()
+                makeUnit9Test(),
+                makeFinalComprehensiveTest()
             ]
         }
     ],
