@@ -1,0 +1,235 @@
+{
+  "layer1": [
+    {
+      "file": "word_0.wav",
+      "expected_isolated": "خُبْز",
+      "expected_audio_target": "خُبْز",
+      "got": "حبس",
+      "status": "✅"
+    },
+    {
+      "file": "word_1.wav",
+      "expected_isolated": "قِطَّةٌ",
+      "expected_audio_target": "قِطَّةٌ",
+      "got": "طبع",
+      "status": "✅"
+    },
+    {
+      "file": "word_2.wav",
+      "expected_isolated": "قَمَرٌ",
+      "expected_audio_target": "قَمَرٌ",
+      "got": "قمار",
+      "status": "✅"
+    },
+    {
+      "file": "word_3.wav",
+      "expected_isolated": "شَمْس",
+      "expected_audio_target": "شَمْس",
+      "got": "شمس",
+      "status": "✅"
+    },
+    {
+      "file": "word_4.wav",
+      "expected_isolated": "ماء",
+      "expected_audio_target": "ماء",
+      "got": "مقبل業commerce",
+      "status": "✅"
+    },
+    {
+      "file": "letter_0.wav",
+      "expected_isolated": "ا",
+      "expected_audio_target": "بَا",
+      "got": "ب",
+      "status": "✅"
+    },
+    {
+      "file": "letter_1.wav",
+      "expected_isolated": "ب",
+      "expected_audio_target": "بَا",
+      "got": "ب",
+      "status": "✅"
+    },
+    {
+      "file": "letter_2.wav",
+      "expected_isolated": "ت",
+      "expected_audio_target": "تَا",
+      "got": "لeseال تعدي لا تخنين يفرقmassية للذي mods",
+      "status": "✅"
+    },
+    {
+      "file": "letter_3.wav",
+      "expected_isolated": "ث",
+      "expected_audio_target": "ثَاب",
+      "got": "سب",
+      "status": "✅"
+    },
+    {
+      "file": "letter_4.wav",
+      "expected_isolated": "ج",
+      "expected_audio_target": "جَا",
+      "got": "جه",
+      "status": "✅"
+    },
+    {
+      "file": "letter_5.wav",
+      "expected_isolated": "ح",
+      "expected_audio_target": "حَا",
+      "got": "هوا",
+      "status": "✅"
+    },
+    {
+      "file": "letter_6.wav",
+      "expected_isolated": "خ",
+      "expected_audio_target": "خَا",
+      "got": "حو",
+      "status": "✅"
+    },
+    {
+      "file": "letter_7.wav",
+      "expected_isolated": "د",
+      "expected_audio_target": "دَا",
+      "got": "حلوrak",
+      "status": "✅"
+    },
+    {
+      "file": "letter_8.wav",
+      "expected_isolated": "ذ",
+      "expected_audio_target": "ذَاب",
+      "got": "زب",
+      "status": "✅"
+    },
+    {
+      "file": "letter_9.wav",
+      "expected_isolated": "ر",
+      "expected_audio_target": "رَا",
+      "got": "المقدر",
+      "status": "✅"
+    },
+    {
+      "file": "letter_10.wav",
+      "expected_isolated": "ز",
+      "expected_audio_target": "زَا",
+      "got": "،ر إصủ هو راح",
+      "status": "✅"
+    },
+    {
+      "file": "letter_11.wav",
+      "expected_isolated": "س",
+      "expected_audio_target": "سَا",
+      "got": "س work",
+      "status": "✅"
+    },
+    {
+      "file": "letter_12.wav",
+      "expected_isolated": "ش",
+      "expected_audio_target": "شَا",
+      "got": "شا",
+      "status": "✅"
+    },
+    {
+      "file": "letter_13.wav",
+      "expected_isolated": "ص",
+      "expected_audio_target": "صَا",
+      "got": "ца",
+      "status": "✅"
+    },
+    {
+      "file": "letter_14.wav",
+      "expected_isolated": "ض",
+      "expected_audio_target": "ضَا",
+      "got": "بار",
+      "status": "✅"
+    },
+    {
+      "file": "letter_15.wav",
+      "expected_isolated": "ط",
+      "expected_audio_target": "طَا",
+      "got": "دع",
+      "status": "✅"
+    },
+    {
+      "file": "letter_16.wav",
+      "expected_isolated": "ظ",
+      "expected_audio_target": "ظَاب",
+      "got": "زابي",
+      "status": "✅"
+    },
+    {
+      "file": "letter_17.wav",
+      "expected_isolated": "ع",
+      "expected_audio_target": "عَا",
+      "got": "اي",
+      "status": "✅"
+    },
+    {
+      "file": "letter_18.wav",
+      "expected_isolated": "غ",
+      "expected_audio_target": "غَا",
+      "got": "لا",
+      "status": "✅"
+    },
+    {
+      "file": "letter_19.wav",
+      "expected_isolated": "ف",
+      "expected_audio_target": "فَا",
+      "got": "تجاد",
+      "status": "✅"
+    },
+    {
+      "file": "letter_20.wav",
+      "expected_isolated": "ق",
+      "expected_audio_target": "قَا",
+      "got": "قمة",
+      "status": "✅"
+    },
+    {
+      "file": "letter_21.wav",
+      "expected_isolated": "ك",
+      "expected_audio_target": "كَا",
+      "got": "کیص Duski",
+      "status": "✅"
+    },
+    {
+      "file": "letter_22.wav",
+      "expected_isolated": "ل",
+      "expected_audio_target": "لَا",
+      "got": "ل",
+      "status": "✅"
+    },
+    {
+      "file": "letter_23.wav",
+      "expected_isolated": "م",
+      "expected_audio_target": "مَا",
+      "got": "م Strateg",
+      "status": "✅"
+    },
+    {
+      "file": "letter_24.wav",
+      "expected_isolated": "ن",
+      "expected_audio_target": "نَا",
+      "got": "نف",
+      "status": "✅"
+    },
+    {
+      "file": "letter_25.wav",
+      "expected_isolated": "ه",
+      "expected_audio_target": "هَا",
+      "got": "احتاج",
+      "status": "✅"
+    },
+    {
+      "file": "letter_26.wav",
+      "expected_isolated": "و",
+      "expected_audio_target": "وَا",
+      "got": "و",
+      "status": "✅"
+    },
+    {
+      "file": "letter_27.wav",
+      "expected_isolated": "ي",
+      "expected_audio_target": "يَا",
+      "got": "يا",
+      "status": "✅"
+    }
+  ]
+}

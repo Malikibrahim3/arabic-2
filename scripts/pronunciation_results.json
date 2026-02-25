@@ -1,0 +1,1646 @@
+{
+  "total": 466,
+  "passed": 232,
+  "failed": 234,
+  "pass_rate": "49.8%",
+  "failures": [
+    {
+      "id": "conv2_line1",
+      "category": "conversation",
+      "expected": "صَباحُ الخَير",
+      "got": "سبحم خير",
+      "similarity": 0.5
+    },
+    {
+      "id": "conv2_line3",
+      "category": "conversation",
+      "expected": "هَذِهِ مَدرَسة",
+      "got": "سward 하지만",
+      "similarity": 0.0
+    },
+    {
+      "id": "conv3_line1",
+      "category": "conversation",
+      "expected": "هَذا كِتاب",
+      "got": "هذك تب",
+      "similarity": 0.625
+    },
+    {
+      "id": "conv3_line4",
+      "category": "conversation",
+      "expected": "عَفوًا",
+      "got": "أفون",
+      "similarity": 0.5
+    },
+    {
+      "id": "conv8_2_line5",
+      "category": "conversation",
+      "expected": "مُمتازٌ، وَما هِيَ أَهَمُّ إِنجازاتِكَ هُناكَ؟",
+      "got": "ممتاز ومهية أهم جزاتك حنق",
+      "similarity": 0.65625
+    },
+    {
+      "id": "conv8_3_line10",
+      "category": "conversation",
+      "expected": "لا تَفوتْ آيا صوفيا وَالبازارَ الكَبيرَ وَالبوسفور",
+      "got": "لتفوت I am Sophia while Bazar Elkebir while Bosphore",
+      "similarity": 0.15384615384615385
+    },
+    {
+      "id": "conv8_5_line3",
+      "category": "conversation",
+      "expected": "رائِعٌ، هَل تَستَمتِعُ بِدِراسَتِكَ؟",
+      "got": "رائع حل فستم تعوبي دراساتك",
+      "similarity": 0.6538461538461539
+    },
+    {
+      "id": "conv8_6_line1",
+      "category": "conversation",
+      "expected": "كَم مَضى مِنَ الوَقتِ مُنذُ آخِرِ لِقاءٍ عائِلِيّ؟",
+      "got": "كما ضمن الوقت منزوا آخر لقاء معاقي ليه",
+      "similarity": 0.6842105263157895
+    },
+    {
+      "id": "conv8_8_line3",
+      "category": "conversation",
+      "expected": "أُوافِقُكِ، لَكِن أَلَيسَ الطُّموحُ مُهِمًّا أَيضًا؟",
+      "got": "Евفكوكا، لكنلأي ستมو yol مهيمان نعيداً",
+      "similarity": 0.4054054054054054
+    },
+    {
+      "id": "conv8_8_line4",
+      "category": "conversation",
+      "expected": "بَلى، المُهِمُّ هُوَ التَّوازُنُ بَينَ الطُّموحِ وَالرِّضا",
+      "got": "بالا المهمه توازن بين التموحي ورضى",
+      "similarity": 0.6923076923076923
+    },
+    {
+      "id": "letter_alif_fatha",
+      "category": "letter_sound",
+      "expected": "أَ",
+      "got": "قلو double thoroughly",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_ayn_fatha",
+      "category": "letter_sound",
+      "expected": "عَ",
+      "got": "أه",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_ayn_name",
+      "category": "letter_name",
+      "expected": "عين",
+      "got": "اين",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_baa_fatha",
+      "category": "letter_sound",
+      "expected": "بَ",
+      "got": "إذا مجلدrov سوح龍 winpha",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_baa_name",
+      "category": "letter_name",
+      "expected": "باء",
+      "got": "ب",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "letter_daad_fatha",
+      "category": "letter_sound",
+      "expected": "ضَ",
+      "got": "دع",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_daad_name",
+      "category": "letter_name",
+      "expected": "ضاد",
+      "got": "داد",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_daal_fatha",
+      "category": "letter_sound",
+      "expected": "دَ",
+      "got": "دي",
+      "similarity": 0.5
+    },
+    {
+      "id": "letter_daal_name",
+      "category": "letter_name",
+      "expected": "دال",
+      "got": "دل",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_dhaa2_fatha",
+      "category": "letter_sound",
+      "expected": "ظَ",
+      "got": "في",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_dhaa2_name",
+      "category": "letter_name",
+      "expected": "ظاء",
+      "got": "سأتها عام الثباض чтобы أخب ٧� oscillator",
+      "similarity": 0.025000000000000022
+    },
+    {
+      "id": "letter_dhaal_fatha",
+      "category": "letter_sound",
+      "expected": "ذَ",
+      "got": "إلىoccل",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_dhaal_name",
+      "category": "letter_name",
+      "expected": "ذال",
+      "got": "زالي",
+      "similarity": 0.5
+    },
+    {
+      "id": "letter_faa_fatha",
+      "category": "letter_sound",
+      "expected": "فَ",
+      "got": "ي Ricky",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_faa_name",
+      "category": "letter_name",
+      "expected": "فاء",
+      "got": "لا لا",
+      "similarity": 0.19999999999999996
+    },
+    {
+      "id": "letter_ghayn_fatha",
+      "category": "letter_sound",
+      "expected": "غَ",
+      "got": "با",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_ghayn_name",
+      "category": "letter_name",
+      "expected": "غين",
+      "got": "رين",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_haa2_fatha",
+      "category": "letter_sound",
+      "expected": "هَ",
+      "got": "م have",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_haa2_name",
+      "category": "letter_name",
+      "expected": "هاء",
+      "got": "وه..",
+      "similarity": 0.25
+    },
+    {
+      "id": "letter_haa_fatha",
+      "category": "letter_sound",
+      "expected": "حَ",
+      "got": "ها",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_haa_name",
+      "category": "letter_name",
+      "expected": "حاء",
+      "got": "гр petit",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_jeem_fatha",
+      "category": "letter_sound",
+      "expected": "جَ",
+      "got": "إجر",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "letter_jeem_name",
+      "category": "letter_name",
+      "expected": "جيم",
+      "got": "جم",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_kaaf_fatha",
+      "category": "letter_sound",
+      "expected": "كَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_kaaf_name",
+      "category": "letter_name",
+      "expected": "كاف",
+      "got": "الاتف لكرني",
+      "similarity": 0.18181818181818177
+    },
+    {
+      "id": "letter_khaa_fatha",
+      "category": "letter_sound",
+      "expected": "خَ",
+      "got": "حق",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_khaa_name",
+      "category": "letter_name",
+      "expected": "خاء",
+      "got": "حد",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_laam_name",
+      "category": "letter_name",
+      "expected": "لام",
+      "got": "لم",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_meem_fatha",
+      "category": "letter_sound",
+      "expected": "مَ",
+      "got": "ماذا",
+      "similarity": 0.25
+    },
+    {
+      "id": "letter_noon_fatha",
+      "category": "letter_sound",
+      "expected": "نَ",
+      "got": "نلال",
+      "similarity": 0.25
+    },
+    {
+      "id": "letter_noon_name",
+      "category": "letter_name",
+      "expected": "نون",
+      "got": "نن",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_qaaf_fatha",
+      "category": "letter_sound",
+      "expected": "قَ",
+      "got": "؟",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_qaaf_name",
+      "category": "letter_name",
+      "expected": "قاف",
+      "got": "حف",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "letter_raa_fatha",
+      "category": "letter_sound",
+      "expected": "رَ",
+      "got": "أر",
+      "similarity": 0.5
+    },
+    {
+      "id": "letter_raa_name",
+      "category": "letter_name",
+      "expected": "راء",
+      "got": "طäch",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_saad_fatha",
+      "category": "letter_sound",
+      "expected": "صَ",
+      "got": "yep",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_saad_name",
+      "category": "letter_name",
+      "expected": "صاد",
+      "got": "ساد",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_seen_fatha",
+      "category": "letter_sound",
+      "expected": "سَ",
+      "got": "لا",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_sheen_fatha",
+      "category": "letter_sound",
+      "expected": "شَ",
+      "got": "شي",
+      "similarity": 0.5
+    },
+    {
+      "id": "letter_taa2_fatha",
+      "category": "letter_sound",
+      "expected": "طَ",
+      "got": "إ",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_taa2_name",
+      "category": "letter_name",
+      "expected": "طاء",
+      "got": "öl及 شخص",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_taa_fatha",
+      "category": "letter_sound",
+      "expected": "تَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_taa_name",
+      "category": "letter_name",
+      "expected": "تاء",
+      "got": "تأط",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_thaa_fatha",
+      "category": "letter_sound",
+      "expected": "ثَ",
+      "got": "Sen",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_thaa_name",
+      "category": "letter_name",
+      "expected": "ثاء",
+      "got": "Thank you",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_waaw_fatha",
+      "category": "letter_sound",
+      "expected": "وَ",
+      "got": "لكم",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_waaw_name",
+      "category": "letter_name",
+      "expected": "واو",
+      "got": "وو",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_yaa_fatha",
+      "category": "letter_sound",
+      "expected": "يَ",
+      "got": "היא",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_yaa_name",
+      "category": "letter_name",
+      "expected": "ياء",
+      "got": "يا",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "letter_zaay_fatha",
+      "category": "letter_sound",
+      "expected": "زَ",
+      "got": "زي",
+      "similarity": 0.5
+    },
+    {
+      "id": "sent_bayt_nadhif",
+      "category": "sentence",
+      "expected": "البَيْتُ نَظِيفٌ",
+      "got": "البيت وموذيث",
+      "similarity": 0.5833333333333333
+    },
+    {
+      "id": "sent_hadha_kitab",
+      "category": "sentence",
+      "expected": "هذا كِتاب",
+      "got": "هذك تب",
+      "similarity": 0.625
+    },
+    {
+      "id": "sent_hadhihi_madrasah",
+      "category": "sentence",
+      "expected": "هذِهِ مَدرَسة",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "sent_idhhab",
+      "category": "sentence",
+      "expected": "اِذْهَبْ",
+      "got": "Wirtschaft",
+      "similarity": 0.0
+    },
+    {
+      "id": "sent_intadhir",
+      "category": "sentence",
+      "expected": "اِنْتَظِرْ",
+      "got": "حل",
+      "similarity": 0.0
+    },
+    {
+      "id": "sent_kam_umruk",
+      "category": "sentence",
+      "expected": "كَمْ عُمْرُكَ",
+      "got": "كماملق",
+      "similarity": 0.4285714285714286
+    },
+    {
+      "id": "sent_la_arif",
+      "category": "sentence",
+      "expected": "لَا أَعْرِفُ",
+      "got": "لأرف",
+      "similarity": 0.5714285714285714
+    },
+    {
+      "id": "sent_lam_adhhab",
+      "category": "sentence",
+      "expected": "لَمْ أَذْهَبْ",
+      "got": "لمتحب",
+      "similarity": 0.4285714285714286
+    },
+    {
+      "id": "sent_laysa_indi",
+      "category": "sentence",
+      "expected": "لَيْسَ عِنْدِي",
+      "got": "لسندي",
+      "similarity": 0.625
+    },
+    {
+      "id": "sent_ma_ismuka",
+      "category": "sentence",
+      "expected": "مَا اسْمُكَ",
+      "got": "مصمك",
+      "similarity": 0.4285714285714286
+    },
+    {
+      "id": "sent_sabah_alkhayr",
+      "category": "sentence",
+      "expected": "صَباحُ الخَير",
+      "got": "سبحم خير",
+      "similarity": 0.5
+    },
+    {
+      "id": "sent_taal_huna",
+      "category": "sentence",
+      "expected": "تَعَالَ هُنَا",
+      "got": "كعا لهنا",
+      "similarity": 0.625
+    },
+    {
+      "id": "sent_taam_ladhidh",
+      "category": "sentence",
+      "expected": "الطَّعَامُ لَذِيذٌ",
+      "got": "reopوici نtem",
+      "similarity": 0.07692307692307687
+    },
+    {
+      "id": "syl_ayn_damma",
+      "category": "syllable",
+      "expected": "عُ",
+      "got": "nd",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_ayn_fatha",
+      "category": "syllable",
+      "expected": "عَ",
+      "got": "وحفظ",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_ayn_kasra",
+      "category": "syllable",
+      "expected": "عِ",
+      "got": ".",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_baa_damma",
+      "category": "syllable",
+      "expected": "بُ",
+      "got": "دو",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_baa_fatha",
+      "category": "syllable",
+      "expected": "بَ",
+      "got": "لدي",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_baa_kasra",
+      "category": "syllable",
+      "expected": "بِ",
+      "got": "2",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_daad_damma",
+      "category": "syllable",
+      "expected": "ضُ",
+      "got": "دو",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_daad_fatha",
+      "category": "syllable",
+      "expected": "ضَ",
+      "got": "دع",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_daad_kasra",
+      "category": "syllable",
+      "expected": "ضِ",
+      "got": "و",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_daal_damma",
+      "category": "syllable",
+      "expected": "دُ",
+      "got": "دو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_daal_fatha",
+      "category": "syllable",
+      "expected": "دَ",
+      "got": "دي",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_daal_kasra",
+      "category": "syllable",
+      "expected": "دِ",
+      "got": "...ماذا قد بلا...",
+      "similarity": 0.05882352941176472
+    },
+    {
+      "id": "syl_dhaa2_damma",
+      "category": "syllable",
+      "expected": "ظُ",
+      "got": "لا",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_dhaa2_fatha",
+      "category": "syllable",
+      "expected": "ظَ",
+      "got": "العجور��",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_dhaa2_kasra",
+      "category": "syllable",
+      "expected": "ظِ",
+      "got": "إيس",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_dhaal_damma",
+      "category": "syllable",
+      "expected": "ذُ",
+      "got": "زو",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_dhaal_fatha",
+      "category": "syllable",
+      "expected": "ذَ",
+      "got": "The",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_dhaal_kasra",
+      "category": "syllable",
+      "expected": "ذِ",
+      "got": "وي title",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_faa_damma",
+      "category": "syllable",
+      "expected": "فُ",
+      "got": "فوق",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "syl_faa_fatha",
+      "category": "syllable",
+      "expected": "فَ",
+      "got": "أليك",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_faa_kasra",
+      "category": "syllable",
+      "expected": "فِ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_ghayn_damma",
+      "category": "syllable",
+      "expected": "غُ",
+      "got": "والإم best",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_ghayn_fatha",
+      "category": "syllable",
+      "expected": "غَ",
+      "got": "orthog",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_ghayn_kasra",
+      "category": "syllable",
+      "expected": "غِ",
+      "got": "م naturب",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_haa2_damma",
+      "category": "syllable",
+      "expected": "هُ",
+      "got": "حو",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_haa2_fatha",
+      "category": "syllable",
+      "expected": "هَ",
+      "got": "فطص نقوية",
+      "similarity": 0.11111111111111116
+    },
+    {
+      "id": "syl_haa2_kasra",
+      "category": "syllable",
+      "expected": "هِ",
+      "got": "يهي",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "syl_haa_damma",
+      "category": "syllable",
+      "expected": "حُ",
+      "got": "حو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_haa_fatha",
+      "category": "syllable",
+      "expected": "حَ",
+      "got": "ها",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_haa_kasra",
+      "category": "syllable",
+      "expected": "حِ",
+      "got": "حل",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_jeem_damma",
+      "category": "syllable",
+      "expected": "جُ",
+      "got": "يسerweise",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_jeem_fatha",
+      "category": "syllable",
+      "expected": "جَ",
+      "got": "إجر",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "syl_jeem_kasra",
+      "category": "syllable",
+      "expected": "جِ",
+      "got": "إيجة",
+      "similarity": 0.25
+    },
+    {
+      "id": "syl_kaaf_damma",
+      "category": "syllable",
+      "expected": "كُ",
+      "got": "المحفظ ك how",
+      "similarity": 0.08333333333333337
+    },
+    {
+      "id": "syl_kaaf_fatha",
+      "category": "syllable",
+      "expected": "كَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_kaaf_kasra",
+      "category": "syllable",
+      "expected": "كِ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_khaa_damma",
+      "category": "syllable",
+      "expected": "خُ",
+      "got": "و",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_khaa_fatha",
+      "category": "syllable",
+      "expected": "خَ",
+      "got": "either",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_khaa_kasra",
+      "category": "syllable",
+      "expected": "خِ",
+      "got": "حق",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_laam_damma",
+      "category": "syllable",
+      "expected": "لُ",
+      "got": "لو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_laam_fatha",
+      "category": "syllable",
+      "expected": "لَ",
+      "got": "emerging",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_laam_kasra",
+      "category": "syllable",
+      "expected": "لِ",
+      "got": "لي",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_meem_damma",
+      "category": "syllable",
+      "expected": "مُ",
+      "got": "مو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_meem_fatha",
+      "category": "syllable",
+      "expected": "مَ",
+      "got": "ماذا",
+      "similarity": 0.25
+    },
+    {
+      "id": "syl_meem_kasra",
+      "category": "syllable",
+      "expected": "مِ",
+      "got": "تحنツ",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_noon_damma",
+      "category": "syllable",
+      "expected": "نُ",
+      "got": "نو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_noon_fatha",
+      "category": "syllable",
+      "expected": "نَ",
+      "got": "نة",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_noon_kasra",
+      "category": "syllable",
+      "expected": "نِ",
+      "got": "نقіш",
+      "similarity": 0.25
+    },
+    {
+      "id": "syl_qaaf_damma",
+      "category": "syllable",
+      "expected": "قُ",
+      "got": "مبق in the blink of an eye",
+      "similarity": 0.038461538461538436
+    },
+    {
+      "id": "syl_qaaf_fatha",
+      "category": "syllable",
+      "expected": "قَ",
+      "got": "لم",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_qaaf_kasra",
+      "category": "syllable",
+      "expected": "قِ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_raa_damma",
+      "category": "syllable",
+      "expected": "رُ",
+      "got": "مっちゃ",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_raa_fatha",
+      "category": "syllable",
+      "expected": "رَ",
+      "got": "أر",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_raa_kasra",
+      "category": "syllable",
+      "expected": "رِ",
+      "got": "irituality",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_saad_damma",
+      "category": "syllable",
+      "expected": "صُ",
+      "got": "سر",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_saad_fatha",
+      "category": "syllable",
+      "expected": "صَ",
+      "got": "ث .",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_saad_kasra",
+      "category": "syllable",
+      "expected": "صِ",
+      "got": "أه",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_seen_damma",
+      "category": "syllable",
+      "expected": "سُ",
+      "got": "سو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_seen_fatha",
+      "category": "syllable",
+      "expected": "سَ",
+      "got": "ليس عملت قمرة",
+      "similarity": 0.07692307692307687
+    },
+    {
+      "id": "syl_seen_kasra",
+      "category": "syllable",
+      "expected": "سِ",
+      "got": "سلم",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "syl_sheen_damma",
+      "category": "syllable",
+      "expected": "شُ",
+      "got": "شو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_sheen_fatha",
+      "category": "syllable",
+      "expected": "شَ",
+      "got": "شي",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_sheen_kasra",
+      "category": "syllable",
+      "expected": "شِ",
+      "got": "شخص",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "syl_taa2_damma",
+      "category": "syllable",
+      "expected": "طُ",
+      "got": "وبرضو",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_taa2_fatha",
+      "category": "syllable",
+      "expected": "طَ",
+      "got": "اي",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_taa2_kasra",
+      "category": "syllable",
+      "expected": "طِ",
+      "got": "ب",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_taa_damma",
+      "category": "syllable",
+      "expected": "تُ",
+      "got": "دو",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_taa_fatha",
+      "category": "syllable",
+      "expected": "تَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_taa_kasra",
+      "category": "syllable",
+      "expected": "تِ",
+      "got": "ن",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_thaa_damma",
+      "category": "syllable",
+      "expected": "ثُ",
+      "got": "ب using maid",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_thaa_fatha",
+      "category": "syllable",
+      "expected": "ثَ",
+      "got": "حل تحول",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_thaa_kasra",
+      "category": "syllable",
+      "expected": "ثِ",
+      "got": "اه",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_waaw_damma",
+      "category": "syllable",
+      "expected": "وُ",
+      "got": "وا",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_waaw_fatha",
+      "category": "syllable",
+      "expected": "وَ",
+      "got": "وjcie<|nn|><|en|>",
+      "similarity": 0.05882352941176472
+    },
+    {
+      "id": "syl_waaw_kasra",
+      "category": "syllable",
+      "expected": "وِ",
+      "got": "أوا",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "syl_yaa_damma",
+      "category": "syllable",
+      "expected": "يُ",
+      "got": "إيه",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "syl_yaa_fatha",
+      "category": "syllable",
+      "expected": "يَ",
+      "got": "apply the (- Five to做), highlight the expression on the first string conference.",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_yaa_kasra",
+      "category": "syllable",
+      "expected": "يِ",
+      "got": "2 data data<|it|> AMDunky chips",
+      "similarity": 0.0
+    },
+    {
+      "id": "syl_zaay_damma",
+      "category": "syllable",
+      "expected": "زُ",
+      "got": "زو",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_zaay_fatha",
+      "category": "syllable",
+      "expected": "زَ",
+      "got": "زي",
+      "similarity": 0.5
+    },
+    {
+      "id": "syl_zaay_kasra",
+      "category": "syllable",
+      "expected": "زِ",
+      "got": "الله",
+      "similarity": 0.0
+    },
+    {
+      "id": "adj_difficult",
+      "category": "word",
+      "expected": "صَعْبٌ",
+      "got": "سابد",
+      "similarity": 0.25
+    },
+    {
+      "id": "adj_easy",
+      "category": "word",
+      "expected": "سَهْلٌ",
+      "got": "سهن",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "adj_tall",
+      "category": "word",
+      "expected": "طَوِيلٌ",
+      "got": "بوين",
+      "similarity": 0.5
+    },
+    {
+      "id": "body_back",
+      "category": "word",
+      "expected": "ظَهْرٌ",
+      "got": "وحرو",
+      "similarity": 0.25
+    },
+    {
+      "id": "body_ear",
+      "category": "word",
+      "expected": "أُذُنٌ",
+      "got": "أو ذون",
+      "similarity": 0.5
+    },
+    {
+      "id": "body_hair",
+      "category": "word",
+      "expected": "شَعْرٌ",
+      "got": "شارو",
+      "similarity": 0.5
+    },
+    {
+      "id": "body_leg",
+      "category": "word",
+      "expected": "رِجْلٌ",
+      "got": "أجل",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "body_mouth",
+      "category": "word",
+      "expected": "فَمٌ",
+      "got": "سمو",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "body_nose",
+      "category": "word",
+      "expected": "أَنْفٌ",
+      "got": "أوح",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "body_tooth",
+      "category": "word",
+      "expected": "سِنٌّ",
+      "got": "سنن",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "color_black",
+      "category": "word",
+      "expected": "أَسْوَدُ",
+      "got": "أسوات",
+      "similarity": 0.6
+    },
+    {
+      "id": "color_brown",
+      "category": "word",
+      "expected": "بُنِّيٌّ",
+      "got": "بنيون",
+      "similarity": 0.6
+    },
+    {
+      "id": "color_green",
+      "category": "word",
+      "expected": "أَخْضَرُ",
+      "got": "أخدار",
+      "similarity": 0.6
+    },
+    {
+      "id": "color_red",
+      "category": "word",
+      "expected": "أَحْمَرُ",
+      "got": "أفمار",
+      "similarity": 0.6
+    },
+    {
+      "id": "color_white",
+      "category": "word",
+      "expected": "أَبْيَضُ",
+      "got": "أعتقد",
+      "similarity": 0.19999999999999996
+    },
+    {
+      "id": "dir_behind",
+      "category": "word",
+      "expected": "خَلْفَ",
+      "got": "حنث",
+      "similarity": 0.0
+    },
+    {
+      "id": "dir_below",
+      "category": "word",
+      "expected": "تَحْتَ",
+      "got": "أيت...",
+      "similarity": 0.16666666666666663
+    },
+    {
+      "id": "dir_outside",
+      "category": "word",
+      "expected": "خَارِجَ",
+      "got": "حرج",
+      "similarity": 0.5
+    },
+    {
+      "id": "expr_welcome",
+      "category": "word",
+      "expected": "عَفْوًا",
+      "got": "أفون",
+      "similarity": 0.5
+    },
+    {
+      "id": "expr_with",
+      "category": "word",
+      "expected": "مَعَ",
+      "got": "مار",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "expr_yes",
+      "category": "word",
+      "expected": "نَعَمْ",
+      "got": "نم",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "fam_brother",
+      "category": "word",
+      "expected": "أَخٌ",
+      "got": "أخوف",
+      "similarity": 0.5
+    },
+    {
+      "id": "fam_father",
+      "category": "word",
+      "expected": "أَبٌ",
+      "got": "وذا لا سופان لمدة منطلق Dobri",
+      "similarity": 0.03448275862068961
+    },
+    {
+      "id": "fam_mother",
+      "category": "word",
+      "expected": "أُمٌّ",
+      "got": "أبcket",
+      "similarity": 0.16666666666666663
+    },
+    {
+      "id": "fam_sister",
+      "category": "word",
+      "expected": "أُخْتٌ",
+      "got": "بَخ-د",
+      "similarity": 0.25
+    },
+    {
+      "id": "nature_mountain",
+      "category": "word",
+      "expected": "جَبَلٌ",
+      "got": "جبن",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "nature_river",
+      "category": "word",
+      "expected": "نَهْرٌ",
+      "got": "نحرم",
+      "similarity": 0.5
+    },
+    {
+      "id": "nature_sea",
+      "category": "word",
+      "expected": "بَحْرٌ",
+      "got": "بفرم",
+      "similarity": 0.5
+    },
+    {
+      "id": "nature_sky",
+      "category": "word",
+      "expected": "سَمَاءٌ",
+      "got": "سمع up",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "num_two",
+      "category": "word",
+      "expected": "اِثْنَانِ",
+      "got": "إسنين",
+      "similarity": 0.6
+    },
+    {
+      "id": "obj_bag",
+      "category": "word",
+      "expected": "حَقِيبَةٌ",
+      "got": "حقب",
+      "similarity": 0.6
+    },
+    {
+      "id": "obj_chair",
+      "category": "word",
+      "expected": "كُرْسِيٌّ",
+      "got": "كورسيم",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "obj_clock",
+      "category": "word",
+      "expected": "سَاعَةٌ",
+      "got": "سع",
+      "similarity": 0.5
+    },
+    {
+      "id": "obj_pen",
+      "category": "word",
+      "expected": "قَلَمٌ",
+      "got": "طينا مم",
+      "similarity": 0.1428571428571429
+    },
+    {
+      "id": "obj_phone",
+      "category": "word",
+      "expected": "هَاتِفٌ",
+      "got": "حدث",
+      "similarity": 0.0
+    },
+    {
+      "id": "obj_table",
+      "category": "word",
+      "expected": "طَاوِلَةٌ",
+      "got": "باويلة",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "obj_window",
+      "category": "word",
+      "expected": "نَافِذَةٌ",
+      "got": "نفضة",
+      "similarity": 0.6
+    },
+    {
+      "id": "people_child",
+      "category": "word",
+      "expected": "طِفْلٌ",
+      "got": "التسف",
+      "similarity": 0.0
+    },
+    {
+      "id": "people_friend",
+      "category": "word",
+      "expected": "صَدِيقٌ",
+      "got": "سوديق",
+      "similarity": 0.6
+    },
+    {
+      "id": "people_guest",
+      "category": "word",
+      "expected": "ضَيْفٌ",
+      "got": "بوق",
+      "similarity": 0.0
+    },
+    {
+      "id": "place_mosque",
+      "category": "word",
+      "expected": "مَسْجِدٌ",
+      "got": "مصدد",
+      "similarity": 0.5
+    },
+    {
+      "id": "time_hour",
+      "category": "word",
+      "expected": "سَاعَةٌ",
+      "got": "سع",
+      "similarity": 0.5
+    },
+    {
+      "id": "time_week",
+      "category": "word",
+      "expected": "أُسْبُوعٌ",
+      "got": "أصبوى",
+      "similarity": 0.6
+    },
+    {
+      "id": "verb_came",
+      "category": "word",
+      "expected": "جَاءَ",
+      "got": "إلى الرجل",
+      "similarity": 0.11111111111111116
+    },
+    {
+      "id": "verb_knew",
+      "category": "word",
+      "expected": "عَرَفَ",
+      "got": "آرف",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "verb_ran",
+      "category": "word",
+      "expected": "رَكَضَ",
+      "got": "رقضة",
+      "similarity": 0.5
+    },
+    {
+      "id": "verb_read",
+      "category": "word",
+      "expected": "قَرَأَ",
+      "got": "قرات في الوصول",
+      "similarity": 0.2142857142857143
+    },
+    {
+      "id": "verb_said",
+      "category": "word",
+      "expected": "قَالَ",
+      "got": "حالي",
+      "similarity": 0.5
+    },
+    {
+      "id": "verb_saw",
+      "category": "word",
+      "expected": "رَأَى",
+      "got": "elling",
+      "similarity": 0.0
+    },
+    {
+      "id": "verb_slept",
+      "category": "word",
+      "expected": "نَامَ",
+      "got": "نم",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "verb_stood",
+      "category": "word",
+      "expected": "وَقَفَ",
+      "got": "وكف",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "verb_walked",
+      "category": "word",
+      "expected": "مَشَى",
+      "got": "ماشر",
+      "similarity": 0.5
+    },
+    {
+      "id": "verb_went",
+      "category": "word",
+      "expected": "ذَهَبَ",
+      "got": "زهب",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "weather_cloud",
+      "category": "word",
+      "expected": "غَيْمٌ",
+      "got": "رائم",
+      "similarity": 0.25
+    },
+    {
+      "id": "weather_wind",
+      "category": "word",
+      "expected": "رِيحٌ",
+      "got": "أيها",
+      "similarity": 0.25
+    },
+    {
+      "id": "word_abyad",
+      "category": "word",
+      "expected": "أَبيَض",
+      "got": "عبJoe",
+      "similarity": 0.19999999999999996
+    },
+    {
+      "id": "word_afwan",
+      "category": "word",
+      "expected": "عَفوًا",
+      "got": "أفون",
+      "similarity": 0.5
+    },
+    {
+      "id": "word_ahmar",
+      "category": "word",
+      "expected": "أَحمَر",
+      "got": "أفمار",
+      "similarity": 0.6
+    },
+    {
+      "id": "word_akh",
+      "category": "word",
+      "expected": "أَخ",
+      "got": "أخوف",
+      "similarity": 0.5
+    },
+    {
+      "id": "word_akhdar",
+      "category": "word",
+      "expected": "أَخضَر",
+      "got": "أخدار",
+      "similarity": 0.6
+    },
+    {
+      "id": "word_aswad",
+      "category": "word",
+      "expected": "أَسوَد",
+      "got": "أسوات",
+      "similarity": 0.6
+    },
+    {
+      "id": "word_ayn_body",
+      "category": "word",
+      "expected": "عَين",
+      "got": "اين",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "word_azraq",
+      "category": "word",
+      "expected": "أَزرَق",
+      "got": "أزراقف",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "word_bab",
+      "category": "word",
+      "expected": "باب",
+      "got": "بب",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "word_chai",
+      "category": "word",
+      "expected": "شاي",
+      "got": "مش",
+      "similarity": 0.0
+    },
+    {
+      "id": "word_ibn",
+      "category": "word",
+      "expected": "اِبن",
+      "got": "قبنو",
+      "similarity": 0.5
+    },
+    {
+      "id": "word_ithnan",
+      "category": "word",
+      "expected": "اِثنان",
+      "got": "إسنين",
+      "similarity": 0.6
+    },
+    {
+      "id": "word_jabal",
+      "category": "word",
+      "expected": "جَبَل",
+      "got": "جبن",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "word_kalb",
+      "category": "word",
+      "expected": "كَلب",
+      "got": "تركو kindر",
+      "similarity": 0.09999999999999998
+    },
+    {
+      "id": "word_khubz",
+      "category": "word",
+      "expected": "خُبز",
+      "got": "حبس",
+      "similarity": 0.33333333333333337
+    },
+    {
+      "id": "word_kitab",
+      "category": "word",
+      "expected": "كِتاب",
+      "got": "كي تب",
+      "similarity": 0.4
+    },
+    {
+      "id": "word_maa",
+      "category": "word",
+      "expected": "ماء",
+      "got": "محمد",
+      "similarity": 0.25
+    },
+    {
+      "id": "word_naam",
+      "category": "word",
+      "expected": "نَعَم",
+      "got": "نم",
+      "similarity": 0.6666666666666667
+    },
+    {
+      "id": "word_nahr",
+      "category": "word",
+      "expected": "نَهر",
+      "got": "نحرم",
+      "similarity": 0.5
+    },
+    {
+      "id": "word_qalam",
+      "category": "word",
+      "expected": "قَلَم",
+      "got": "طينا مم",
+      "similarity": 0.1428571428571429
+    },
+    {
+      "id": "word_qitt",
+      "category": "word",
+      "expected": "قِطّ",
+      "got": "��",
+      "similarity": 0.0
+    },
+    {
+      "id": "word_samak",
+      "category": "word",
+      "expected": "سَمَك",
+      "got": "سماقت",
+      "similarity": 0.4
+    },
+    {
+      "id": "word_thalathah",
+      "category": "word",
+      "expected": "ثَلاثة",
+      "got": "سلسة",
+      "similarity": 0.4
+    },
+    {
+      "id": "word_tis3ah",
+      "category": "word",
+      "expected": "تِسعة",
+      "got": "تسا",
+      "similarity": 0.5
+    },
+    {
+      "id": "word_walad",
+      "category": "word",
+      "expected": "وَلَد",
+      "got": "جدا",
+      "similarity": 0.0
+    }
+  ]
+}

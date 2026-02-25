@@ -108,6 +108,7 @@ function getAudioContext(): AudioContext {
 async function loadVocabulary(): Promise<Record<string, { text: string; path: string }>> {
     if (vocabularyData) return vocabularyData;
     try {
+        // Try loading from local path
         const res = await fetch('/audio/vocabulary.json');
         if (res.ok) {
             vocabularyData = await res.json();
@@ -144,12 +145,13 @@ function resolveAudioId(input: string): string | null {
 }
 
 function audioIdToPath(audioId: string): string {
-    // Determine directory from ID prefix
+    // Determine directory from ID prefix and return local URL
     if (audioId.startsWith('letter_')) return `/audio/letters/${audioId}.mp3`;
     if (audioId.startsWith('syl_')) return `/audio/syllables/${audioId}.mp3`;
     if (audioId.startsWith('word_')) return `/audio/words/${audioId}.mp3`;
     if (audioId.startsWith('sent_')) return `/audio/sentences/${audioId}.mp3`;
     if (audioId.startsWith('conv')) return `/audio/conversations/${audioId}.mp3`;
+    if (audioId.startsWith('quran_')) return `/audio/quran/${audioId}.mp3`;
     return `/audio/letters/${audioId}.mp3`;
 }
 
@@ -172,14 +174,16 @@ export function stopAudio(): void {
  */
 export async function play(input: string, speed: PlaybackSpeed = PlaybackSpeed.Normal): Promise<void> {
     stopAudio();
+    console.log(`[AudioEngine] play() called with input: "${input}"`);
 
-    // If input is already a direct path, try playing it immediately
-    if (input.startsWith('/') && input.endsWith('.mp3')) {
+    // If input is already a direct path (local URL), try playing it immediately
+    if ((input.startsWith('/') || input.startsWith('http')) && input.endsWith('.mp3')) {
         const played = await tryPlayMP3Path(input, speed);
         if (played) return;
     }
 
     const audioId = resolveAudioId(input);
+    console.log(`[AudioEngine] resolveAudioId("${input}") → ${audioId ?? 'null'}`);
     if (audioId) {
         const played = await tryPlayMP3(audioId, speed);
         if (played) return;
@@ -188,11 +192,13 @@ export async function play(input: string, speed: PlaybackSpeed = PlaybackSpeed.N
     // Also try vocabulary lookup
     const vocab = await loadVocabulary();
     if (audioId && vocab[audioId]) {
+        console.log(`[AudioEngine] Vocabulary hit: ${audioId} → ${vocab[audioId].path}`);
         const played = await tryPlayMP3Path(vocab[audioId].path, speed);
         if (played) return;
     }
 
     // Fallback to browser TTS
+    console.warn(`[AudioEngine] ⚠️ FALLBACK to browser SpeechSynthesis for: "${input}"`);
     await speakWithTTS(input, speed);
 }
 
@@ -243,13 +249,20 @@ async function tryPlayMP3Path(filePath: string, speed: PlaybackSpeed): Promise<b
         let buffer = audioCache.get(filePath);
 
         if (!buffer) {
+            console.log(`[AudioEngine] Fetching MP3: ${filePath}`);
             const response = await fetch(filePath);
-            if (!response.ok) return false;
+            if (!response.ok) {
+                console.warn(`[AudioEngine] MP3 fetch failed (${response.status}): ${filePath}`);
+                return false;
+            }
 
             const arrayBuffer = await response.arrayBuffer();
             const ctx = getAudioContext();
             buffer = await ctx.decodeAudioData(arrayBuffer);
             audioCache.set(filePath, buffer);
+            console.log(`[AudioEngine] ✅ Playing MP3: ${filePath}`);
+        } else {
+            console.log(`[AudioEngine] ✅ Playing MP3 (cached): ${filePath}`);
         }
 
         const ctx = getAudioContext();
@@ -276,6 +289,7 @@ async function tryPlayMP3Path(filePath: string, speed: PlaybackSpeed): Promise<b
 // ─── Internal: Browser SpeechSynthesis fallback ────────────
 
 async function speakWithTTS(text: string, speed: PlaybackSpeed): Promise<void> {
+    console.warn(`[AudioEngine] 🔊 Using browser SpeechSynthesis (NOT Azure) for: "${text}"`);
     if (!window.speechSynthesis) return;
 
     return new Promise<void>((resolve) => {

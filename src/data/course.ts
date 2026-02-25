@@ -1,5 +1,7 @@
 import type { Course, CourseNode, Lesson, Exercise } from './types';
 
+console.log('🔍 COURSE.TS MODULE LOADING - TIMESTAMP:', new Date().toISOString());
+
 // ─── Letter Data ───────────────────────────────────────────
 
 interface LetterInfo {
@@ -14,7 +16,7 @@ const ALL_LETTERS: LetterInfo[] = [
     { letter: 'ت', name: 'Taa', sound: '/t/' },
     { letter: 'ث', name: 'Thaa', sound: '/th/' },
     { letter: 'ج', name: 'Jeem', sound: '/j/' },
-    { letter: 'ح', name: 'Haa', sound: '/ħ/' },
+    { letter: 'ح', name: 'Ḥaa', sound: '/ħ/' },
     { letter: 'خ', name: 'Khaa', sound: '/kh/' },
     { letter: 'د', name: 'Daal', sound: '/d/' },
     { letter: 'ذ', name: 'Dhaal', sound: '/dh/' },
@@ -24,8 +26,8 @@ const ALL_LETTERS: LetterInfo[] = [
     { letter: 'ش', name: 'Sheen', sound: '/sh/' },
     { letter: 'ص', name: 'Saad', sound: '/sˤ/' },
     { letter: 'ض', name: 'Daad', sound: '/dˤ/' },
-    { letter: 'ط', name: 'Taa\u02BE', sound: '/tˤ/' },
-    { letter: 'ظ', name: 'Dhaa\u02BE', sound: '/ðˤ/' },
+    { letter: 'ط', name: 'Ṭaa', sound: '/tˤ/' },
+    { letter: 'ظ', name: 'Ẓaa', sound: '/ðˤ/' },
     { letter: 'ع', name: 'Ayn', sound: '/ʕ/' },
     { letter: 'غ', name: 'Ghayn', sound: '/ɣ/' },
     { letter: 'ف', name: 'Faa', sound: '/f/' },
@@ -34,7 +36,7 @@ const ALL_LETTERS: LetterInfo[] = [
     { letter: 'ل', name: 'Laam', sound: '/l/' },
     { letter: 'م', name: 'Meem', sound: '/m/' },
     { letter: 'ن', name: 'Noon', sound: '/n/' },
-    { letter: 'ه', name: 'Haa\u02BE', sound: '/h/' },
+    { letter: 'ه', name: 'Haa', sound: '/h/' },
     { letter: 'و', name: 'Waaw', sound: '/w/' },
     { letter: 'ي', name: 'Yaa', sound: '/y/' },
 ];
@@ -167,11 +169,11 @@ const LEARNED_CONTENT = {
  */
 function makeLetterRefreshers(count: number, nodeId: string): Exercise[] {
     if (LEARNED_CONTENT.letters.length === 0) return [];
-    
+
     const refreshers: Exercise[] = [];
     const oldLetters = pick(LEARNED_CONTENT.letters, Math.min(count, LEARNED_CONTENT.letters.length));
     const letterPool = ALL_LETTERS.map(l => l.letter);
-    
+
     for (const l of oldLetters) {
         // Alternate between different exercise types
         if (Math.random() > 0.5) {
@@ -193,7 +195,7 @@ function makeLetterRefreshers(count: number, nodeId: string): Exercise[] {
             });
         }
     }
-    
+
     return refreshers;
 }
 
@@ -202,15 +204,15 @@ function makeLetterRefreshers(count: number, nodeId: string): Exercise[] {
  */
 function makeVowelRefreshers(count: number, nodeId: string, letters: any[]): Exercise[] {
     if (LEARNED_CONTENT.vowels.length === 0 || letters.length === 0) return [];
-    
+
     const refreshers: Exercise[] = [];
     const oldVowels = pick(LEARNED_CONTENT.vowels, Math.min(count, LEARNED_CONTENT.vowels.length));
-    
+
     for (const v of oldVowels) {
         const l = letters[Math.floor(Math.random() * letters.length)];
         const combo = l.letter + v.mark;
         const syllable = l.name.toLowerCase().slice(0, 2) + v.translit;
-        
+
         refreshers.push({
             id: nextId(`${nodeId}-vowel-refresh`),
             type: 'multiple_choice',
@@ -220,7 +222,7 @@ function makeVowelRefreshers(count: number, nodeId: string, letters: any[]): Exe
             hint: combo,
         });
     }
-    
+
     return refreshers;
 }
 
@@ -229,10 +231,10 @@ function makeVowelRefreshers(count: number, nodeId: string, letters: any[]): Exe
  */
 function makeWordRefreshers(count: number, nodeId: string): Exercise[] {
     if (LEARNED_CONTENT.words.length === 0) return [];
-    
+
     const refreshers: Exercise[] = [];
     const oldWords = pick(LEARNED_CONTENT.words, Math.min(count, LEARNED_CONTENT.words.length));
-    
+
     for (const w of oldWords) {
         // Alternate between hearing and meaning exercises
         if (Math.random() > 0.5) {
@@ -255,7 +257,7 @@ function makeWordRefreshers(count: number, nodeId: string): Exercise[] {
             });
         }
     }
-    
+
     return refreshers;
 }
 
@@ -264,10 +266,10 @@ function makeWordRefreshers(count: number, nodeId: string): Exercise[] {
  */
 function makeSentenceRefreshers(count: number, nodeId: string): Exercise[] {
     if (LEARNED_CONTENT.sentences.length === 0) return [];
-    
+
     const refreshers: Exercise[] = [];
     const oldSentences = pick(LEARNED_CONTENT.sentences, Math.min(count, LEARNED_CONTENT.sentences.length));
-    
+
     for (const s of oldSentences) {
         refreshers.push({
             id: nextId(`${nodeId}-sent-refresh`),
@@ -279,7 +281,7 @@ function makeSentenceRefreshers(count: number, nodeId: string): Exercise[] {
             promptAudio: s.audio,
         });
     }
-    
+
     return refreshers;
 }
 
@@ -391,15 +393,15 @@ function makeVowelTrapExercise(letter: LetterInfo, correctVowel: any, allVowels:
     const wrongVowels = allVowels.filter(v => v.name !== correctVowel.name);
     const correctCombo = letter.letter + correctVowel.mark;
     const wrongCombos = wrongVowels.map(v => letter.letter + v.mark);
-    
-    const trapExplanations = wrongVowels.map(v => 
+
+    const trapExplanations = wrongVowels.map(v =>
         `<strong class="arabic-text">${v.mark}</strong> (${v.name}) makes "${v.sound}" - not "${correctVowel.sound}"`
     ).join('<br/>');
-    
+
     return {
         id: nextId(`${nodeId}-vowel-trap`),
         type: 'trap_select',
-        prompt: isAudio 
+        prompt: isAudio
             ? `Listen carefully! Which syllable?`
             : `Careful! Which syllable makes "${letter.name.toLowerCase().slice(0, 2)}${correctVowel.translit}"?`,
         promptAudio: isAudio ? correctCombo : undefined,
@@ -414,10 +416,10 @@ function makeVowelTrapExercise(letter: LetterInfo, correctVowel: any, allVowels:
  * Critical for preventing vocabulary confusion
  */
 function makeWordConfusionTrap(correctWord: any, confusableWords: any[], nodeId: string, isAudio: boolean = false): Exercise {
-    const trapExplanations = confusableWords.map(w => 
+    const trapExplanations = confusableWords.map(w =>
         `<strong class="arabic-text">${w.arabic}</strong> means "${w.english}" - not "${correctWord.english}"`
     ).join('<br/>');
-    
+
     return {
         id: nextId(`${nodeId}-word-trap`),
         type: 'trap_select',
@@ -436,10 +438,10 @@ function makeWordConfusionTrap(correctWord: any, confusableWords: any[], nodeId:
  * Critical for preventing sentence confusion
  */
 function makeSentenceConfusionTrap(correctSent: any, confusableSents: any[], nodeId: string, isAudio: boolean = false): Exercise {
-    const trapExplanations = confusableSents.map(s => 
+    const trapExplanations = confusableSents.map(s =>
         `<strong class="arabic-text">${s.arabic}</strong> means "${s.english}" - not "${correctSent.english}"`
     ).join('<br/>');
-    
+
     return {
         id: nextId(`${nodeId}-sent-trap`),
         type: 'trap_select',
@@ -458,10 +460,10 @@ function makeSentenceConfusionTrap(correctSent: any, confusableSents: any[], nod
  * Critical for conversation comprehension
  */
 function makeConversationLineTrap(correctLine: any, confusableLines: any[], nodeId: string, context: string): Exercise {
-    const trapExplanations = confusableLines.map(l => 
+    const trapExplanations = confusableLines.map(l =>
         `<strong class="arabic-text">${l.arabic}</strong> - "${l.english}" (different line)`
     ).join('<br/>');
-    
+
     return {
         id: nextId(`${nodeId}-conv-trap`),
         type: 'trap_select',
@@ -535,10 +537,10 @@ function makeRound2(letters: LetterInfo[], nodeId: string): Lesson {
     const namePool = ALL_LETTERS.map(l => l.name);
 
     const exercises: Exercise[] = [];
-    
+
     // Add letter refreshers from previous nodes (DUOLINGO-STYLE)
     exercises.push(...makeLetterRefreshers(4, nodeId));
-    
+
     for (const l of letters) {
         exercises.push({
             id: nextId(`${nodeId}-r2`),
@@ -609,7 +611,7 @@ function makeRound3(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
     const namePool = allPool.map(x => x.name);
 
     const exercises: Exercise[] = [];
-    
+
     // Add MORE letter refreshers (DUOLINGO-STYLE)
     exercises.push(...makeLetterRefreshers(6, nodeId));
 
@@ -706,7 +708,7 @@ function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
     const bigNamePool = allLetters.map(x => x.name);
 
     const exercises: Exercise[] = [];
-    
+
     // Add EVEN MORE letter refreshers (DUOLINGO-STYLE)
     exercises.push(...makeLetterRefreshers(8, nodeId));
 
@@ -766,7 +768,7 @@ function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
         choices: [],
         pairs: pairSet.map(l => ({ left: l.letter, right: l.sound })),
     });
-    
+
     // Add sentence assembly with letters
     const sentLetters = pick(allLetters, 3);
     const sentLetterNames = sentLetters.map(l => l.name).join(', ');
@@ -797,7 +799,7 @@ function makeRound5(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
     const namePool = allForTest.map(x => x.name);
 
     const exercises: Exercise[] = [];
-    
+
     // Add MAXIMUM letter refreshers (DUOLINGO-STYLE)
     exercises.push(...makeLetterRefreshers(10, nodeId));
 
@@ -876,7 +878,7 @@ function makeLetterGroupNode(
     const prevLetters = getPreviousLetters(nodeIndex);
     const letterLabels = letters.map(l => l.letter).join(' ');
     const nameLabels = letters.map(l => l.name).join(', ');
-    
+
     // Register these letters as learned (DUOLINGO-STYLE)
     letters.forEach(l => {
         if (!LEARNED_CONTENT.letters.find(ll => ll.letter === l.letter)) {
@@ -1076,10 +1078,10 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
 
     // ── Round 1: Intro vowel + batch 1 ──
     const r1: Exercise[] = [];
-    
+
     // Add letter refreshers (DUOLINGO-STYLE)
     r1.push(...makeLetterRefreshers(3, nodeId));
-    
+
     r1.push({
         id: nextId(`${nodeId}-r1-intro`),
         type: 'introduction',
@@ -1114,7 +1116,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r1.push(...getRefresher('r1'));
-    
+
     // Add trap select for vowel confusion
     if (prevVowels.length > 0) {
         const l = batch1[0];
@@ -1128,20 +1130,20 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
             trapExplanation: `<strong class="arabic-text">${vowel.name}</strong> (${vowel.mark}) makes the "${vowel.sound}" sound, not "${trapVowel.sound}".`,
         });
     }
-    
+
     // Add MORE vowel confusion traps (AGGRESSIVE)
     for (const l of pick(batch1, 2)) {
         r1.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, false));
     }
-    
+
     const round1: Lesson = { id: `${nodeId}-l1`, title: `Round 1: Meet ${vowel.name}`, description: `Introduction to ${vowel.name}`, exercises: shuffle(r1) };
 
     // ── Round 2: Intro batch 2 ──
     const r2: Exercise[] = [];
-    
+
     // Add letter refreshers (DUOLINGO-STYLE)
     r2.push(...makeLetterRefreshers(3, nodeId));
-    
+
     for (const l of batch2) {
         r2.push({
             id: nextId(`${nodeId}-r2-link`),
@@ -1171,20 +1173,20 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r2.push(...getRefresher('r2'));
-    
+
     // Add vowel confusion traps (AGGRESSIVE)
     for (const l of pick([...batch1, ...batch2], 3)) {
         r2.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, false));
     }
-    
+
     const round2: Lesson = { id: `${nodeId}-l2`, title: `Round 2: More Letters`, description: `Practice ${vowel.name} with new letters`, exercises: shuffle(r2) };
 
     // ── Round 3: batch 3 + audio ──
     const r3: Exercise[] = [];
-    
+
     // Add letter refreshers (DUOLINGO-STYLE)
     r3.push(...makeLetterRefreshers(4, nodeId));
-    
+
     for (const l of batch3) {
         r3.push({
             id: nextId(`${nodeId}-r3-link`),
@@ -1214,20 +1216,20 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r3.push(...getRefresher('r3'));
-    
+
     // Add AUDIO vowel confusion traps (AGGRESSIVE)
     for (const l of pick(letters, 3)) {
         r3.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, true));
     }
-    
+
     const round3: Lesson = { id: `${nodeId}-l3`, title: `Round 3: Audio Mastery`, description: `Hear and identify ${vowel.name}`, exercises: shuffle(r3) };
 
     // ── Round 4: Speed Quiz ──
     const r4: Exercise[] = [];
-    
+
     // Add letter refreshers (DUOLINGO-STYLE)
     r4.push(...makeLetterRefreshers(5, nodeId));
-    
+
     for (const l of letters) {
         if (Math.random() > 0.5) {
             r4.push({
@@ -1250,20 +1252,20 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
     }
     r4.push(...getRefresher('r4'));
     r4.push(...getRefresher('r4')); // Add even more review here
-    
+
     // Add MORE vowel confusion traps (AGGRESSIVE)
     for (const l of pick(letters, 4)) {
         r4.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, Math.random() > 0.5));
     }
-    
+
     const round4: Lesson = { id: `${nodeId}-l4`, title: `Round 4: Speed Review`, description: `All letters with ${vowel.name}`, exercises: shuffle(r4) };
 
     // ── Round 5: Mastery Practice + Match Pairs ──
     const r5: Exercise[] = [];
-    
+
     // Add letter refreshers (DUOLINGO-STYLE)
     r5.push(...makeLetterRefreshers(6, nodeId));
-    
+
     r5.push({
         id: nextId(`${nodeId}-r5-mp`),
         type: 'match_pairs',
@@ -1283,12 +1285,12 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         });
     }
     r5.push(...getRefresher('r5'));
-    
+
     // Add FINAL vowel confusion traps (AGGRESSIVE)
     for (const l of pick(letters, 5)) {
         r5.push(makeVowelTrapExercise(l, vowel, VOWELS, nodeId, Math.random() > 0.5));
     }
-    
+
     // Add word assembly with vowels
     const vowelWord = pick(letters, 2).map(l => vowelCombo(l.letter, vowel)).join('');
     const vowelLetterNames = pick(letters, 2).map(l => l.name).join(' + ');
@@ -1300,7 +1302,7 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         choices: shuffle([...pick(letters, 2).map(l => vowelCombo(l.letter, vowel)), vowelCombo(letters[0].letter, VOWELS[(vowel === VOWELS[0] ? 1 : 0)])]),
         hint: `Tap the syllables to build the word`,
     });
-    
+
     // Add sentence assembly with simple vowel combinations
     const sentenceParts = pick(letters, 3).map(l => vowelCombo(l.letter, vowel));
     r5.push({
@@ -1311,11 +1313,11 @@ function makeSingleVowelNode(vowelIndex: number, nodeId: string): CourseNode {
         choices: shuffle([...sentenceParts, vowelCombo(letters[0].letter, VOWELS[(vowel === VOWELS[0] ? 1 : 0)])]),
         hint: `Tap to put the syllables in sequence`,
     });
-    
+
     const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Mastery Practice`, description: `Prove your ${vowel.name} fluency!`, exercises: shuffle(r5) };
 
     const title = batch1.map(l => vowelCombo(l.letter, vowel)).join(' ');
-    
+
     // Register this vowel as learned (DUOLINGO-STYLE)
     if (!LEARNED_CONTENT.vowels.find(v => v.name === vowel.name)) {
         LEARNED_CONTENT.vowels.push(vowel);
@@ -1338,10 +1340,10 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 1: Mixing Fatha & Kasra
     const r1: Exercise[] = [];
-    
+
     // Add letter refreshers (DUOLINGO-STYLE)
     r1.push(...makeLetterRefreshers(4, nodeId));
-    
+
     r1.push({
         id: nextId(`${nodeId}-r1-intro`),
         type: 'introduction',
@@ -1372,11 +1374,11 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 2: Mixing all 3
     const r2: Exercise[] = [];
-    
+
     // Add letter + vowel refreshers (DUOLINGO-STYLE)
     r2.push(...makeLetterRefreshers(3, nodeId));
     r2.push(...makeVowelRefreshers(2, nodeId, letters));
-    
+
     r2.push({
         id: nextId(`${nodeId}-r2-intro`),
         type: 'introduction',
@@ -1399,11 +1401,11 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 3: Audio discrimination
     const r3: Exercise[] = [];
-    
+
     // Add letter + vowel refreshers (DUOLINGO-STYLE)
     r3.push(...makeLetterRefreshers(4, nodeId));
     r3.push(...makeVowelRefreshers(3, nodeId, letters));
-    
+
     for (const l of letters) {
         const v = VOWELS[Math.floor(Math.random() * 3)];
         r3.push({
@@ -1419,11 +1421,11 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 4: Match Pairs
     const r4: Exercise[] = [];
-    
+
     // Add letter + vowel refreshers (DUOLINGO-STYLE)
     r4.push(...makeLetterRefreshers(5, nodeId));
     r4.push(...makeVowelRefreshers(4, nodeId, letters));
-    
+
     r4.push({
         id: nextId(`${nodeId}-r4-mp`),
         type: 'match_pairs',
@@ -1447,7 +1449,7 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
         }),
     });
     const round4: Lesson = { id: `${nodeId}-l4`, title: `Round 4: Matching Mix`, description: `Connect the shapes and sounds`, exercises: r4 };
-    
+
     // Add trap select for mixed vowels
     const trapLetter = letters[0];
     r4.push({
@@ -1458,7 +1460,7 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
         choices: shuffle([vowelCombo(trapLetter.letter, VOWELS[0]), vowelCombo(trapLetter.letter, VOWELS[1]), vowelCombo(trapLetter.letter, VOWELS[2])]),
         trapExplanation: `Watch the vowel mark! <strong class="arabic-text">${VOWELS[0].mark}</strong> (Fatha) = "a", <strong class="arabic-text">${VOWELS[1].mark}</strong> (Kasra) = "i", <strong class="arabic-text">${VOWELS[2].mark}</strong> (Damma) = "u".`,
     });
-    
+
     // Add MORE mixed vowel traps (AGGRESSIVE)
     for (const l of pick(letters, 4)) {
         const randomVowel = VOWELS[Math.floor(Math.random() * 3)];
@@ -1467,11 +1469,11 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
 
     // Round 5: Mastery Practice
     const r5: Exercise[] = [];
-    
+
     // Add letter + vowel refreshers (DUOLINGO-STYLE)
     r5.push(...makeLetterRefreshers(6, nodeId));
     r5.push(...makeVowelRefreshers(5, nodeId, letters));
-    
+
     for (const l of pick(letters, 6)) {
         for (const v of VOWELS) {
             r5.push({
@@ -1484,13 +1486,13 @@ function makeMixedVowelNode(nodeId: string): CourseNode {
             });
         }
     }
-    
+
     // Add FINAL mixed vowel traps (AGGRESSIVE)
     for (const l of pick(letters, 5)) {
         const randomVowel = VOWELS[Math.floor(Math.random() * 3)];
         r5.push(makeVowelTrapExercise(l, randomVowel, VOWELS, nodeId, Math.random() > 0.5));
     }
-    
+
     const round5: Lesson = { id: `${nodeId}-l5`, title: `Round 5: Mastery Practice`, description: `Show you've mastered them all!`, exercises: shuffle(r5) };
 
     return {
@@ -1942,13 +1944,13 @@ const UNIT4_WORDS: WordData[] = [
     // Category 3: Eat & Drink
     { arabic: 'مَاءٌ', translit: 'Maa\'un', english: 'Water', audio: '/audio/words/word_maa.mp3' },
     { arabic: 'خُبْزٌ', translit: 'Khubzun', english: 'Bread', audio: '/audio/words/word_khubz.mp3' },
-    { arabic: 'تُفَّاحٌ', translit: 'Tuffahun', english: 'Apple', audio: '/audio/words/food_apple.mp3' },
+    { arabic: 'تُفَّاحٌ', translit: 'Tuffaahun', english: 'Apple', audio: '/audio/words/food_apple.mp3' },
     { arabic: 'حَلِيبٌ', translit: 'Haleebun', english: 'Milk', audio: '/audio/words/drink_milk.mp3' },
 
     // Category 4: Places
     { arabic: 'مَدْرَسَةٌ', translit: 'Madrasatun', english: 'School', audio: '/audio/words/place_school.mp3' },
     { arabic: 'مَسْجِدٌ', translit: 'Masjidun', english: 'Mosque', audio: '/audio/words/place_mosque.mp3' },
-    { arabic: 'مُسْتَشْفَى', translit: 'Mustashfa', english: 'Hospital', audio: '/audio/words/place_hospital.mp3' },
+    { arabic: 'مُسْتَشْفَى', translit: 'Mustashfaa', english: 'Hospital', audio: '/audio/words/place_hospital.mp3' },
     { arabic: 'سُوقٌ', translit: 'Suqun', english: 'Market', audio: '/audio/words/place_market.mp3' },
 
     // Category 5: Time & Numbers (NEW - 8 words)
@@ -1981,6 +1983,8 @@ const UNIT4_WORDS: WordData[] = [
     { arabic: 'سَهْلٌ', translit: 'Sahlun', english: 'Easy', audio: '/audio/words/adj_easy.mp3' },
     { arabic: 'صَعْبٌ', translit: 'Sa\'bun', english: 'Difficult', audio: '/audio/words/adj_difficult.mp3' }
 ];
+
+console.log('🔍 UNIT4_WORDS array loaded. Mosque word:', UNIT4_WORDS.find(w => w.english === 'Mosque'));
 
 // UNIT 4B: EXTENDED VOCABULARY (NEW UNIT - 40 words)
 const UNIT4B_WORDS: WordData[] = [
@@ -2076,7 +2080,7 @@ const UNIT4C_WORDS: WordData[] = [
     { arabic: 'لَا', translit: 'Laa', english: 'No', audio: '/audio/words/expr_no.mp3' },
     { arabic: 'مِنْ فَضْلِكَ', translit: 'Min fadlika', english: 'Please', audio: '/audio/words/expr_please.mp3' },
     { arabic: 'شُكْرًا', translit: 'Shukran', english: 'Thanks', audio: '/audio/words/expr_thanks.mp3' },
-    { arabic: 'عَفْوًا', translit: '\'Afwan', english: 'Welcome', audio: '/audio/words/expr_welcome.mp3' },
+    { arabic: 'عَفْوًا', translit: '\'Afwan', english: 'You\'re welcome', audio: '/audio/words/expr_welcome.mp3' },
     { arabic: 'آسِفٌ', translit: 'Aasifun', english: 'Sorry', audio: '/audio/words/expr_sorry.mp3' },
     { arabic: 'مَعَ', translit: 'Ma\'a', english: 'With', audio: '/audio/words/expr_with.mp3' },
     { arabic: 'بِدُونِ', translit: 'Bidooni', english: 'Without', audio: '/audio/words/expr_without.mp3' },
@@ -2093,41 +2097,41 @@ const WORD_CONFUSION_GROUPS: Record<string, string[]> = {
     'باب': ['بيت', 'بنت'],  // door vs house vs girl (all start with ب)
     'بيت': ['باب', 'بنت'],  // house vs door vs girl
     'بنت': ['باب', 'بيت'],  // girl vs door vs house
-    
+
     // Similar shapes
     'كلب': ['كتب', 'قلب'],  // dog vs books vs heart (ك/ق confusion)
     'شمس': ['شهر', 'سمك'],  // sun vs month vs fish (س/ش confusion)
     'قمر': ['قلب', 'كلب'],  // moon vs heart vs dog (ق/ك confusion)
-    
+
     // Similar sounds
     'تمر': ['تمن', 'ثمر'],  // dates vs price vs fruit (ت/ث confusion)
     'ولد': ['والد', 'ولد'],  // boy vs father (vowel confusion)
     'رجل': ['رجال', 'رحل'],  // man vs men vs departed
-    
+
     // Body parts (similar structure)
     'عين': ['أذن', 'يد'],   // eye vs ear vs hand
     'وجه': ['فم', 'رأس'],   // face vs mouth vs head
     'يد': ['رجل', 'عين'],   // hand vs leg vs eye
-    
+
     // Adjectives (similar patterns)
     'كبير': ['صغير', 'كثير'],  // big vs small vs many
     'صغير': ['كبير', 'قصير'],  // small vs big vs short
     'جديد': ['قديم', 'بعيد'],  // new vs old vs far
     'قديم': ['جديد', 'كريم'],  // old vs new vs generous
     'جميل': ['جليل', 'قليل'],  // beautiful vs great vs few
-    
+
     // Family (similar structure)
     'أب': ['أم', 'أخ'],      // father vs mother vs brother
     'أم': ['أب', 'أخت'],     // mother vs father vs sister
     'أخ': ['أب', 'أخت'],     // brother vs father vs sister
     'أخت': ['أم', 'أخ'],     // sister vs mother vs brother
-    
+
     // Food (similar structure)
     'ماء': ['حليب', 'خبز'],  // water vs milk vs bread
     'خبز': ['ماء', 'تمر'],   // bread vs water vs dates
     'تفاح': ['تمر', 'خبز'],  // apple vs dates vs bread
     'حليب': ['ماء', 'خبز'],  // milk vs water vs bread
-    
+
     // Places (all start with م)
     'مدرسة': ['مسجد', 'مستشفى'],  // school vs mosque vs hospital
     'مسجد': ['مدرسة', 'سوق'],     // mosque vs school vs market
@@ -2136,14 +2140,19 @@ const WORD_CONFUSION_GROUPS: Record<string, string[]> = {
 };
 
 function makeWordAssemblyExercises(word: WordData, nodeId: string): Exercise[] {
-    // Strip diacritics to get base letters only
-    const stripHarakatForDisplay = (text: string): string => {
-        return text.replace(/[\u064B-\u0652\u0654-\u0655]/g, '');
-    };
-    
-    const baseWord = stripHarakatForDisplay(word.arabic);
-    const letters = baseWord.split(''); // Now splits only base letters
-    
+    // Strip diacritics FIRST before any processing
+    const baseWord = stripHarakat(word.arabic);
+    const letters = baseWord.split('');
+
+    // DEBUG: Log the processing
+    console.log('🔍 makeWordAssemblyExercises DEBUG:', {
+        english: word.english,
+        original: word.arabic,
+        stripped: baseWord,
+        letters: letters,
+        hint: `${letters.join(' + ')} = ${word.arabic}`
+    });
+
     // Add one distractor letter
     const distractorLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ر', 'س', 'ش', 'م', 'ن', 'ه', 'و', 'ي'];
     const distactor = distractorLetters.find(l => !letters.includes(l)) || 'م';
@@ -2189,14 +2198,14 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
     });
 
     const refreshers: Exercise[] = [];
-    
+
     // ALWAYS add letter and vowel refreshers (DUOLINGO-STYLE)
     refreshers.push(...makeLetterRefreshers(3, nodeId));
     refreshers.push(...makeVowelRefreshers(2, nodeId, PRACTICE_LETTERS));
-    
+
     // Add word refreshers from PREVIOUS nodes (CRITICAL FOR RETENTION)
     refreshers.push(...makeWordRefreshers(4, nodeId));
-    
+
     if (requireReview) {
         // Add some basic letter/vowel refreshers
         const reviewLetters = pick(ALL_LETTERS, 3);
@@ -2210,7 +2219,7 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
             });
         });
     }
-    
+
     // Register these words as learned (DUOLINGO-STYLE)
     words.forEach(w => {
         if (!LEARNED_CONTENT.words.find(ww => ww.arabic === w.arabic)) {
@@ -2258,7 +2267,7 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
         choices: [],
         pairs: words.map(w => ({ left: w.arabic, right: w.english })),
     };
-    
+
     // Add trap select for similar words
     if (words.length >= 2) {
         const trapEx: Exercise = {
@@ -2269,14 +2278,14 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
             choices: shuffle([words[0].arabic, words[1].arabic, words[2]?.arabic || words[1].arabic]),
             trapExplanation: `<strong class="arabic-text">${words[0].arabic}</strong> means "${words[0].english}", not "${words[1].english}".`,
         };
-        
+
         // Add MORE word confusion traps (AGGRESSIVE)
         const wordTraps: Exercise[] = [trapEx];
         for (const w of words) {
             // Find confusable words from the confusion groups
             const confusables = WORD_CONFUSION_GROUPS[w.arabic.replace(/[ًٌٍَُِّْ]/g, '')];
             if (confusables) {
-                const confusableWords = words.filter(ww => 
+                const confusableWords = words.filter(ww =>
                     confusables.some(c => ww.arabic.replace(/[ًٌٍَُِّْ]/g, '').includes(c))
                 );
                 if (confusableWords.length > 0) {
@@ -2284,7 +2293,7 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
                 }
             }
         }
-        
+
         lessons.push({
             id: `${nodeId}-l5`,
             title: `Round 5: Full Mastery`,
@@ -2318,7 +2327,9 @@ function makeWordAssemblyNode(nodeId: string, title: string, words: WordData[], 
 
 /** Removes common vowel marks (Fatha, Kasra, Damma, Sukun, Shadda, Tanween) */
 function stripHarakat(text: string): string {
-    return text.replace(/[\u064B-\u0652\u0654-\u0655]/g, '');
+    const result = text.replace(/[\u064B-\u0652\u0654-\u0655]/g, '');
+    console.log('🔍 stripHarakat:', { input: text, output: result });
+    return result;
 }
 
 function makeUnvowelledExercises(word: WordData, nodeId: string): Exercise[] {
@@ -2366,7 +2377,7 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         reads.push(exs[1]);
         hears.push(exs[2]);
     });
-    
+
     // Register these words as learned (DUOLINGO-STYLE)
     words.forEach(w => {
         if (!LEARNED_CONTENT.words.find(ww => ww.arabic === w.arabic)) {
@@ -2375,21 +2386,21 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
     });
 
     const lessons: Lesson[] = [];
-    
+
     lessons.push({
         id: `${nodeId}-l1`,
         title: `Round 1: Stripping Vowels`,
         description: `See the naked words.`,
         exercises: [...intros, ...shuffle([...reads, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(3, nodeId)])]
     });
-    
+
     lessons.push({
         id: `${nodeId}-l2`,
         title: `Round 2: Hearing Unvowelled`,
         description: `Match audio to plain text.`,
         exercises: shuffle([...hears, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(4, nodeId)])
     });
-    
+
     lessons.push({
         id: `${nodeId}-l3`,
         title: `Round 3: Match Pairs`,
@@ -2403,7 +2414,7 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
             pairs: pick(words, 4).map(w => ({ left: stripHarakat(w.arabic), right: w.english }))
         }, ...shuffle([...reads, ...reads, ...makeWordRefreshers(5, nodeId)])]
     });
-    
+
     lessons.push({
         id: `${nodeId}-l4`,
         title: `Round 4: More Practice`,
@@ -2420,7 +2431,7 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         choices: shuffle([...stripHarakat(asmWord.arabic).split(''), 'م']),
         hint: `Tap the letters in order to spell ${asmWord.translit}`,
     };
-    
+
     // Add trap select for similar unvowelled words
     const trapEx: Exercise = {
         id: nextId(`${nodeId}-l5-trap`),
@@ -2430,7 +2441,7 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         choices: shuffle([stripHarakat(words[0].arabic), stripHarakat(words[1].arabic), stripHarakat(words[2]?.arabic || words[1].arabic)]),
         trapExplanation: `Without vowels, <strong class="arabic-text">${stripHarakat(words[0].arabic)}</strong> means "${words[0].english}".`,
     };
-    
+
     // Add MORE unvowelled word traps (AGGRESSIVE)
     const unvowelledTraps: Exercise[] = [trapEx];
     for (const w of pick(words, 3)) {
@@ -2444,7 +2455,7 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
             ));
         }
     }
-    
+
     // Add sentence assembly with unvowelled words
     const sentWords = pick(words, 2);
     const sentWordsEnglish = sentWords.map(w => w.english).join(' + ');
@@ -2456,7 +2467,7 @@ function makeUnvowelledNode(nodeId: string, title: string, words: WordData[]): C
         choices: shuffle([...sentWords.map(w => stripHarakat(w.arabic)), stripHarakat(words[2]?.arabic || words[0].arabic)]),
         hint: `Tap the words to put them in the right order`,
     };
-    
+
     lessons.push({
         id: `${nodeId}-l5`,
         title: `Round 5: Mastery`,
@@ -2492,7 +2503,7 @@ const UNIT6_SENTENCES: SentenceData[] = [
         arabic: 'اَلسَّلامُ عَلَيْكُم',
         english: 'Peace be upon you',
         audio: '/audio/sentences/sent_assalamu.mp3',
-        words: ['اَلسَّلامُ', 'عَلَيكُم']
+        words: ['اَلسَّلامُ', 'عَلَيْكُم']
     },
     {
         arabic: 'بِسْمِ اللّهِ',
@@ -2513,7 +2524,7 @@ const UNIT6_SENTENCES: SentenceData[] = [
         words: ['أَنَا', 'بِخَيْرٍ']
     },
     {
-        arabic: 'اِسمي',
+        arabic: 'اِسْمِي',
         english: 'My name is...',
         audio: '/audio/sentences/sent_ismi.mp3',
         words: ['اِسْمِي']
@@ -2534,7 +2545,7 @@ const UNIT6_SENTENCES: SentenceData[] = [
         arabic: 'مَعَ السَّلامَةِ',
         english: 'Goodbye',
         audio: '/audio/sentences/sent_ma3a_salama.mp3',
-        words: ['مَعَ', 'السَّلامة']
+        words: ['مَعَ', 'السَّلامَةِ']
     },
     {
         arabic: 'صَبَاحُ الخَيْرِ',
@@ -2543,12 +2554,12 @@ const UNIT6_SENTENCES: SentenceData[] = [
         words: ['صَبَاحُ', 'الخَيْرِ']
     },
     {
-        arabic: 'أَنا أُحِبُّ العَرَبيّة',
+        arabic: 'أَنَا أُحِبُّ العَرَبيّة',
         english: 'I love Arabic',
         audio: '/audio/sentences/sent_ana_uhibb.mp3',
-        words: ['أَنا', 'أُحِبُّ', 'العَرَبيّة']
+        words: ['أَنَا', 'أُحِبُّ', 'العَرَبيّة']
     }
-,
+    ,
     // NEW SENTENCES - Questions (5)
     {
         arabic: 'مَا اسْمُكَ',
@@ -2678,7 +2689,7 @@ const UNIT6_SENTENCES: SentenceData[] = [
 
 function makeSentenceExercises(sent: SentenceData, nodeId: string): Exercise[] {
     const distractors = pick(UNIT6_SENTENCES.map(s => s.english).filter(e => e !== sent.english), 3);
-    
+
     // Add distractor words from other sentences to make assembly harder
     const allWords = UNIT6_SENTENCES.flatMap(s => s.words).filter(w => !sent.words.includes(w));
     const distractorWords = pick(allWords, Math.min(3, allWords.length));
@@ -2713,14 +2724,14 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         const exs = makeSentenceExercises(s, nodeId);
         graded.push(...exs); // No more separate intros array!
     });
-    
+
     // Register these sentences as learned (DUOLINGO-STYLE)
     sentences.forEach(s => {
         if (!LEARNED_CONTENT.sentences.find(ss => ss.arabic === s.arabic)) {
             LEARNED_CONTENT.sentences.push(s);
         }
     });
-    
+
     // Add match pairs for sentence meanings
     const matchEx: Exercise = {
         id: nextId(`${nodeId}-mp`),
@@ -2730,7 +2741,7 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         choices: [],
         pairs: pick(sentences, Math.min(4, sentences.length)).map(s => ({ left: s.arabic, right: s.english })),
     };
-    
+
     // Add trap select for similar sentences
     const trapEx: Exercise = {
         id: nextId(`${nodeId}-trap`),
@@ -2740,7 +2751,7 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         choices: shuffle([sentences[0].arabic, sentences[1].arabic, sentences[2]?.arabic || sentences[1].arabic]),
         trapExplanation: `<strong class="arabic-text">${sentences[0].arabic}</strong> means "${sentences[0].english}".`,
     };
-    
+
     // Add word assembly from sentence words
     const wordAsmEx: Exercise = {
         id: nextId(`${nodeId}-word-asm`),
@@ -2749,7 +2760,7 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         correctAnswer: sentences[0].words[0],
         choices: shuffle([...stripHarakat(sentences[0].words[0]).split(''), 'م']),
     };
-    
+
     // Add MORE sentence confusion traps (AGGRESSIVE)
     const sentenceTraps: Exercise[] = [trapEx];
     for (const s of pick(sentences, Math.min(3, sentences.length))) {
@@ -2773,35 +2784,35 @@ function makeSentenceNode(nodeId: string, title: string, sentences: SentenceData
         totalRounds: 5,
         completedRounds: 0,
         lessons: [
-            { 
-                id: `${nodeId}-r1`, 
-                title: 'Round 1: Comprehension', 
-                description: 'Figure out what they mean', 
-                exercises: shuffle([...graded.slice(0, 6), matchEx, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(3, nodeId)]) 
+            {
+                id: `${nodeId}-r1`,
+                title: 'Round 1: Comprehension',
+                description: 'Figure out what they mean',
+                exercises: shuffle([...graded.slice(0, 6), matchEx, ...makeLetterRefreshers(3, nodeId), ...makeWordRefreshers(3, nodeId)])
             },
-            { 
-                id: `${nodeId}-r2`, 
-                title: 'Round 2: Practice', 
-                description: 'Build your skills', 
-                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), ...sentenceTraps.slice(0, 2), wordAsmEx, ...makeLetterRefreshers(4, nodeId), ...makeWordRefreshers(4, nodeId)]) 
+            {
+                id: `${nodeId}-r2`,
+                title: 'Round 2: Practice',
+                description: 'Build your skills',
+                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), ...sentenceTraps.slice(0, 2), wordAsmEx, ...makeLetterRefreshers(4, nodeId), ...makeWordRefreshers(4, nodeId)])
             },
-            { 
-                id: `${nodeId}-r3`, 
-                title: 'Round 3: More Practice', 
-                description: 'Keep building', 
-                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), matchEx, ...sentenceTraps.slice(2, 4), ...makeWordRefreshers(5, nodeId), ...makeSentenceRefreshers(3, nodeId)]) 
+            {
+                id: `${nodeId}-r3`,
+                title: 'Round 3: More Practice',
+                description: 'Keep building',
+                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), matchEx, ...sentenceTraps.slice(2, 4), ...makeWordRefreshers(5, nodeId), ...makeSentenceRefreshers(3, nodeId)])
             },
-            { 
-                id: `${nodeId}-r4`, 
-                title: 'Round 4: Assembly', 
-                description: 'Assemble them all', 
-                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), ...sentenceTraps.slice(4), ...makeWordRefreshers(5, nodeId), ...makeSentenceRefreshers(4, nodeId)]) 
+            {
+                id: `${nodeId}-r4`,
+                title: 'Round 4: Assembly',
+                description: 'Assemble them all',
+                exercises: shuffle([...graded, ...graded.filter(e => e.type === 'sentence_assembly'), ...sentenceTraps.slice(4), ...makeWordRefreshers(5, nodeId), ...makeSentenceRefreshers(4, nodeId)])
             },
-            { 
-                id: `${nodeId}-r5`, 
-                title: 'Round 5: Mastery', 
-                description: 'Final review', 
-                exercises: shuffle([...graded, matchEx, ...sentenceTraps, ...makeWordRefreshers(6, nodeId), ...makeSentenceRefreshers(5, nodeId)]) 
+            {
+                id: `${nodeId}-r5`,
+                title: 'Round 5: Mastery',
+                description: 'Final review',
+                exercises: shuffle([...graded, matchEx, ...sentenceTraps, ...makeWordRefreshers(6, nodeId), ...makeSentenceRefreshers(5, nodeId)])
             }
         ]
     };
@@ -3067,14 +3078,14 @@ const UNIT8_CONVERSATIONS: ConversationData[] = [
 
 function makeConversationExercises(conv: ConversationData, nodeId: string): Exercise[] {
     const exercises: Exercise[] = [];
-    
+
     // REMOVED: Introduction cards - learners must figure out the conversation!
-    
+
     // Comprehension: Match speaker to line
     conv.lines.forEach((line, idx) => {
         const otherLines = conv.lines.filter((_, i) => i !== idx);
         const distractors = pick(otherLines, Math.min(2, otherLines.length)).map(l => l.arabic);
-        
+
         exercises.push({
             id: nextId(`${nodeId}-comp-${idx}`),
             type: 'multiple_choice',
@@ -3084,12 +3095,12 @@ function makeConversationExercises(conv: ConversationData, nodeId: string): Exer
             promptAudio: line.audio
         });
     });
-    
+
     // Translation: Arabic to English
     conv.lines.forEach((line, idx) => {
         const otherLines = conv.lines.filter((_, i) => i !== idx);
         const distractors = pick(otherLines, Math.min(2, otherLines.length)).map(l => l.english);
-        
+
         exercises.push({
             id: nextId(`${nodeId}-trans-${idx}`),
             type: 'multiple_choice',
@@ -3100,7 +3111,7 @@ function makeConversationExercises(conv: ConversationData, nodeId: string): Exer
             promptAudio: line.audio
         });
     });
-    
+
     // Sentence assembly: Build the conversation lines
     conv.lines.forEach((line, idx) => {
         const words = line.arabic.split(' ');
@@ -3110,7 +3121,7 @@ function makeConversationExercises(conv: ConversationData, nodeId: string): Exer
                 .flatMap(l => l.arabic.split(' '))
                 .filter(w => !words.includes(w));
             const distractors = pick(otherWords, Math.min(2, otherWords.length));
-            
+
             exercises.push({
                 id: nextId(`${nodeId}-asm-${idx}`),
                 type: 'sentence_assembly',
@@ -3122,7 +3133,7 @@ function makeConversationExercises(conv: ConversationData, nodeId: string): Exer
             });
         }
     });
-    
+
     // Match pairs: Speaker to line
     exercises.push({
         id: nextId(`${nodeId}-mp-speaker`),
@@ -3130,12 +3141,12 @@ function makeConversationExercises(conv: ConversationData, nodeId: string): Exer
         prompt: `Match each speaker to what they say`,
         correctAnswer: '',
         choices: [],
-        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({ 
-            left: l.speaker, 
-            right: l.arabic 
+        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({
+            left: l.speaker,
+            right: l.arabic
         }))
     });
-    
+
     // Match pairs: Arabic to English
     exercises.push({
         id: nextId(`${nodeId}-mp-trans`),
@@ -3143,23 +3154,23 @@ function makeConversationExercises(conv: ConversationData, nodeId: string): Exer
         prompt: `Match Arabic to English`,
         correctAnswer: '',
         choices: [],
-        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({ 
-            left: l.arabic, 
-            right: l.english 
+        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({
+            left: l.arabic,
+            right: l.english
         }))
     });
-    
+
     return exercises;
 }
 
 function makeConversationNode(conv: ConversationData): CourseNode {
     const exercises = makeConversationExercises(conv, conv.id);
-    
+
     // Split into rounds (NO MORE INTROS!)
     const comprehension = exercises.filter(e => e.type === 'multiple_choice');
     const assembly = exercises.filter(e => e.type === 'sentence_assembly');
     const matching = exercises.filter(e => e.type === 'match_pairs');
-    
+
     // Create conversation line traps (AGGRESSIVE)
     const conversationTraps: Exercise[] = [];
     for (const line of pick(conv.lines, Math.min(4, conv.lines.length))) {
@@ -3173,7 +3184,7 @@ function makeConversationNode(conv: ConversationData): CourseNode {
             ));
         }
     }
-    
+
     // Add speaker confusion traps
     for (const line of pick(conv.lines, Math.min(3, conv.lines.length))) {
         const otherLines = conv.lines.filter(l => l.speaker !== line.speaker);
@@ -3189,7 +3200,7 @@ function makeConversationNode(conv: ConversationData): CourseNode {
             });
         }
     }
-    
+
     return {
         id: `u7-${conv.id}`,
         title: conv.title,
@@ -3229,7 +3240,7 @@ function makeConversationNode(conv: ConversationData): CourseNode {
 
 function makeUnit7Test(): CourseNode {
     const exercises: Exercise[] = [];
-    
+
     // Test all conversations
     UNIT7_CONVERSATIONS.forEach(conv => {
         // Translation questions
@@ -3238,7 +3249,7 @@ function makeUnit7Test(): CourseNode {
                 .flatMap(c => c.lines)
                 .filter(l => l.english !== line.english);
             const distractors = pick(otherLines, 3).map(l => l.english);
-            
+
             exercises.push({
                 id: nextId('u7t-trans'),
                 type: 'multiple_choice',
@@ -3249,7 +3260,7 @@ function makeUnit7Test(): CourseNode {
                 promptAudio: line.audio
             });
         });
-        
+
         // Assembly questions
         conv.lines.forEach(line => {
             const words = line.arabic.split(' ');
@@ -3260,7 +3271,7 @@ function makeUnit7Test(): CourseNode {
                     .flatMap(l => l.arabic.split(' '))
                     .filter(w => !words.includes(w));
                 const distractors = pick(otherWords, Math.min(3, otherWords.length));
-                
+
                 exercises.push({
                     id: nextId('u7t-asm'),
                     type: 'sentence_assembly',
@@ -3272,7 +3283,7 @@ function makeUnit7Test(): CourseNode {
             }
         });
     });
-    
+
     // Match pairs from different conversations
     const allLines = UNIT7_CONVERSATIONS.flatMap(c => c.lines);
     exercises.push({
@@ -3283,7 +3294,7 @@ function makeUnit7Test(): CourseNode {
         choices: [],
         pairs: pick(allLines, 6).map(l => ({ left: l.arabic, right: l.english }))
     });
-    
+
     return {
         id: 'u7-test',
         title: '📝 Unit 7 Test',
@@ -3303,7 +3314,7 @@ function makeUnit7Test(): CourseNode {
 
 function makeUnit8Test(): CourseNode {
     const exercises: Exercise[] = [];
-    
+
     // Test all advanced conversations
     UNIT8_CONVERSATIONS.forEach(conv => {
         // Translation questions
@@ -3312,7 +3323,7 @@ function makeUnit8Test(): CourseNode {
                 .flatMap(c => c.lines)
                 .filter(l => l.english !== line.english);
             const distractors = pick(otherLines, 3).map(l => l.english);
-            
+
             exercises.push({
                 id: nextId('u8t-trans'),
                 type: 'multiple_choice',
@@ -3323,7 +3334,7 @@ function makeUnit8Test(): CourseNode {
                 promptAudio: line.audio
             });
         });
-        
+
         // Assembly questions for longer sentences
         conv.lines.forEach(line => {
             const words = line.arabic.split(' ');
@@ -3334,7 +3345,7 @@ function makeUnit8Test(): CourseNode {
                     .flatMap(l => l.arabic.split(' '))
                     .filter(w => !words.includes(w));
                 const distractors = pick(otherWords, Math.min(4, otherWords.length));
-                
+
                 exercises.push({
                     id: nextId('u8t-asm'),
                     type: 'sentence_assembly',
@@ -3346,7 +3357,7 @@ function makeUnit8Test(): CourseNode {
             }
         });
     });
-    
+
     // Match pairs from different conversations
     const allLines = UNIT8_CONVERSATIONS.flatMap(c => c.lines);
     exercises.push({
@@ -3357,7 +3368,7 @@ function makeUnit8Test(): CourseNode {
         choices: [],
         pairs: pick(allLines, 8).map(l => ({ left: l.arabic, right: l.english }))
     });
-    
+
     return {
         id: 'u8-test',
         title: '📝 Unit 8 Test',
@@ -3417,7 +3428,7 @@ const UNIT9_QURAN_VERSES: QuranVerse[] = [
         translation: 'All praise is due to Allah, Lord of all the worlds',
         audio: '/audio/quran/quran_1_2.mp3'
     },
-    
+
     // Surah Al-Ikhlas (Sincerity) - Short and fundamental
     {
         id: 'quran_112_1',
@@ -3464,7 +3475,7 @@ const UNIT9_QURAN_VERSES: QuranVerse[] = [
         translation: 'Nor is there to Him any equivalent',
         audio: '/audio/quran/quran_112_4.mp3'
     },
-    
+
     // Surah Al-Falaq (The Daybreak)
     {
         id: 'quran_113_1',
@@ -3489,7 +3500,7 @@ const UNIT9_QURAN_VERSES: QuranVerse[] = [
         translation: 'From the evil of what He created',
         audio: '/audio/quran/quran_113_2.mp3'
     },
-    
+
     // Surah An-Nas (Mankind)
     {
         id: 'quran_114_1',
@@ -3525,7 +3536,7 @@ const UNIT9_QURAN_VERSES: QuranVerse[] = [
         translation: 'The God of mankind',
         audio: '/audio/quran/quran_114_3.mp3'
     },
-    
+
     // Surah Al-Asr (The Time)
     {
         id: 'quran_103_1',
@@ -3561,7 +3572,7 @@ const UNIT9_QURAN_VERSES: QuranVerse[] = [
         translation: 'Except for those who believe and do righteous deeds and advise each other to truth and advise each other to patience',
         audio: '/audio/quran/quran_103_3.mp3'
     },
-    
+
     // Surah Al-Kawthar (Abundance)
     {
         id: 'quran_108_1',
@@ -3601,7 +3612,7 @@ const UNIT9_QURAN_VERSES: QuranVerse[] = [
 
 function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] {
     const exercises: Exercise[] = [];
-    
+
     // INTRO CARD: Teach the verse first
     exercises.push({
         id: nextId(`${nodeId}-intro`),
@@ -3612,7 +3623,7 @@ function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] 
         hint: `${verse.transliteration}\n\n"${verse.translation}"${verse.context ? `\n\n${verse.context}` : ''}`,
         promptAudio: verse.audio
     });
-    
+
     // 1. Listening exercise - hear and recognize
     exercises.push({
         id: nextId(`${nodeId}-listen`),
@@ -3625,7 +3636,7 @@ function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] 
             ...pick(UNIT9_QURAN_VERSES.filter(v => v.id !== verse.id).map(v => v.arabic), 3)
         ])
     });
-    
+
     // 2. Translation matching
     exercises.push({
         id: nextId(`${nodeId}-trans`),
@@ -3639,7 +3650,7 @@ function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] 
         ]),
         promptAudio: verse.audio
     });
-    
+
     // 3. Transliteration matching (helps with pronunciation)
     exercises.push({
         id: nextId(`${nodeId}-translit`),
@@ -3652,14 +3663,14 @@ function makeQuranVerseExercises(verse: QuranVerse, nodeId: string): Exercise[] 
             ...pick(UNIT9_QURAN_VERSES.filter(v => v.id !== verse.id).map(v => v.transliteration), 3)
         ])
     });
-    
+
     return exercises;
 }
 
 function makeQuranSurahNode(surahNumber: number, nodeId: string): CourseNode {
     const surahVerses = UNIT9_QURAN_VERSES.filter(v => v.surahNumber === surahNumber);
     const firstVerse = surahVerses[0];
-    
+
     return {
         id: nodeId,
         title: `${firstVerse.surahNameArabic} (${firstVerse.surahName})`,
@@ -3681,7 +3692,7 @@ function makeQuranSurahNode(surahNumber: number, nodeId: string): CourseNode {
 
 function makeUnit9Test(): CourseNode {
     const exercises: Exercise[] = [];
-    
+
     // Test all verses
     UNIT9_QURAN_VERSES.forEach(verse => {
         // Translation test
@@ -3697,7 +3708,7 @@ function makeUnit9Test(): CourseNode {
             ]),
             promptAudio: verse.audio
         });
-        
+
         // Audio recognition test
         exercises.push({
             id: nextId('u9t-audio'),
@@ -3711,7 +3722,7 @@ function makeUnit9Test(): CourseNode {
             ])
         });
     });
-    
+
     // Match pairs
     exercises.push({
         id: nextId('u9t-mp'),
@@ -3721,7 +3732,7 @@ function makeUnit9Test(): CourseNode {
         choices: [],
         pairs: pick(UNIT9_QURAN_VERSES, 6).map(v => ({ left: v.arabic, right: v.translation }))
     });
-    
+
     return {
         id: 'u9-test',
         title: '📝 Unit 9 Test',

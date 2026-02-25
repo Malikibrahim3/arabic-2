@@ -1,0 +1,811 @@
+{
+  "letter_sounds": [
+    {
+      "id": "letter_alif_fatha",
+      "expected_phonemes": [
+        "ʔ",
+        "a"
+      ],
+      "words": [
+        {
+          "word": "and",
+          "start": 0.25,
+          "end": 0.879,
+          "score": 0.764
+        }
+      ],
+      "duration": 0.629,
+      "avg_score": 0.764,
+      "is_emphatic": false,
+      "status": "PASS"
+    },
+    {
+      "id": "letter_baa_fatha",
+      "expected_phonemes": [
+        "b",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "با",
+          "start": 0.25,
+          "end": 0.744,
+          "score": 0.635
+        }
+      ],
+      "duration": 0.494,
+      "avg_score": 0.635,
+      "is_emphatic": false,
+      "status": "PASS"
+    },
+    {
+      "id": "letter_taa_fatha",
+      "expected_phonemes": [
+        "t",
+        "aː"
+      ],
+      "words": [],
+      "duration": 0,
+      "avg_score": 0,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_thaa_fatha",
+      "expected_phonemes": [
+        "θ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "yeah",
+          "start": 0.25,
+          "end": 0.728,
+          "score": 0.852
+        }
+      ],
+      "duration": 0.478,
+      "avg_score": 0.852,
+      "is_emphatic": false,
+      "status": "PASS"
+    },
+    {
+      "id": "letter_jeem_fatha",
+      "expected_phonemes": [
+        "dʒ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "جهة",
+          "start": 0.233,
+          "end": 0.761,
+          "score": 0.219
+        }
+      ],
+      "duration": 0.528,
+      "avg_score": 0.219,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_haa_fatha",
+      "expected_phonemes": [
+        "ħ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "حا",
+          "start": 0.318,
+          "end": 0.762,
+          "score": 0.422
+        }
+      ],
+      "duration": 0.444,
+      "avg_score": 0.422,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_khaa_fatha",
+      "expected_phonemes": [
+        "x",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "ها",
+          "start": 0.25,
+          "end": 0.795,
+          "score": 0.437
+        }
+      ],
+      "duration": 0.545,
+      "avg_score": 0.437,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_daal_fatha",
+      "expected_phonemes": [
+        "d",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "ده",
+          "start": 0.267,
+          "end": 0.761,
+          "score": 0.34
+        }
+      ],
+      "duration": 0.494,
+      "avg_score": 0.34,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_dhaal_fatha",
+      "expected_phonemes": [
+        "ð",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "ذا",
+          "start": 0.267,
+          "end": 0.728,
+          "score": 0.354
+        }
+      ],
+      "duration": 0.461,
+      "avg_score": 0.354,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_raa_fatha",
+      "expected_phonemes": [
+        "r",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "ألا",
+          "start": 0.233,
+          "end": 0.644,
+          "score": 0.238
+        }
+      ],
+      "duration": 0.411,
+      "avg_score": 0.238,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_zaay_fatha",
+      "expected_phonemes": [
+        "z",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "زى",
+          "start": 0.233,
+          "end": 0.795,
+          "score": 0.398
+        }
+      ],
+      "duration": 0.562,
+      "avg_score": 0.398,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_seen_fatha",
+      "expected_phonemes": [
+        "s",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "ساة",
+          "start": 0.031,
+          "end": 0.794,
+          "score": 0.23
+        }
+      ],
+      "duration": 0.763,
+      "avg_score": 0.23,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_sheen_fatha",
+      "expected_phonemes": [
+        "ʃ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "شا",
+          "start": 0.284,
+          "end": 0.811,
+          "score": 0.412
+        }
+      ],
+      "duration": 0.527,
+      "avg_score": 0.412,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_saad_fatha",
+      "expected_phonemes": [
+        "sˤ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "ساة",
+          "start": 0.217,
+          "end": 0.913,
+          "score": 0.259
+        }
+      ],
+      "duration": 0.696,
+      "avg_score": 0.259,
+      "is_emphatic": true,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_daad_fatha",
+      "expected_phonemes": [
+        "dˤ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "دا",
+          "start": 0.25,
+          "end": 0.761,
+          "score": 0.37
+        }
+      ],
+      "duration": 0.511,
+      "avg_score": 0.37,
+      "is_emphatic": true,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_taa2_fatha",
+      "expected_phonemes": [
+        "tˤ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "دا",
+          "start": 0.267,
+          "end": 0.745,
+          "score": 0.411
+        }
+      ],
+      "duration": 0.478,
+      "avg_score": 0.411,
+      "is_emphatic": true,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_dhaa2_fatha",
+      "expected_phonemes": [
+        "ðˤ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "ذا",
+          "start": 0.267,
+          "end": 0.794,
+          "score": 0.66
+        }
+      ],
+      "duration": 0.527,
+      "avg_score": 0.66,
+      "is_emphatic": true,
+      "status": "PASS"
+    },
+    {
+      "id": "letter_ayn_fatha",
+      "expected_phonemes": [
+        "ʕ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "السلام",
+          "start": 0.284,
+          "end": 0.564,
+          "score": 0.112
+        },
+        {
+          "word": "عليكم.",
+          "start": 0.585,
+          "end": 0.778,
+          "score": 0.289
+        }
+      ],
+      "duration": 0.494,
+      "avg_score": 0.2,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_ghayn_fatha",
+      "expected_phonemes": [
+        "ɣ",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "لا",
+          "start": 0.233,
+          "end": 0.761,
+          "score": 0.404
+        }
+      ],
+      "duration": 0.528,
+      "avg_score": 0.404,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_faa_fatha",
+      "expected_phonemes": [
+        "f",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "سيكون",
+          "start": 0.217,
+          "end": 0.677,
+          "score": 0.208
+        }
+      ],
+      "duration": 0.46,
+      "avg_score": 0.208,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_qaaf_fatha",
+      "expected_phonemes": [
+        "q",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "حا",
+          "start": 0.318,
+          "end": 0.677,
+          "score": 0.376
+        }
+      ],
+      "duration": 0.359,
+      "avg_score": 0.376,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_kaaf_fatha",
+      "expected_phonemes": [
+        "k",
+        "aː"
+      ],
+      "words": [],
+      "duration": 0,
+      "avg_score": 0,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_laam_fatha",
+      "expected_phonemes": [
+        "l",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "لا",
+          "start": 0.2,
+          "end": 1.098,
+          "score": 0.464
+        }
+      ],
+      "duration": 0.898,
+      "avg_score": 0.464,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_meem_fatha",
+      "expected_phonemes": [
+        "m",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "مه",
+          "start": 0.25,
+          "end": 0.728,
+          "score": 0.366
+        }
+      ],
+      "duration": 0.478,
+      "avg_score": 0.366,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_noon_fatha",
+      "expected_phonemes": [
+        "n",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "نا",
+          "start": 0.233,
+          "end": 0.795,
+          "score": 0.331
+        }
+      ],
+      "duration": 0.562,
+      "avg_score": 0.331,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_haa2_fatha",
+      "expected_phonemes": [
+        "h",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "حسنا",
+          "start": 0.318,
+          "end": 0.744,
+          "score": 0.221
+        }
+      ],
+      "duration": 0.426,
+      "avg_score": 0.221,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_waaw_fatha",
+      "expected_phonemes": [
+        "w",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "وَا",
+          "start": 0.267,
+          "end": 0.829,
+          "score": 0.286
+        }
+      ],
+      "duration": 0.562,
+      "avg_score": 0.286,
+      "is_emphatic": false,
+      "status": "WARN"
+    },
+    {
+      "id": "letter_yaa_fatha",
+      "expected_phonemes": [
+        "j",
+        "aː"
+      ],
+      "words": [
+        {
+          "word": "yeah",
+          "start": 0.267,
+          "end": 0.862,
+          "score": 0.865
+        }
+      ],
+      "duration": 0.595,
+      "avg_score": 0.865,
+      "is_emphatic": false,
+      "status": "PASS"
+    }
+  ],
+  "words": [
+    {
+      "id": "word_shams",
+      "expected": "شَمس",
+      "feature": "fricative",
+      "words": [
+        {
+          "word": "شمس",
+          "start": 0.149,
+          "end": 0.811,
+          "score": 0.864
+        }
+      ],
+      "chars": [],
+      "duration": 0.662,
+      "avg_score": 0.864,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "PASS"
+    },
+    {
+      "id": "word_samak",
+      "expected": "سَمَك",
+      "feature": "plain_s",
+      "words": [
+        {
+          "word": "سماكت",
+          "start": 0.031,
+          "end": 1.031,
+          "score": 0.558
+        }
+      ],
+      "chars": [],
+      "duration": 1.0,
+      "avg_score": 0.558,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "PASS"
+    },
+    {
+      "id": "word_salam",
+      "expected": "سَلام",
+      "feature": "plain_s+long_a",
+      "words": [
+        {
+          "word": "سنم",
+          "start": 0.031,
+          "end": 1.081,
+          "score": 0.93
+        }
+      ],
+      "chars": [],
+      "duration": 1.05,
+      "avg_score": 0.93,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "PASS"
+    },
+    {
+      "id": "word_tuffah",
+      "expected": "تُفَّاح",
+      "feature": "shadda_faa",
+      "words": [
+        {
+          "word": "فاحو",
+          "start": 0.284,
+          "end": 1.014,
+          "score": 0.55
+        }
+      ],
+      "chars": [],
+      "duration": 0.73,
+      "avg_score": 0.55,
+      "feature_status": "PASS",
+      "feature_note": "duration OK for shadda: 730ms",
+      "status": "PASS"
+    },
+    {
+      "id": "word_umm",
+      "expected": "أُمٌّ",
+      "feature": "shadda_meem",
+      "words": [
+        {
+          "word": "أمون",
+          "start": 0.031,
+          "end": 0.879,
+          "score": 0.215
+        }
+      ],
+      "chars": [],
+      "duration": 0.848,
+      "avg_score": 0.215,
+      "feature_status": "PASS",
+      "feature_note": "duration OK for shadda: 848ms",
+      "status": "WARN"
+    },
+    {
+      "id": "word_qitt",
+      "expected": "قِطَّة",
+      "feature": "shadda_emphatic",
+      "words": [
+        {
+          "word": "كتة",
+          "start": 0.25,
+          "end": 0.862,
+          "score": 0.243
+        }
+      ],
+      "chars": [],
+      "duration": 0.612,
+      "avg_score": 0.243,
+      "feature_status": "WARN",
+      "feature_note": "emphatic consonant present, score=0.24 — low confidence, possible emphasis drift",
+      "status": "WARN"
+    },
+    {
+      "id": "word_kitab",
+      "expected": "كِتاب",
+      "feature": "long_a",
+      "words": [
+        {
+          "word": "كي",
+          "start": 0.233,
+          "end": 0.461,
+          "score": 0.4
+        },
+        {
+          "word": "تب",
+          "start": 0.482,
+          "end": 0.98,
+          "score": 0.907
+        }
+      ],
+      "chars": [],
+      "duration": 0.747,
+      "avg_score": 0.654,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "PASS"
+    },
+    {
+      "id": "word_qamar",
+      "expected": "قَمَر",
+      "feature": "uvular_q",
+      "words": [
+        {
+          "word": "أمار",
+          "start": 0.25,
+          "end": 0.862,
+          "score": 0.201
+        }
+      ],
+      "chars": [],
+      "duration": 0.612,
+      "avg_score": 0.201,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "WARN"
+    },
+    {
+      "id": "word_maa",
+      "expected": "ماء",
+      "feature": "long_a",
+      "words": [
+        {
+          "word": "ميت",
+          "start": 0.233,
+          "end": 0.711,
+          "score": 0.248
+        }
+      ],
+      "chars": [],
+      "duration": 0.478,
+      "avg_score": 0.248,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "WARN"
+    },
+    {
+      "id": "word_khubz",
+      "expected": "خُبز",
+      "feature": "velar_fricative",
+      "words": [
+        {
+          "word": "هبس",
+          "start": 0.233,
+          "end": 0.779,
+          "score": 0.276
+        }
+      ],
+      "chars": [],
+      "duration": 0.546,
+      "avg_score": 0.276,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "WARN"
+    },
+    {
+      "id": "adj_tall",
+      "expected": "طَوِيلٌ",
+      "feature": "emphatic_t",
+      "words": [
+        {
+          "word": "طويل",
+          "start": 0.031,
+          "end": 0.946,
+          "score": 0.788
+        }
+      ],
+      "chars": [],
+      "duration": 0.915,
+      "avg_score": 0.788,
+      "feature_status": "PASS",
+      "feature_note": "emphatic consonant present, score=0.79",
+      "status": "PASS"
+    },
+    {
+      "id": "adj_difficult",
+      "expected": "صَعْبٌ",
+      "feature": "emphatic_s",
+      "words": [
+        {
+          "word": "ساب",
+          "start": 0.031,
+          "end": 0.946,
+          "score": 0.937
+        }
+      ],
+      "chars": [],
+      "duration": 0.915,
+      "avg_score": 0.937,
+      "feature_status": "PASS",
+      "feature_note": "emphatic consonant present, score=0.94",
+      "status": "PASS"
+    },
+    {
+      "id": "verb_went",
+      "expected": "ذَهَبَ",
+      "feature": "dental_fricative",
+      "words": [
+        {
+          "word": "ذهب",
+          "start": 0.031,
+          "end": 0.913,
+          "score": 0.928
+        }
+      ],
+      "chars": [],
+      "duration": 0.882,
+      "avg_score": 0.928,
+      "feature_status": "PASS",
+      "feature_note": "",
+      "status": "PASS"
+    },
+    {
+      "id": "body_back",
+      "expected": "ظَهْرٌ",
+      "feature": "emphatic_dh",
+      "words": [
+        {
+          "word": "وحرو",
+          "start": 0.031,
+          "end": 0.946,
+          "score": 0.644
+        }
+      ],
+      "chars": [],
+      "duration": 0.915,
+      "avg_score": 0.644,
+      "feature_status": "PASS",
+      "feature_note": "emphatic consonant present, score=0.64",
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "total_tests": 42,
+    "total_pass": 14,
+    "total_fail": 28,
+    "letter_pass": 5,
+    "letter_fail": 23,
+    "word_pass": 9,
+    "word_fail": 5
+  }
+}

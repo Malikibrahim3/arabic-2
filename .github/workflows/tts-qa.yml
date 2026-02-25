@@ -1,0 +1,60 @@
+name: Arabic TTS QA Harness
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'public/audio/**'
+      - 'arabic-tts-qa/**'
+      - 'scripts/generate_audio*'
+      - 'scripts/regenerate*'
+      - 'package.json'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'public/audio/**'
+      - 'arabic-tts-qa/**'
+
+jobs:
+  run-tts-qa:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Node Dependencies
+      run: npm install
+
+    - name: Install System Dependencies (ffmpeg)
+      run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install faster-whisper whisperx torch
+
+    - name: Run Full TTS QA Pipeline
+      run: npm run tts-qa
+      env:
+        # Azure TTS key needed if generating new audio during CI
+        # Usually we only validate existing audio in CI to avoid API usage,
+        # but the harness currently does full generation.
+        # AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+        PYTHONUNBUFFERED: "1"
+
+    - name: Upload QA Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: tts-qa-report
+        path: arabic-tts-qa/reports/

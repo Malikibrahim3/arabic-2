@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useLocation, useRoute } from 'wouter';
 import { courseData } from '../data/course';
 import { ExerciseSession } from '../components/exercises/ExerciseSession';
-import { warmUpAudio } from '../utils/audio';
 import './LessonPage.css';
 
 export const LessonPage: React.FC = () => {
@@ -101,7 +100,6 @@ export const LessonPage: React.FC = () => {
                                 className={`round-item ${isComplete ? 'complete' : ''} ${isCurrent && !isGodMode ? 'current' : ''} ${isLocked ? 'locked' : ''}`}
                                 onClick={() => {
                                     if (!isLocked) {
-                                        warmUpAudio();
                                         setCurrentRound(i);
                                     }
                                 }}

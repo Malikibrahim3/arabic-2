@@ -1,0 +1,288 @@
+{
+  "total": 114,
+  "passed": 74,
+  "failed": 40,
+  "pass_rate": "64.9%",
+  "failures": [
+    {
+      "id": "letter_alif_fatha",
+      "category": "letter_sound",
+      "expected": "أَ",
+      "got": "Ah",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_baa_fatha",
+      "category": "letter_sound",
+      "expected": "بَ",
+      "got": "د",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_taa_fatha",
+      "category": "letter_sound",
+      "expected": "تَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_thaa_fatha",
+      "category": "letter_sound",
+      "expected": "ثَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_jeem_fatha",
+      "category": "letter_sound",
+      "expected": "جَ",
+      "got": "Jet",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_haa_fatha",
+      "category": "letter_sound",
+      "expected": "حَ",
+      "got": "حاء",
+      "similarity": 0.33
+    },
+    {
+      "id": "letter_khaa_fatha",
+      "category": "letter_sound",
+      "expected": "خَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_daal_fatha",
+      "category": "letter_sound",
+      "expected": "دَ",
+      "got": "Day",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_dhaal_fatha",
+      "category": "letter_sound",
+      "expected": "ذَ",
+      "got": "ذا؟",
+      "similarity": 0.33
+    },
+    {
+      "id": "letter_raa_fatha",
+      "category": "letter_sound",
+      "expected": "رَ",
+      "got": "Err",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_zaay_fatha",
+      "category": "letter_sound",
+      "expected": "زَ",
+      "got": "زاي؟",
+      "similarity": 0.25
+    },
+    {
+      "id": "letter_seen_fatha",
+      "category": "letter_sound",
+      "expected": "سَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_sheen_fatha",
+      "category": "letter_sound",
+      "expected": "شَ",
+      "got": "شيك",
+      "similarity": 0.33
+    },
+    {
+      "id": "letter_saad_fatha",
+      "category": "letter_sound",
+      "expected": "صَ",
+      "got": "ستة",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_daad_fatha",
+      "category": "letter_sound",
+      "expected": "ضَ",
+      "got": "ضاء",
+      "similarity": 0.33
+    },
+    {
+      "id": "letter_taa2_fatha",
+      "category": "letter_sound",
+      "expected": "طَ",
+      "got": "Ea؟",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_dhaa2_fatha",
+      "category": "letter_sound",
+      "expected": "ظَ",
+      "got": "Ved؟",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_ayn_fatha",
+      "category": "letter_sound",
+      "expected": "عَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_ghayn_fatha",
+      "category": "letter_sound",
+      "expected": "غَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_faa_fatha",
+      "category": "letter_sound",
+      "expected": "فَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_qaaf_fatha",
+      "category": "letter_sound",
+      "expected": "قَ",
+      "got": "و",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_kaaf_fatha",
+      "category": "letter_sound",
+      "expected": "كَ",
+      "got": "K ik",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_laam_fatha",
+      "category": "letter_sound",
+      "expected": "لَ",
+      "got": "لا",
+      "similarity": 0.5
+    },
+    {
+      "id": "letter_meem_fatha",
+      "category": "letter_sound",
+      "expected": "مَ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_noon_fatha",
+      "category": "letter_sound",
+      "expected": "نَ",
+      "got": "لا",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_haa2_fatha",
+      "category": "letter_sound",
+      "expected": "هَ",
+      "got": "Head",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_yaa_fatha",
+      "category": "letter_sound",
+      "expected": "يَ",
+      "got": "E",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_alif_name",
+      "category": "letter_name",
+      "expected": "ألف",
+      "got": "ا",
+      "similarity": 0.33
+    },
+    {
+      "id": "letter_khaa_name",
+      "category": "letter_name",
+      "expected": "خاء",
+      "got": "Half",
+      "similarity": 0.0
+    },
+    {
+      "id": "letter_laam_name",
+      "category": "letter_name",
+      "expected": "لام",
+      "got": "لم؟",
+      "similarity": 0.33
+    },
+    {
+      "id": "letter_yaa_name",
+      "category": "letter_name",
+      "expected": "ياء",
+      "got": "Yeah",
+      "similarity": 0.0
+    },
+    {
+      "id": "word_walad",
+      "category": "word",
+      "expected": "وَلَد",
+      "got": "Did you",
+      "similarity": 0.0
+    },
+    {
+      "id": "word_ab",
+      "category": "word",
+      "expected": "أَب",
+      "got": "Ab؟",
+      "similarity": 0.0
+    },
+    {
+      "id": "word_umm",
+      "category": "word",
+      "expected": "أُمّ",
+      "got": "",
+      "similarity": 0.0
+    },
+    {
+      "id": "word_akh",
+      "category": "word",
+      "expected": "أَخ",
+      "got": "أخو؟",
+      "similarity": 0.5
+    },
+    {
+      "id": "word_qitt",
+      "category": "word",
+      "expected": "قِطّ",
+      "got": "T",
+      "similarity": 0.0
+    },
+    {
+      "id": "fam_father",
+      "category": "word",
+      "expected": "أَبٌ",
+      "got": "Ab؟",
+      "similarity": 0.0
+    },
+    {
+      "id": "fam_mother",
+      "category": "word",
+      "expected": "أُمٌّ",
+      "got": "Em",
+      "similarity": 0.0
+    },
+    {
+      "id": "fam_brother",
+      "category": "word",
+      "expected": "أَخٌ",
+      "got": "أخو؟",
+      "similarity": 0.5
+    },
+    {
+      "id": "body_mouth",
+      "category": "word",
+      "expected": "فَمٌ",
+      "got": "ثامو",
+      "similarity": 0.25
+    }
+  ]
+}
