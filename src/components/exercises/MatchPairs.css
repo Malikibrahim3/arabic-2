@@ -55,7 +55,7 @@
 .match-left {
     direction: rtl;
     font-size: clamp(20px, 5vw, 28px);
-    font-family: 'Amiri', serif;
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
 }
 
 .match-item:active:not(:disabled) {

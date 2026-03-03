@@ -759,6 +759,34 @@
     "text": "قَهوة",
     "path": "/audio/words/word_qahwah.mp3"
   },
+  "word_madha": {
+    "text": "مَاذَا",
+    "path": "/audio/words/word_madha.mp3"
+  },
+  "word_kayfa": {
+    "text": "كَيْفَ",
+    "path": "/audio/words/word_kayfa.mp3"
+  },
+  "word_ayna": {
+    "text": "أَيْنَ",
+    "path": "/audio/words/word_ayna.mp3"
+  },
+  "word_limadha": {
+    "text": "لِمَاذَا",
+    "path": "/audio/words/word_limadha.mp3"
+  },
+  "word_hadha": {
+    "text": "هَذَا",
+    "path": "/audio/words/word_hadha.mp3"
+  },
+  "word_hadhihi": {
+    "text": "هَذِهِ",
+    "path": "/audio/words/word_hadhihi.mp3"
+  },
+  "word_ana": {
+    "text": "أَنَا",
+    "path": "/audio/words/word_ana.mp3"
+  },
   "sent_assalamu": {
     "text": "اَلسَّلامُ عَلَيكُم",
     "path": "/audio/sentences/sent_assalamu.mp3"

@@ -1,0 +1,93 @@
+.dual-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.dual-text-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dual-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.dual-text-content.egyptian {
+    text-align: right;
+}
+
+.dual-text-content.msa {
+    text-align: right;
+}
+
+.dual-text-content.english {
+    text-align: left;
+}
+
+.dialect-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.text-display-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.arabic-text.primary {
+    font-size: 26px;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.arabic-text.secondary {
+    font-size: 20px;
+    color: var(--color-text-main);
+}
+
+.english-text {
+    font-size: 16px;
+    color: var(--color-text-light);
+    font-style: italic;
+}
+
+.audio-btn {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--color-primary);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.audio-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    transform: scale(1.05);
+}
+
+.dual-text-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--color-border);
+    margin: 4px 0;
+}

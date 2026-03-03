@@ -6,6 +6,16 @@ import { MatchPairs } from './MatchPairs';
 import { TrapSelect } from './TrapSelect';
 import { WordAssembly } from './WordAssembly';
 import { SentenceAssembly } from './SentenceAssembly';
+import { FillInBlankDialect } from './FillInBlankDialect';
+import { ConversationExercise } from './ConversationExercise';
+import { SpeakingExercise } from './SpeakingExercise';
+import { Dictation } from './Dictation';
+import { RootExtraction } from './RootExtraction';
+import { SyntaxHighlight } from './SyntaxHighlight';
+import { VocabMatchDialect } from './VocabMatchDialect';
+import { BShiftDrill } from './BShiftDrill';
+import { srsEngine } from '../../data/srsEngine';
+import { difficultyEngine } from '../../data/difficultyEngine';
 import './ExerciseSession.css';
 
 interface ExerciseSessionProps {
@@ -30,7 +40,7 @@ function addDistractors(choices: string[], correctAnswer: string, exerciseType: 
     if (exerciseType === 'word_assembly' && choices.length <= 2) {
         const distractors: string[] = [];
         const arabicLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي'];
-        
+
         // Add 2-3 distractor letters that aren't in the correct answer
         const needed = Math.max(0, 4 - choices.length); // Aim for 4-5 total pieces
         let attempts = 0;
@@ -41,25 +51,25 @@ function addDistractors(choices: string[], correctAnswer: string, exerciseType: 
             }
             attempts++;
         }
-        
+
         return shuffle([...choices, ...distractors]);
     }
-    
+
     // For sentence assembly with 2 words, add a distractor word
     if (exerciseType === 'sentence_assembly' && choices.length === 2) {
         const distractorWords = ['في', 'من', 'إلى', 'على', 'هو', 'هي', 'أنا', 'أنت'];
         const distractors: string[] = [];
-        
+
         for (const word of distractorWords) {
             if (!choices.includes(word) && !correctAnswer.includes(word)) {
                 distractors.push(word);
                 break; // Just add one distractor
             }
         }
-        
+
         return shuffle([...choices, ...distractors]);
     }
-    
+
     return choices;
 }
 
@@ -146,6 +156,8 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
         setSelected(choice);
 
         const isCorrect = choice === exercise.correctAnswer;
+        srsEngine.recordPerformance(exercise.id, isCorrect);
+
         if (isCorrect) {
             setFeedback('correct');
             setCorrectCount(c => c + 1);
@@ -177,12 +189,14 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
     }, [feedback, selected, exercise, currentIndex, isReviewPhase]);
 
     const handleMatchPairsComplete = useCallback(() => {
+        srsEngine.recordPerformance(exerciseQueue[currentIndex].id, true);
         setCorrectCount(c => c + 1);
         setTotalAnswered(t => t + 1);
         setTimeout(advanceToNext, 400);
-    }, [advanceToNext]);
+    }, [advanceToNext, exerciseQueue, currentIndex]);
 
     const handleWordAssemblyComplete = useCallback((isCorrect: boolean) => {
+        srsEngine.recordPerformance(exercise.id, isCorrect);
         if (isCorrect) {
             setCorrectCount(c => c + 1);
         } else {
@@ -210,6 +224,7 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
     }, [exercise, isReviewPhase, advanceToNext, currentIndex]);
 
     const handleSentenceAssemblyComplete = useCallback((isCorrect: boolean) => {
+        srsEngine.recordPerformance(exercise.id, isCorrect);
         if (isCorrect) {
             setCorrectCount(c => c + 1);
         } else {
@@ -221,6 +236,33 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
                     return [...prev, { ...exercise, id: baseId }];
                 });
 
+                setExerciseQueue(prev => {
+                    const copy = [...prev];
+                    const retry = { ...exercise, id: exercise.id + '-retry' };
+                    const insertAt = Math.min(currentIndex + 4, copy.length);
+                    copy.splice(insertAt, 0, retry);
+                    return copy;
+                });
+            } else {
+                setExerciseQueue(prev => [...prev, { ...exercise, id: exercise.id + '-review-retry' }]);
+            }
+        }
+        setTotalAnswered(t => t + 1);
+        advanceToNext();
+    }, [exercise, isReviewPhase, advanceToNext, currentIndex]);
+
+    const handleFillInBlankComplete = useCallback((isCorrect: boolean) => {
+        srsEngine.recordPerformance(exercise.id, isCorrect);
+        if (isCorrect) {
+            setCorrectCount(c => c + 1);
+        } else {
+            setHearts(h => h - 1);
+            if (!isReviewPhase) {
+                const baseId = exercise.id.replace(/-retry$/, '');
+                setFailedQueue(prev => {
+                    if (prev.some(e => e.id.startsWith(baseId))) return prev;
+                    return [...prev, { ...exercise, id: baseId }];
+                });
                 setExerciseQueue(prev => {
                     const copy = [...prev];
                     const retry = { ...exercise, id: exercise.id + '-retry' };
@@ -306,7 +348,11 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
                             <span className="stat-label">XP</span>
                         </div>
                     </div>
-                    <button className="complete-continue-btn" onClick={() => onComplete({ correct: correctCount, total })}>
+                    <button className="complete-continue-btn" onClick={() => {
+                        // Record session in difficulty engine
+                        difficultyEngine.recordSession(accuracy);
+                        onComplete({ correct: correctCount, total });
+                    }}>
                         Continue
                     </button>
                 </div>
@@ -316,12 +362,20 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
 
     if (!exercise) return null;
 
+    const diffTier = difficultyEngine.getTier();
+    const diffLabel = diffTier === 'hard' ? '🔥 Hard' : diffTier === 'easy' ? '🌱 Easy' : '';
+
     const headerBar = (
         <div className="session-header">
             <button className="session-close-btn" onClick={onQuit}><X size={24} /></button>
             <div className="session-progress-bar">
                 <div className="session-progress-fill" style={{ width: `${progress}%` }}></div>
             </div>
+            {diffLabel && (
+                <span style={{ fontSize: '12px', padding: '2px 8px', borderRadius: '8px', background: diffTier === 'hard' ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)', color: diffTier === 'hard' ? '#F87171' : '#6EE7B7', fontWeight: 600 }}>
+                    {diffLabel}
+                </span>
+            )}
             <div className="session-hearts">
                 <Heart size={20} fill="#FF4B4B" color="#FF4B4B" />
                 <span>{hearts}</span>
@@ -351,6 +405,7 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
             if (feedback !== null || selected !== null) return;
             setSelected(choice || 'TIMEOUT');
             const isCorrect = choice === exercise.correctAnswer;
+            srsEngine.recordPerformance(exercise.id, isCorrect);
             if (isCorrect) {
                 setFeedback('correct');
                 setCorrectCount(c => c + 1);
@@ -412,6 +467,129 @@ export const ExerciseSession: React.FC<ExerciseSessionProps> = ({ exercises: ini
                     exercise={exercise}
                     shuffledWords={shuffledChoices}
                     onComplete={handleSentenceAssemblyComplete}
+                />
+            </div>
+        );
+    }
+
+    // ─── Reading Mechanics ────────────────────────────────────
+    if (exercise.type === 'dictation') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <Dictation
+                    key={exercise.id}
+                    exercise={exercise}
+                    onComplete={handleFillInBlankComplete} // Reusing the boolean true/false handler
+                />
+            </div>
+        );
+    }
+
+    if (exercise.type === 'root_extraction') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <RootExtraction
+                    key={exercise.id}
+                    exercise={exercise}
+                    onComplete={handleFillInBlankComplete}
+                />
+            </div>
+        );
+    }
+
+    if (exercise.type === 'syntax_highlight') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <SyntaxHighlight
+                    key={exercise.id}
+                    exercise={exercise}
+                    onComplete={handleFillInBlankComplete}
+                />
+            </div>
+        );
+    }
+
+    // ─── Phase 4 Hybrid Mechanics ──────────────────────────────
+    if (exercise.type === 'vocab_match_dialect') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <VocabMatchDialect
+                    key={exercise.id}
+                    exercise={exercise}
+                    shuffledChoices={shuffledChoices}
+                    onComplete={handleFillInBlankComplete}
+                />
+            </div>
+        );
+    }
+
+    if (exercise.type === 'b_shift_drill') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <BShiftDrill
+                    key={exercise.id}
+                    exercise={exercise}
+                    shuffledChoices={shuffledChoices}
+                    onComplete={handleFillInBlankComplete}
+                />
+            </div>
+        );
+    }
+
+    // ─── Fill In Blank Dialect ────────────────────────────────
+    if (exercise.type === 'fill_in_blank_dialect') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <FillInBlankDialect
+                    key={exercise.id}
+                    exercise={exercise}
+                    onComplete={handleFillInBlankComplete}
+                />
+            </div>
+        );
+    }
+
+    // ─── Speaking Exercises (with speech recognition) ────────
+    const speakingTypes = ['listen_repeat', 'pronunciation_drill', 'speak_translation', 'listen_respond', 'shadowing'];
+    if (speakingTypes.includes(exercise.type)) {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <SpeakingExercise
+                    key={exercise.id}
+                    exercise={exercise}
+                    onComplete={() => {
+                        setCorrectCount(c => c + 1);
+                        setTotalAnswered(t => t + 1);
+                        advanceToNext();
+                    }}
+                    onWrong={() => {
+                        setTotalAnswered(t => t + 1);
+                    }}
+                />
+            </div>
+        );
+    }
+
+    // ─── Conversation Roleplay ────────────────────────────────
+    if (exercise.type === 'roleplay_chat') {
+        return (
+            <div className="exercise-session">
+                {headerBar}
+                <ConversationExercise
+                    key={exercise.id}
+                    exercise={exercise}
+                    onComplete={() => {
+                        setCorrectCount(c => c + 1);
+                        setTotalAnswered(t => t + 1);
+                        advanceToNext();
+                    }}
                 />
             </div>
         );

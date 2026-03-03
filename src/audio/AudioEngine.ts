@@ -15,6 +15,15 @@ export const PlaybackSpeed = {
 
 export type PlaybackSpeed = typeof PlaybackSpeed[keyof typeof PlaybackSpeed];
 
+import type { DialectId } from '../data/types';
+
+let currentDialect: DialectId = 'msa';
+
+export function setDialect(dialect: DialectId) {
+    currentDialect = dialect;
+    vocabularyData = null; // Clear cached vocab when dialect changes
+}
+
 // ─── Letter/Syllable ID Mappings ───────────────────────────
 // Maps Arabic characters (with diacritics) to audio file IDs
 
@@ -108,14 +117,16 @@ function getAudioContext(): AudioContext {
 async function loadVocabulary(): Promise<Record<string, { text: string; path: string }>> {
     if (vocabularyData) return vocabularyData;
     try {
-        // Try loading from local path
-        const res = await fetch('/audio/vocabulary.json');
+        const vocabPath = currentDialect === 'msa'
+            ? '/audio/vocabulary.json'
+            : `/audio/dialects/${currentDialect}/vocabulary.json`;
+        const res = await fetch(vocabPath);
         if (res.ok) {
             vocabularyData = await res.json();
             return vocabularyData!;
         }
     } catch {
-        // vocabulary.json not available
+        // vocab not available
     }
     vocabularyData = {};
     return vocabularyData;
@@ -144,15 +155,19 @@ function resolveAudioId(input: string): string | null {
     return null;
 }
 
-function audioIdToPath(audioId: string): string {
-    // Determine directory from ID prefix and return local URL
-    if (audioId.startsWith('letter_')) return `/audio/letters/${audioId}.mp3`;
-    if (audioId.startsWith('syl_')) return `/audio/syllables/${audioId}.mp3`;
-    if (audioId.startsWith('word_')) return `/audio/words/${audioId}.mp3`;
-    if (audioId.startsWith('sent_')) return `/audio/sentences/${audioId}.mp3`;
-    if (audioId.startsWith('conv')) return `/audio/conversations/${audioId}.mp3`;
-    if (audioId.startsWith('quran_')) return `/audio/quran/${audioId}.mp3`;
-    return `/audio/letters/${audioId}.mp3`;
+function audioIdToPath(audioId: string, dialect: DialectId = currentDialect): string {
+    // Mapping ID prefixes to directory names
+    const category = audioId.startsWith('letter_') ? 'letters' :
+        audioId.startsWith('syl_') ? 'syllables' :
+            audioId.startsWith('word_') ? 'words' :
+                audioId.startsWith('sent_') ? 'sentences' :
+                    audioId.startsWith('conv') ? 'conversations' :
+                        audioId.startsWith('quran_') ? 'quran' : 'letters';
+
+    if (dialect !== 'msa') {
+        return `/audio/dialects/${dialect}/${category}/${audioId}.mp3`;
+    }
+    return `/audio/${category}/${audioId}.mp3`;
 }
 
 // ─── Playback ──────────────────────────────────────────────
@@ -240,7 +255,18 @@ export async function playLetterSound(letter: string, speed: PlaybackSpeed = Pla
 // ─── Internal: MP3 via Web Audio API ───────────────────────
 
 async function tryPlayMP3(audioId: string, speed: PlaybackSpeed): Promise<boolean> {
-    return tryPlayMP3Path(audioIdToPath(audioId), speed);
+    // AF16: Try human-recorded native audio first
+    const nativePath = `/native_audio/${currentDialect === 'msa' ? 'msa' : currentDialect}/${audioId}.mp3`;
+    const playedNative = await tryPlayMP3Path(nativePath, speed);
+
+    if (playedNative) {
+        console.log(`[AudioEngine] 🎙️ Played NATIVE audio for: ${audioId}`);
+        return true;
+    }
+
+    // Fall back to synthetic TTS generated audio
+    const dialectPath = audioIdToPath(audioId, currentDialect);
+    return tryPlayMP3Path(dialectPath, speed);
 }
 
 async function tryPlayMP3Path(filePath: string, speed: PlaybackSpeed): Promise<boolean> {
@@ -275,11 +301,25 @@ async function tryPlayMP3Path(filePath: string, speed: PlaybackSpeed): Promise<b
 
         currentSource = source;
         return new Promise((resolve) => {
+            let timeoutId: number | ReturnType<typeof setTimeout>;
+
             source.onended = () => {
+                clearTimeout(timeoutId);
                 currentSource = null;
                 resolve(true);
             };
             source.start();
+
+            // Safety fallback: If autoplay is blocked, onended won't fire.
+            // Resolve after expected duration + 500ms so the app doesn't hang forever.
+            const durationMs = (buffer!.duration / speed) * 1000 + 500;
+            timeoutId = setTimeout(() => {
+                if (currentSource === source) {
+                    console.warn(`[AudioEngine] WebAudio onended timeout triggered for: ${filePath}`);
+                    currentSource = null;
+                    resolve(true); // Resolve anyway to unblock the sequence
+                }
+            }, durationMs);
         });
     } catch {
         return false;
@@ -294,11 +334,32 @@ async function speakWithTTS(text: string, speed: PlaybackSpeed): Promise<void> {
 
     return new Promise<void>((resolve) => {
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ar-SA';
+
+        // Map dialect to appropriate locale
+        const localeMap: Record<DialectId, string> = {
+            'egyptian': 'ar-EG',
+            'msa': 'ar-SA'
+        };
+        utterance.lang = localeMap[currentDialect] || 'ar-SA';
+
         utterance.rate = speed === PlaybackSpeed.Slow ? 0.6 : 0.8;
 
-        utterance.onend = () => resolve();
-        utterance.onerror = () => resolve();
+        let timeoutId: number | ReturnType<typeof setTimeout>;
+
+        utterance.onend = () => {
+            clearTimeout(timeoutId);
+            resolve();
+        };
+        utterance.onerror = () => {
+            clearTimeout(timeoutId);
+            resolve();
+        };
+
+        const durationMs = 1500 + text.length * 100; // max reasonable duration
+        timeoutId = setTimeout(() => {
+            console.warn(`[AudioEngine] TTS onend timeout triggered for: "${text}"`);
+            resolve();
+        }, durationMs);
 
         window.speechSynthesis.speak(utterance);
     });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, BookOpen, User, Target } from 'lucide-react';
+import { Home, Target } from 'lucide-react';
 import { useLocation } from 'wouter';
 import './BottomNav.css';
 
@@ -8,9 +8,7 @@ export const BottomNav: React.FC = () => {
 
     const navItems = [
         { path: '/', icon: Home, label: 'Learn' },
-        { path: '/characters', icon: BookOpen, label: 'Characters' },
-        { path: '/quests', icon: Target, label: 'Quests' },
-        { path: '/profile', icon: User, label: 'Profile' }
+        { path: '/progress', icon: Target, label: 'Progress' }
     ];
 
     return (

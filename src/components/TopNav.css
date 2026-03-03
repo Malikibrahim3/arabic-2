@@ -25,19 +25,66 @@
     font-size: 16px;
 }
 
+.dialect-selector {
+    gap: 10px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 12px;
+    transition: background-color 0.2s;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dialect-selector:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dialect-name-nav {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #d4af37;
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+}
+
 .flag-icon {
     font-size: 24px;
 }
 
-.gems-container {
-    color: var(--color-secondary);
+.streak-container {
+    color: #F59E0B;
     margin-left: auto;
 }
 
-.icon-gem {
-    color: var(--color-secondary);
-    width: 20px;
-    height: 20px;
+.streak-icon {
+    font-size: 20px;
+}
+
+.streak-count {
+    color: #FBBF24;
+    font-weight: 800;
+}
+
+.progress-btn {
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 10px;
+    transition: background-color 0.2s;
+}
+
+.progress-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-btn.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: #D4AF37;
+}
+
+.icon-progress {
+    color: var(--color-text-secondary);
+}
+
+.progress-btn.active .icon-progress {
+    color: #D4AF37;
 }
 
 .hearts-container {
@@ -50,9 +97,7 @@
     height: 22px;
 }
 
-.streak-container {
-    display: none;
-}
+
 
 .logout-btn {
     background: none;

@@ -1,0 +1,522 @@
+/* ═══════════════════════════════════════════════════════════
+   ConversationRoleplay — Immersive Chat Experience
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Container ─────────────────────────────────────────── */
+.cr-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: var(--color-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Chat Area ─────────────────────────────────────────── */
+.cr-chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cr-chat-area::-webkit-scrollbar {
+    width: 5px;
+}
+
+.cr-chat-area::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 10px;
+}
+
+/* ─── Bubble Rows ───────────────────────────────────────── */
+.cr-bubble-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    max-width: 85%;
+}
+
+.cr-bubble-row.ai {
+    align-self: flex-start;
+}
+
+.cr-bubble-row.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+/* ─── Avatars ───────────────────────────────────────────── */
+.cr-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cr-avatar.ai {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-shadow));
+}
+
+.cr-avatar.user {
+    background: linear-gradient(135deg, #4A90D9, #2E5B99);
+}
+
+/* ─── Chat Bubbles ──────────────────────────────────────── */
+.cr-bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.cr-bubble.ai {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-bottom-left-radius: 6px;
+    color: var(--color-text-main);
+}
+
+.cr-bubble.user {
+    background: linear-gradient(135deg, #4A90D9, #2E5B99);
+    border-bottom-right-radius: 6px;
+    color: #fff;
+}
+
+/* Override DualTextDisplay inside bubbles */
+.cr-bubble .dual-text {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    gap: 2px !important;
+}
+
+.cr-bubble .arabic-text {
+    font-size: 20px !important;
+    line-height: 1.5 !important;
+}
+
+.cr-bubble .translation-text {
+    font-size: 13px !important;
+    opacity: 0.85;
+}
+
+.cr-bubble.user .translation-text {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* ─── Typing Dots ───────────────────────────────────────── */
+.cr-bubble.typing {
+    padding: 14px 20px;
+}
+
+.cr-typing-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.cr-typing-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+    display: block;
+}
+
+/* ─── Input Area ────────────────────────────────────────── */
+.cr-input-area {
+    padding: 16px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cr-typing-label {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+/* ─── Corrections ───────────────────────────────────────── */
+.cr-correction {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(248, 113, 113, 0.1);
+    border-left: 3px solid #F87171;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.cr-correction-header {
+    font-weight: 700;
+    color: #F87171;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+
+.cr-correction-wrong {
+    text-decoration: line-through;
+    opacity: 0.7;
+    margin-bottom: 4px;
+}
+
+.cr-correction-right {
+    font-weight: 700;
+    color: #4ADE80;
+    font-size: 15px;
+}
+
+.cr-correction-explain {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(248, 113, 113, 0.3);
+    font-style: italic;
+    opacity: 0.85;
+}
+
+/* ─── Pronunciation Tip ─────────────────────────────────── */
+.cr-tip {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--color-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Scene Intro
+   ═══════════════════════════════════════════════════════════ */
+.cr-scene-intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 24px;
+}
+
+.cr-scene-card {
+    text-align: center;
+    max-width: 420px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.cr-scene-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+}
+
+.cr-scene-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-text-main);
+    margin-bottom: 12px;
+}
+
+.cr-scene-desc {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.cr-scene-stats {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.cr-scene-stats span {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--color-border);
+}
+
+.cr-start-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-shadow));
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+.cr-start-btn:hover {
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.45);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Quiz Panel
+   ═══════════════════════════════════════════════════════════ */
+.cr-quiz-panel {
+    padding: 24px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cr-quiz-badge {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.cr-quiz-prompt {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-main);
+    text-align: center;
+    line-height: 1.4;
+}
+
+.cr-quiz-prompt em {
+    color: var(--color-primary);
+}
+
+.cr-quiz-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cr-quiz-choice {
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 2px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text-main);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.cr-quiz-choice:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    background: rgba(212, 175, 55, 0.06);
+}
+
+.cr-quiz-choice.correct {
+    border-color: #4ADE80;
+    background: rgba(74, 222, 128, 0.12);
+    color: #4ADE80;
+}
+
+.cr-quiz-choice.wrong {
+    border-color: #F87171;
+    background: rgba(248, 113, 113, 0.12);
+    color: #F87171;
+}
+
+.cr-rtl-choice {
+    font-size: 18px;
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+}
+
+/* ─── Feedback ──────────────────────────────────────────── */
+.cr-feedback {
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.cr-feedback.correct {
+    background: rgba(74, 222, 128, 0.12);
+    color: #4ADE80;
+}
+
+.cr-feedback.wrong {
+    background: rgba(248, 113, 113, 0.1);
+    color: #F87171;
+}
+
+.cr-continue-btn {
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--color-primary);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cr-continue-btn:hover {
+    background: var(--color-primary-shadow);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Word Order Challenge
+   ═══════════════════════════════════════════════════════════ */
+.cr-word-order-answer {
+    min-height: 56px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px dashed var(--color-border);
+    border-radius: 14px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.cr-word-placeholder {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    font-style: italic;
+}
+
+.cr-word-order-tiles {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cr-word-tile {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text-main);
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    transition: all 0.15s ease;
+}
+
+.cr-word-tile:hover {
+    border-color: var(--color-primary);
+}
+
+.cr-word-tile.selected {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Summary Screen
+   ═══════════════════════════════════════════════════════════ */
+.cr-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 24px;
+}
+
+.cr-summary-card {
+    text-align: center;
+    max-width: 380px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 40px 28px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.cr-summary-emoji {
+    font-size: 56px;
+    margin-bottom: 12px;
+}
+
+.cr-summary-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-text-main);
+    margin-bottom: 24px;
+}
+
+.cr-summary-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.cr-score-ring {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.cr-score-ring svg {
+    width: 100%;
+    height: 100%;
+}
+
+.cr-score-pct {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-text-main);
+}
+
+.cr-score-detail {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+}
+
+.cr-finish-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-shadow));
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+}
+
+.cr-finish-btn:hover {
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.45);
+}

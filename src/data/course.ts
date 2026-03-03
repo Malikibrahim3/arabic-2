@@ -1,4 +1,6 @@
-import type { Course, CourseNode, Lesson, Exercise } from './types';
+import type { Course, CourseNode, Lesson, Exercise, DialectId } from './types';
+import { buildSpeakingUnits } from './speaking_curriculum';
+import { makeStage2Conversations } from './lessons/stage2_conversations';
 
 console.log('🔍 COURSE.TS MODULE LOADING - TIMESTAMP:', new Date().toISOString());
 
@@ -455,25 +457,6 @@ function makeSentenceConfusionTrap(correctSent: any, confusableSents: any[], nod
     };
 }
 
-/**
- * CONVERSATION LINE TRAP - Tests speaker/context confusion
- * Critical for conversation comprehension
- */
-function makeConversationLineTrap(correctLine: any, confusableLines: any[], nodeId: string, context: string): Exercise {
-    const trapExplanations = confusableLines.map(l =>
-        `<strong class="arabic-text">${l.arabic}</strong> - "${l.english}" (different line)`
-    ).join('<br/>');
-
-    return {
-        id: nextId(`${nodeId}-conv-trap`),
-        type: 'trap_select',
-        prompt: `Careful! ${context}`,
-        promptAudio: correctLine.audio,
-        correctAnswer: correctLine.arabic,
-        choices: shuffle([correctLine.arabic, ...confusableLines.map(l => l.arabic)]),
-        trapExplanation: `<strong class="arabic-text">${correctLine.arabic}</strong> means "${correctLine.english}".<br/><br/><div style="font-size:18px; color:#666">Watch out for:<br/><br/>${trapExplanations}</div>`,
-    };
-}
 
 // ═══════════════════════════════════════════════════════════
 // ROUND 1: INTRODUCTION — Intro cards + basic exercises (6 choices, traps)
@@ -778,7 +761,7 @@ function makeRound4(letters: LetterInfo[], nodeId: string, prevLetters: LetterIn
         prompt: `Practice: Arrange ${sentLetterNames} in alphabetical order`,
         correctAnswer: sentLetters.map(l => l.letter).join(' '),
         choices: shuffle([...sentLetters.map(l => l.letter), allLetters[0].letter]),
-        hint: `Tap the letters to put them in sequence`,
+        hint: `Tap the letters in order to put them in sequence`,
     });
 
     return {
@@ -1546,7 +1529,7 @@ function makeUnit2Test(): CourseNode {
             prompt: 'Listen — what sound?',
             promptAudio: vowelCombo(l.letter, v),
             correctAnswer: vowelSyllable(l, v),
-            choices: shuffle([vowelSyllable(l, v), ...syllableDistractors(l, v, letters)]),
+            choices: shuffle([vowelCombo(l.letter, v), ...syllableDistractors(l, v, letters)]),
         });
     }
 
@@ -1646,6 +1629,7 @@ function makeCumulativeTest1(): CourseNode {
             correctAnswer: w.english,
             choices: shuffle([w.english, ...pick(UNIT3_WORDS.filter(ww => ww.english !== w.english).map(ww => ww.english), 3)]),
             hint: w.arabic,
+            promptAudio: w.audio,
         });
         exercises.push({
             id: nextId('cum1-word-audio'),
@@ -3076,315 +3060,12 @@ const UNIT8_CONVERSATIONS: ConversationData[] = [
     }
 ];
 
-function makeConversationExercises(conv: ConversationData, nodeId: string): Exercise[] {
-    const exercises: Exercise[] = [];
 
-    // REMOVED: Introduction cards - learners must figure out the conversation!
+// Unused conversation nodes and tests removed to clean up build
 
-    // Comprehension: Match speaker to line
-    conv.lines.forEach((line, idx) => {
-        const otherLines = conv.lines.filter((_, i) => i !== idx);
-        const distractors = pick(otherLines, Math.min(2, otherLines.length)).map(l => l.arabic);
 
-        exercises.push({
-            id: nextId(`${nodeId}-comp-${idx}`),
-            type: 'multiple_choice',
-            prompt: `What does ${line.speaker} say?`,
-            correctAnswer: line.arabic,
-            choices: shuffle([line.arabic, ...distractors]),
-            promptAudio: line.audio
-        });
-    });
+// Unused conversation nodes and tests removed to clean up build
 
-    // Translation: Arabic to English
-    conv.lines.forEach((line, idx) => {
-        const otherLines = conv.lines.filter((_, i) => i !== idx);
-        const distractors = pick(otherLines, Math.min(2, otherLines.length)).map(l => l.english);
-
-        exercises.push({
-            id: nextId(`${nodeId}-trans-${idx}`),
-            type: 'multiple_choice',
-            prompt: `What does this mean?`,
-            correctAnswer: line.english,
-            choices: shuffle([line.english, ...distractors]),
-            hint: line.arabic,
-            promptAudio: line.audio
-        });
-    });
-
-    // Sentence assembly: Build the conversation lines
-    conv.lines.forEach((line, idx) => {
-        const words = line.arabic.split(' ');
-        if (words.length >= 2) {
-            const otherWords = conv.lines
-                .filter((_, i) => i !== idx)
-                .flatMap(l => l.arabic.split(' '))
-                .filter(w => !words.includes(w));
-            const distractors = pick(otherWords, Math.min(2, otherWords.length));
-
-            exercises.push({
-                id: nextId(`${nodeId}-asm-${idx}`),
-                type: 'sentence_assembly',
-                prompt: `Assemble: "${line.english}"`,
-                correctAnswer: line.arabic,
-                choices: shuffle([...words, ...distractors]),
-                promptAudio: line.audio,
-                hint: `${line.speaker} says this`
-            });
-        }
-    });
-
-    // Match pairs: Speaker to line
-    exercises.push({
-        id: nextId(`${nodeId}-mp-speaker`),
-        type: 'match_pairs',
-        prompt: `Match each speaker to what they say`,
-        correctAnswer: '',
-        choices: [],
-        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({
-            left: l.speaker,
-            right: l.arabic
-        }))
-    });
-
-    // Match pairs: Arabic to English
-    exercises.push({
-        id: nextId(`${nodeId}-mp-trans`),
-        type: 'match_pairs',
-        prompt: `Match Arabic to English`,
-        correctAnswer: '',
-        choices: [],
-        pairs: pick(conv.lines, Math.min(4, conv.lines.length)).map(l => ({
-            left: l.arabic,
-            right: l.english
-        }))
-    });
-
-    return exercises;
-}
-
-function makeConversationNode(conv: ConversationData): CourseNode {
-    const exercises = makeConversationExercises(conv, conv.id);
-
-    // Split into rounds (NO MORE INTROS!)
-    const comprehension = exercises.filter(e => e.type === 'multiple_choice');
-    const assembly = exercises.filter(e => e.type === 'sentence_assembly');
-    const matching = exercises.filter(e => e.type === 'match_pairs');
-
-    // Create conversation line traps (AGGRESSIVE)
-    const conversationTraps: Exercise[] = [];
-    for (const line of pick(conv.lines, Math.min(4, conv.lines.length))) {
-        const otherLines = conv.lines.filter(l => l.arabic !== line.arabic);
-        if (otherLines.length >= 2) {
-            conversationTraps.push(makeConversationLineTrap(
-                line,
-                otherLines.slice(0, 2),
-                conv.id,
-                `What does ${line.speaker} say?`
-            ));
-        }
-    }
-
-    // Add speaker confusion traps
-    for (const line of pick(conv.lines, Math.min(3, conv.lines.length))) {
-        const otherLines = conv.lines.filter(l => l.speaker !== line.speaker);
-        if (otherLines.length >= 2) {
-            conversationTraps.push({
-                id: nextId(`${conv.id}-speaker-trap`),
-                type: 'trap_select',
-                prompt: `Careful! Which line does ${line.speaker} say?`,
-                promptAudio: line.audio,
-                correctAnswer: line.arabic,
-                choices: shuffle([line.arabic, ...otherLines.slice(0, 2).map(l => l.arabic)]),
-                trapExplanation: `<strong>${line.speaker}</strong> says: <strong class="arabic-text">${line.arabic}</strong> - "${line.english}".`,
-            });
-        }
-    }
-
-    return {
-        id: `u7-${conv.id}`,
-        title: conv.title,
-        description: conv.context,
-        type: 'lesson',
-        status: 'locked',
-        totalRounds: 4,
-        completedRounds: 0,
-        lessons: [
-            {
-                id: `u7-${conv.id}-r1`,
-                title: 'Round 1: Comprehension',
-                description: 'Figure out what is said',
-                exercises: shuffle([...comprehension.slice(0, Math.ceil(comprehension.length / 2)), ...conversationTraps.slice(0, 2), ...makeWordRefreshers(4, conv.id), ...makeSentenceRefreshers(3, conv.id)])
-            },
-            {
-                id: `u7-${conv.id}-r2`,
-                title: 'Round 2: Build Sentences',
-                description: 'Assemble the conversation',
-                exercises: shuffle([...assembly, ...assembly, ...comprehension.slice(Math.ceil(comprehension.length / 2)), ...conversationTraps.slice(2, 4), ...makeWordRefreshers(5, conv.id), ...makeSentenceRefreshers(4, conv.id)])
-            },
-            {
-                id: `u7-${conv.id}-r3`,
-                title: 'Round 3: Practice More',
-                description: 'Keep practicing',
-                exercises: shuffle([...matching, ...pick(comprehension, 3), ...pick(assembly, 2), ...pick(assembly, 2), ...conversationTraps.slice(4, 6), ...makeWordRefreshers(6, conv.id), ...makeSentenceRefreshers(5, conv.id)])
-            },
-            {
-                id: `u7-${conv.id}-r4`,
-                title: 'Round 4: Master the Dialogue',
-                description: 'Put it all together',
-                exercises: shuffle([...matching, ...pick(comprehension, 4), ...pick(assembly, 3), ...conversationTraps, ...makeLetterRefreshers(4, conv.id), ...makeWordRefreshers(6, conv.id), ...makeSentenceRefreshers(6, conv.id)])
-            }
-        ]
-    };
-}
-
-function makeUnit7Test(): CourseNode {
-    const exercises: Exercise[] = [];
-
-    // Test all conversations
-    UNIT7_CONVERSATIONS.forEach(conv => {
-        // Translation questions
-        conv.lines.forEach(line => {
-            const otherLines = UNIT7_CONVERSATIONS
-                .flatMap(c => c.lines)
-                .filter(l => l.english !== line.english);
-            const distractors = pick(otherLines, 3).map(l => l.english);
-
-            exercises.push({
-                id: nextId('u7t-trans'),
-                type: 'multiple_choice',
-                prompt: 'What does this mean?',
-                correctAnswer: line.english,
-                choices: shuffle([line.english, ...distractors]),
-                hint: line.arabic,
-                promptAudio: line.audio
-            });
-        });
-
-        // Assembly questions
-        conv.lines.forEach(line => {
-            const words = line.arabic.split(' ');
-            if (words.length >= 2) {
-                const otherWords = UNIT7_CONVERSATIONS
-                    .flatMap(c => c.lines)
-                    .filter(l => l.arabic !== line.arabic)
-                    .flatMap(l => l.arabic.split(' '))
-                    .filter(w => !words.includes(w));
-                const distractors = pick(otherWords, Math.min(3, otherWords.length));
-
-                exercises.push({
-                    id: nextId('u7t-asm'),
-                    type: 'sentence_assembly',
-                    prompt: `Assemble: "${line.english}"`,
-                    correctAnswer: line.arabic,
-                    choices: shuffle([...words, ...distractors]),
-                    promptAudio: line.audio
-                });
-            }
-        });
-    });
-
-    // Match pairs from different conversations
-    const allLines = UNIT7_CONVERSATIONS.flatMap(c => c.lines);
-    exercises.push({
-        id: nextId('u7t-mp'),
-        type: 'match_pairs',
-        prompt: 'Match Arabic to English',
-        correctAnswer: '',
-        choices: [],
-        pairs: pick(allLines, 6).map(l => ({ left: l.arabic, right: l.english }))
-    });
-
-    return {
-        id: 'u7-test',
-        title: '📝 Unit 7 Test',
-        description: 'Test all conversations',
-        type: 'test',
-        status: 'locked',
-        totalRounds: 1,
-        completedRounds: 0,
-        lessons: [{
-            id: 'u7-test-lesson',
-            title: 'Unit 7 Test',
-            description: 'Show you can handle real conversations',
-            exercises: shuffle(exercises)
-        }]
-    };
-}
-
-function makeUnit8Test(): CourseNode {
-    const exercises: Exercise[] = [];
-
-    // Test all advanced conversations
-    UNIT8_CONVERSATIONS.forEach(conv => {
-        // Translation questions
-        conv.lines.forEach(line => {
-            const otherLines = UNIT8_CONVERSATIONS
-                .flatMap(c => c.lines)
-                .filter(l => l.english !== line.english);
-            const distractors = pick(otherLines, 3).map(l => l.english);
-
-            exercises.push({
-                id: nextId('u8t-trans'),
-                type: 'multiple_choice',
-                prompt: 'What does this mean?',
-                correctAnswer: line.english,
-                choices: shuffle([line.english, ...distractors]),
-                hint: line.arabic,
-                promptAudio: line.audio
-            });
-        });
-
-        // Assembly questions for longer sentences
-        conv.lines.forEach(line => {
-            const words = line.arabic.split(' ');
-            if (words.length >= 2) {
-                const otherWords = UNIT8_CONVERSATIONS
-                    .flatMap(c => c.lines)
-                    .filter(l => l.arabic !== line.arabic)
-                    .flatMap(l => l.arabic.split(' '))
-                    .filter(w => !words.includes(w));
-                const distractors = pick(otherWords, Math.min(4, otherWords.length));
-
-                exercises.push({
-                    id: nextId('u8t-asm'),
-                    type: 'sentence_assembly',
-                    prompt: `Assemble: "${line.english}"`,
-                    correctAnswer: line.arabic,
-                    choices: shuffle([...words, ...distractors]),
-                    promptAudio: line.audio
-                });
-            }
-        });
-    });
-
-    // Match pairs from different conversations
-    const allLines = UNIT8_CONVERSATIONS.flatMap(c => c.lines);
-    exercises.push({
-        id: nextId('u8t-mp'),
-        type: 'match_pairs',
-        prompt: 'Match Arabic to English',
-        correctAnswer: '',
-        choices: [],
-        pairs: pick(allLines, 8).map(l => ({ left: l.arabic, right: l.english }))
-    });
-
-    return {
-        id: 'u8-test',
-        title: '📝 Unit 8 Test',
-        description: 'Test advanced conversations',
-        type: 'test',
-        status: 'locked',
-        totalRounds: 1,
-        completedRounds: 0,
-        lessons: [{
-            id: 'u8-test-lesson',
-            title: 'Unit 8 Test',
-            description: 'Show you can handle complex real-world conversations',
-            exercises: shuffle(exercises)
-        }]
-    };
-}
 
 // ═══════════════════════════════════════════════════════════
 // UNIT 9: QURANIC VERSES (STAGE 9)
@@ -3752,359 +3433,216 @@ function makeUnit9Test(): CourseNode {
 
 // ─── Course Data ───────────────────────────────────────────
 
-const baseCourseData: Course = {
-    id: 'stage-1',
-    title: 'Stage 1',
-    description: 'Script & Sound Decoding',
-    units: [
-        {
-            id: 1,
-            title: 'Unit 1',
-            description: 'The Arabic Alphabet',
-            color: '#58CC02',
-            nodes: [
-                makeLetterGroupNode('u1-n1', NODE_GROUPS[0], 0),
-                makeLetterGroupNode('u1-n2', NODE_GROUPS[1], 1),
-                makeLetterGroupNode('u1-n3', NODE_GROUPS[2], 2),
-                makeLetterGroupNode('u1-n4', NODE_GROUPS[3], 3),
-                makeLetterGroupNode('u1-n5', NODE_GROUPS[4], 4),
-                makeLetterGroupNode('u1-n6', NODE_GROUPS[5], 5),
-                makeLetterGroupNode('u1-n7', NODE_GROUPS[6], 6),
-                makeUnitTest(),
-            ],
-        },
-        {
-            id: 2,
-            title: 'Unit 2',
-            description: 'Short Vowels (Harakat)',
-            color: '#49C0F8',
-            nodes: [
-                makeSingleVowelNode(0, 'u2-n1'), // Fatha
-                makeSingleVowelNode(1, 'u2-n2'), // Kasra
-                makeSingleVowelNode(2, 'u2-n3'), // Damma
-                makeMixedVowelNode('u2-n4'),
-                makeUnit2Test(),
-            ],
-        },
-        {
-            id: 3,
-            title: 'Unit 3',
-            description: 'Words & Connecting',
-            color: '#FF4B4B',
-            nodes: [
-                makeWordAssemblyNode('u3-n1', 'First Words', UNIT3_WORDS.slice(0, 4), true),
-                makeWordAssemblyNode('u3-n2', 'Nature & Animals', UNIT3_WORDS.slice(4, 8), true),
-                makeWordAssemblyNode('u3-n3', 'People & Things', UNIT3_WORDS.slice(8, 12), true),
-                makeWordAssemblyNode('u3-n4', 'Body Parts', UNIT3_WORDS.slice(12, 17), true),
-                makeWordAssemblyNode('u3-n5', 'Common Adjectives', UNIT3_WORDS.slice(17, 22), true),
-                {
-                    id: 'u3-test',
-                    title: '📝 Unit 3 Test',
-                    description: 'Test your vocabulary',
-                    type: 'test',
-                    status: 'active',
-                    totalRounds: 1,
-                    completedRounds: 0,
-                    lessons: [{
-                        id: 'u3-test-lesson',
-                        title: 'Unit 3 Test',
-                        description: 'Assemble all the words learned.',
-                        exercises: shuffle(UNIT3_WORDS.flatMap(w => [
-                            {
-                                id: nextId('u3t-asm'),
-                                type: 'word_assembly',
-                                prompt: `Spell: ${w.english}`,
-                                correctAnswer: w.arabic,
-                                choices: shuffle([...stripHarakat(w.arabic).split(''), 'م']),
-                            }
-                        ])),
-                    }],
-                },
-                makeCumulativeTest1()
-            ],
-        },
-        {
-            id: 4,
-            title: 'Unit 4',
-            description: 'Core Vocabulary (Stage 4)',
-            color: '#9C27B0', // A nice deep purple for Stage 4
-            nodes: [
-                makeWordAssemblyNode('u4-n1', 'Home Sweet Home', UNIT4_WORDS.slice(0, 4), true),
-                makeWordAssemblyNode('u4-n2', 'Family Members', UNIT4_WORDS.slice(4, 8), true),
-                makeWordAssemblyNode('u4-n3', 'Eat & Drink', UNIT4_WORDS.slice(8, 12), true),
-                makeWordAssemblyNode('u4-n4', 'Places', UNIT4_WORDS.slice(12, 16), true),
-                makeWordAssemblyNode('u4-n5', 'Time & Numbers', UNIT4_WORDS.slice(16, 24), true),
-                makeWordAssemblyNode('u4-n6', 'Actions', UNIT4_WORDS.slice(24, 32), true),
-                makeWordAssemblyNode('u4-n7', 'Adjectives', UNIT4_WORDS.slice(32, 40), true),
-                {
-                    id: 'u4-test',
-                    title: '📝 Unit 4 Test',
-                    description: 'Test all vocabulary',
-                    type: 'test',
-                    status: 'locked',
-                    totalRounds: 1,
-                    completedRounds: 0,
-                    lessons: [{
-                        id: 'u4-test-lesson',
-                        title: 'Unit 4 Test',
-                        description: 'Translate and assemble the core words.',
-                        exercises: shuffle(UNIT4_WORDS.flatMap(w => [
-                            {
-                                id: nextId('u4t-mul'),
-                                type: 'multiple_choice',
-                                prompt: `What is the Arabic word for "${w.english}"?`,
-                                correctAnswer: w.arabic,
-                                choices: shuffle([w.arabic, ...pick(UNIT4_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
-                            }
-                        ])),
-                    }],
-                }
-            ]
-        },
-        {
-            id: 5,
-            title: 'Unit 4B',
-            description: 'Extended Vocabulary',
-            color: '#7B1FA2', // Darker purple for Unit 4B
-            nodes: [
-                makeWordAssemblyNode('u4b-n1', 'Body Parts', UNIT4B_WORDS.slice(0, 10), true),
-                makeWordAssemblyNode('u4b-n2', 'Colors', UNIT4B_WORDS.slice(10, 20), true),
-                makeWordAssemblyNode('u4b-n3', 'Nature & Weather', UNIT4B_WORDS.slice(20, 30), true),
-                makeWordAssemblyNode('u4b-n4', 'Common Objects', UNIT4B_WORDS.slice(30, 40), true),
-                {
-                    id: 'u4b-test',
-                    title: '📝 Unit 4B Test',
-                    description: 'Test extended vocabulary',
-                    type: 'test',
-                    status: 'locked',
-                    totalRounds: 1,
-                    completedRounds: 0,
-                    lessons: [{
-                        id: 'u4b-test-lesson',
-                        title: 'Unit 4B Test',
-                        description: 'Test your extended vocabulary.',
-                        exercises: shuffle(UNIT4B_WORDS.flatMap(w => [
-                            {
-                                id: nextId('u4bt-mul'),
-                                type: 'multiple_choice',
-                                prompt: `What is the Arabic word for "${w.english}"?`,
-                                correctAnswer: w.arabic,
-                                choices: shuffle([w.arabic, ...pick(UNIT4B_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
-                            }
-                        ])),
-                    }],
-                }
-            ]
-        },
-        {
-            id: 6,
-            title: 'Unit 4C',
-            description: 'Advanced Vocabulary',
-            color: '#6A1B9A', // Even darker purple for Unit 4C
-            nodes: [
-                makeWordAssemblyNode('u4c-n1', 'Directions', UNIT4C_WORDS.slice(0, 10), true),
-                makeWordAssemblyNode('u4c-n2', 'People', UNIT4C_WORDS.slice(10, 20), true),
-                makeWordAssemblyNode('u4c-n3', 'More Actions', UNIT4C_WORDS.slice(20, 30), true),
-                makeWordAssemblyNode('u4c-n4', 'Expressions', UNIT4C_WORDS.slice(30, 40), true),
-                {
-                    id: 'u4c-test',
-                    title: '📝 Unit 4C Test',
-                    description: 'Test advanced vocabulary',
-                    type: 'test',
-                    status: 'locked',
-                    totalRounds: 1,
-                    completedRounds: 0,
-                    lessons: [{
-                        id: 'u4c-test-lesson',
-                        title: 'Unit 4C Test',
-                        description: 'Test your advanced vocabulary.',
-                        exercises: shuffle(UNIT4C_WORDS.flatMap(w => [
-                            {
-                                id: nextId('u4ct-mul'),
-                                type: 'multiple_choice',
-                                prompt: `What is the Arabic word for "${w.english}"?`,
-                                correctAnswer: w.arabic,
-                                choices: shuffle([w.arabic, ...pick(UNIT4C_WORDS.map(ww => ww.arabic).filter(a => a !== w.arabic), 3)])
-                            }
-                        ])),
-                    }],
-                }
-            ]
-        },
-        {
-            id: 7,
-            title: 'Unit 5',
-            description: 'Unvowelled Reading (Stage 5)',
-            color: '#F5A623', // Bright vibrant orange
-            nodes: [
-                makeUnvowelledNode('u5-n1', 'Naked Words 1', [...UNIT4_WORDS.slice(0, 10), ...UNIT4B_WORDS.slice(0, 5)]),
-                makeUnvowelledNode('u5-n2', 'Naked Words 2', [...UNIT4_WORDS.slice(10, 20), ...UNIT4B_WORDS.slice(5, 10)]),
-                makeUnvowelledNode('u5-n3', 'Naked Words 3', [...UNIT4_WORDS.slice(20, 30), ...UNIT4B_WORDS.slice(10, 15)]),
-                makeUnvowelledNode('u5-n4', 'Naked Words 4', [...UNIT4_WORDS.slice(30, 40), ...UNIT4C_WORDS.slice(0, 5)]),
-                makeUnvowelledNode('u5-n5', 'Naked Words 5', [...UNIT4C_WORDS.slice(5, 20)]),
-                {
-                    id: 'u5-test',
-                    title: '📝 Unit 5 Test',
-                    description: 'Test unvowelled reading',
-                    type: 'test',
-                    status: 'locked',
-                    totalRounds: 1,
-                    completedRounds: 0,
-                    lessons: [{
-                        id: 'u5-test-lesson',
-                        title: 'Unit 5 Test',
-                        description: 'Translate unvowelled Arabic back to English.',
-                        exercises: shuffle([...UNIT4_WORDS, ...UNIT4B_WORDS, ...UNIT4C_WORDS].flatMap(w => [
-                            {
-                                id: nextId('u5t-mul'),
-                                type: 'multiple_choice',
-                                prompt: `What does this word mean?`,
-                                correctAnswer: w.english,
-                                choices: shuffle([w.english, ...pick([...UNIT4_WORDS, ...UNIT4B_WORDS, ...UNIT4C_WORDS].map(ww => ww.english).filter(a => a !== w.english), 3)]),
-                                hint: stripHarakat(w.arabic)
-                            }
-                        ])),
-                    }],
-                }
-            ]
-        },
-        {
-            id: 8,
-            title: 'Unit 6',
-            description: 'Full Sentences (Stage 6)',
-            color: '#FFD700', // Gold color for Stage 6 mastery
-            nodes: [
-                makeSentenceNode('u6-n1', 'Greetings', UNIT6_SENTENCES.slice(0, 6)),
-                makeSentenceNode('u6-n2', 'Common Phrases', UNIT6_SENTENCES.slice(6, 12)),
-                makeSentenceNode('u6-n3', 'Questions', UNIT6_SENTENCES.slice(12, 18)),
-                makeSentenceNode('u6-n4', 'Negations', UNIT6_SENTENCES.slice(18, 24)),
-                makeSentenceNode('u6-n5', 'Commands & Descriptions', UNIT6_SENTENCES.slice(24, 30)),
-                {
-                    id: 'u6-test',
-                    title: '📝 Unit 6 Test',
-                    description: 'Test sentence mastery',
-                    type: 'test',
-                    status: 'locked',
-                    totalRounds: 1,
-                    completedRounds: 0,
-                    lessons: [{
-                        id: 'u6-test-lesson',
-                        title: 'Unit 6 Test',
-                        description: 'Assemble and translate complex sentences.',
-                        exercises: shuffle(UNIT6_SENTENCES.flatMap(s => [
-                            {
-                                id: nextId('u6t-asm'),
-                                type: 'sentence_assembly',
-                                prompt: `Assemble: "${s.english}"`,
-                                correctAnswer: s.arabic,
-                                choices: shuffle([...s.words]),
-                                promptAudio: s.audio
-                            }
-                        ])),
-                    }],
-                },
-                makeCumulativeTest2()
-            ]
-        },
-        {
-            id: 9,
-            title: 'Unit 7',
-            description: 'Real Conversations (Stage 7)',
-            color: '#00BFA5', // Teal color for conversation mastery
-            nodes: [
-                makeConversationNode(UNIT7_CONVERSATIONS[0]), // Meeting Someone New
-                makeConversationNode(UNIT7_CONVERSATIONS[1]), // How Are You?
-                makeConversationNode(UNIT7_CONVERSATIONS[2]), // At Home
-                makeConversationNode(UNIT7_CONVERSATIONS[3]), // At the Market
-                makeConversationNode(UNIT7_CONVERSATIONS[4]), // Asking for Help
-                makeConversationNode(UNIT7_CONVERSATIONS[5]), // Saying Goodbye
-                makeUnit7Test()
-            ]
-        },
-        {
-            id: 10,
-            title: 'Unit 8',
-            description: 'Advanced Conversations (Stage 8)',
-            color: '#E91E63', // Pink color for advanced mastery
-            nodes: [
-                makeConversationNode(UNIT8_CONVERSATIONS[0]), // At the Restaurant
-                makeConversationNode(UNIT8_CONVERSATIONS[1]), // Asking for Directions
-                makeConversationNode(UNIT8_CONVERSATIONS[2]), // At the Market
-                makeConversationNode(UNIT8_CONVERSATIONS[3]), // Making Plans
-                makeConversationNode(UNIT8_CONVERSATIONS[4]), // Talking About Hobbies
-                makeConversationNode(UNIT8_CONVERSATIONS[5]), // At the Doctor
-                makeConversationNode(UNIT8_CONVERSATIONS[6]), // Talking About Family
-                makeConversationNode(UNIT8_CONVERSATIONS[7]), // Planning a Trip
-                makeUnit8Test()
-            ]
-        },
-        {
-            id: 11,
-            title: 'Unit 9',
-            description: 'Quranic Verses (Stage 9)',
-            color: '#4CAF50', // Green color for spiritual mastery
-            nodes: [
-                makeQuranSurahNode(1, 'u9-n1'),    // Al-Fatihah (2 verses)
-                makeQuranSurahNode(112, 'u9-n2'),  // Al-Ikhlas (4 verses)
-                makeQuranSurahNode(113, 'u9-n3'),  // Al-Falaq (2 verses)
-                makeQuranSurahNode(114, 'u9-n4'),  // An-Nas (3 verses)
-                makeQuranSurahNode(103, 'u9-n5'),  // Al-Asr (3 verses)
-                makeQuranSurahNode(108, 'u9-n6'),  // Al-Kawthar (3 verses)
-                makeUnit9Test(),
-                makeFinalComprehensiveTest()
-            ]
-        }
-    ],
-};
+// ─── Course Data ───────────────────────────────────────────
 
-// --- Post-Processor: Boost Audio Exercises ---
-// The user requested 20% MORE listening exercises than reading exercises overall.
-// We traverse the generated course and duplicate 'hear_choose' and audio 'trap_select'
-// to shift the balance dynamically.
+function getBaseCourseData(dialect: DialectId): Course {
+    const dialectPrefix = dialect === 'msa' ? 'MSA' : dialect.charAt(0).toUpperCase() + dialect.slice(1);
+
+    return {
+        id: `course-${dialect}`,
+        title: `${dialectPrefix} Arabic`,
+        description: `Learn to speak and read ${dialectPrefix} Arabic.`,
+        units: [
+            {
+                id: '1',
+                title: 'Unit 1',
+                description: 'The Arabic Alphabet',
+                color: '#58CC02',
+                path: 'reading',
+                nodes: [
+                    makeLetterGroupNode('u1-n1', NODE_GROUPS[0], 0),
+                    makeLetterGroupNode('u1-n2', NODE_GROUPS[1], 1),
+                    makeLetterGroupNode('u1-n3', NODE_GROUPS[2], 2),
+                    makeLetterGroupNode('u1-n4', NODE_GROUPS[3], 3),
+                    makeLetterGroupNode('u1-n5', NODE_GROUPS[4], 4),
+                    makeLetterGroupNode('u1-n6', NODE_GROUPS[5], 5),
+                    makeLetterGroupNode('u1-n7', NODE_GROUPS[6], 6),
+                    makeUnitTest(),
+                ],
+            },
+            {
+                id: '2',
+                title: 'Unit 2',
+                description: 'Short Vowels (Harakat)',
+                color: '#49C0F8',
+                path: 'reading',
+                nodes: [
+                    makeSingleVowelNode(0, 'u2-n1'), // Fatha
+                    makeSingleVowelNode(1, 'u2-n2'), // Kasra
+                    makeSingleVowelNode(2, 'u2-n3'), // Damma
+                    makeMixedVowelNode('u2-n4'),
+                    makeUnit2Test(),
+                ],
+            },
+            {
+                id: '3',
+                title: 'Unit 3',
+                description: 'Words & Connecting',
+                color: '#FF4B4B',
+                path: 'reading',
+                nodes: [
+                    makeWordAssemblyNode('u3-n1', 'First Words', UNIT3_WORDS.slice(0, 4), true),
+                    makeWordAssemblyNode('u3-n2', 'Nature & Animals', UNIT3_WORDS.slice(4, 8), true),
+                    makeWordAssemblyNode('u3-n3', 'People & Things', UNIT3_WORDS.slice(8, 12), true),
+                    makeWordAssemblyNode('u3-n4', 'Body Parts', UNIT3_WORDS.slice(12, 17), true),
+                    makeWordAssemblyNode('u3-n5', 'Common Adjectives', UNIT3_WORDS.slice(17, 22), true),
+                    {
+                        id: 'u3-test',
+                        title: '📝 Unit 3 Test',
+                        description: 'Test your vocabulary',
+                        type: 'test',
+                        status: 'active',
+                        totalRounds: 1,
+                        completedRounds: 0,
+                        lessons: [{
+                            id: 'u3-test-lesson',
+                            title: 'Unit 3 Test',
+                            description: 'Assemble all the words learned.',
+                            exercises: shuffle(UNIT3_WORDS.flatMap(w => [
+                                {
+                                    id: nextId('u3t-asm'),
+                                    type: 'word_assembly',
+                                    prompt: `Spell: ${w.english}`,
+                                    correctAnswer: w.arabic,
+                                    choices: shuffle([...stripHarakat(w.arabic).split(''), 'م']),
+                                }
+                            ])),
+                        }],
+                    },
+                    makeCumulativeTest1()
+                ],
+            },
+            {
+                id: '4',
+                title: 'Unit 4',
+                description: 'Core Vocabulary (Stage 4)',
+                color: '#9C27B0',
+                path: 'reading',
+                nodes: [
+                    makeWordAssemblyNode('u4-n1', 'Home Sweet Home', UNIT4_WORDS.slice(0, 4), true),
+                    makeWordAssemblyNode('u4-n2', 'Family Members', UNIT4_WORDS.slice(4, 8), true),
+                    makeWordAssemblyNode('u4-n3', 'Eat & Drink', UNIT4_WORDS.slice(8, 12), true),
+                    makeWordAssemblyNode('u4-n4', 'Places', UNIT4_WORDS.slice(12, 16), true),
+                    makeWordAssemblyNode('u4-n5', 'Time & Numbers', UNIT4_WORDS.slice(16, 24), true),
+                    makeWordAssemblyNode('u4-n6', 'Actions', UNIT4_WORDS.slice(24, 32), true),
+                    makeWordAssemblyNode('u4-n7', 'Adjectives', UNIT4_WORDS.slice(32, 40), true),
+                ]
+            },
+            {
+                id: '5',
+                title: 'Unit 5',
+                description: 'Unvowelled Reading (Stage 5)',
+                color: '#F5A623',
+                path: 'reading',
+                nodes: [
+                    makeUnvowelledNode('u5-n1', 'Naked Words 1', [...UNIT4_WORDS.slice(0, 10), ...UNIT4B_WORDS.slice(0, 5)]),
+                    makeUnvowelledNode('u5-n2', 'Naked Words 2', [...UNIT4_WORDS.slice(10, 20), ...UNIT4B_WORDS.slice(5, 10)]),
+                    makeUnvowelledNode('u5-n3', 'Naked Words 3', [...UNIT4_WORDS.slice(20, 30), ...UNIT4B_WORDS.slice(10, 15)]),
+                    makeUnvowelledNode('u5-n4', 'Naked Words 4', [...UNIT4_WORDS.slice(30, 40), ...UNIT4C_WORDS.slice(0, 5)]),
+                    makeUnvowelledNode('u5-n5', 'Naked Words 5', [...UNIT4C_WORDS.slice(5, 20)]),
+                ]
+            },
+            {
+                id: '6',
+                title: 'Unit 6',
+                description: 'Full Sentences (Stage 6)',
+                color: '#FFD700',
+                path: 'reading',
+                nodes: [
+                    makeSentenceNode('u6-n1', 'Greetings', UNIT6_SENTENCES.slice(0, 6)),
+                    makeSentenceNode('u6-n2', 'Common Phrases', UNIT6_SENTENCES.slice(6, 12)),
+                    makeSentenceNode('u6-n3', 'Questions', UNIT6_SENTENCES.slice(12, 18)),
+                    makeSentenceNode('u6-n4', 'Negations', UNIT6_SENTENCES.slice(18, 24)),
+                    makeSentenceNode('u6-n5', 'Commands & Descriptions', UNIT6_SENTENCES.slice(24, 30)),
+                    makeCumulativeTest2()
+                ]
+            },
+            {
+                id: '9',
+                title: 'Unit 9',
+                description: 'Quranic Verses (Stage 9)',
+                color: '#4CAF50',
+                path: 'reading',
+                nodes: [
+                    makeQuranSurahNode(1, 'u9-n1'),
+                    makeQuranSurahNode(112, 'u9-n2'),
+                    makeQuranSurahNode(113, 'u9-n3'),
+                    makeQuranSurahNode(114, 'u9-n4'),
+                    makeQuranSurahNode(103, 'u9-n5'),
+                    makeQuranSurahNode(108, 'u9-n6'),
+                    makeUnit9Test(),
+                    makeFinalComprehensiveTest()
+                ]
+            },
+            // ─── Progressive Speaking Curriculum ──────────────────
+            ...buildSpeakingUnits(dialect === 'egyptian' ? 'egyptian' : 'msa').map(u => ({ ...u, id: u.id.toString() })),
+            // ─── Phase 4: Hybrid Integration ──────────────────────
+            {
+                id: '201', // Stage 4: Hybrid Integration
+                title: 'Stage 4: Hybrid Integration',
+                description: 'MSA-Dialect Fusion & Switching',
+                color: '#EC4899',
+                path: 'hybrid' as const,
+                nodes: [
+                    {
+                        id: 's4-n1',
+                        title: 'Context Switching: Café',
+                        description: 'Side-by-side MSA & Dialect comparison.',
+                        type: 'lesson',
+                        status: 'locked',
+                        totalRounds: 1,
+                        completedRounds: 0,
+                        lessons: [makeStage2Conversations('s4-n1')]
+                    },
+                    {
+                        id: 's4-n2',
+                        title: 'Vocabulary Bridge',
+                        description: 'Match MSA prompts to Dialect responses.',
+                        type: 'lesson',
+                        status: 'locked',
+                        totalRounds: 1,
+                        completedRounds: 0,
+                        lessons: [{
+                            id: 's4-n2-l1',
+                            title: 'Vocabulary Match',
+                            description: 'Build your mental bridge between MSA and Dialect.',
+                            exercises: [
+                                {
+                                    id: 's4-n2-ex1',
+                                    type: 'vocab_match_dialect',
+                                    prompt: 'Match the MSA word to its Egyptian equivalent',
+                                    correctAnswer: 'أهلاً', // Egyptian
+                                    choices: ['أهلاً', 'مرحباً', 'صباح الخير', 'عفواً'],
+                                    hint: 'مرحباً' // MSA prompt
+                                },
+                                {
+                                    id: 's4-n2-ex2',
+                                    type: 'vocab_match_dialect',
+                                    prompt: 'Match the MSA word to its Egyptian equivalent',
+                                    correctAnswer: 'فين', // Egyptian
+                                    choices: ['فين', 'إيه', 'ليه', 'كام'],
+                                    hint: 'أين' // MSA prompt
+                                }
+                            ]
+                        }]
+                    }
+                ]
+            }
+        ]
+    };
+}
 
 function postProcessCourse(course: Course): Course {
     course.units.forEach(unit => {
         unit.nodes.forEach(node => {
             if (node.lessons) {
                 node.lessons.forEach(lesson => {
-                    const audioExercises = lesson.exercises.filter(e =>
-                        e.type === 'hear_choose' || e.promptAudio
-                    );
-                    const readingExercises = lesson.exercises.filter(e =>
-                        e.type !== 'hear_choose' && !e.promptAudio && e.type !== 'introduction' && e.type.toString() !== 'intro-trap-philosophy'
-                    );
-
-                    // Duplicate some audio exercises to shift the ratio
-                    // Make sure audio questions outnumber reading questions by about 20%
-                    const targetAudioCount = Math.ceil(readingExercises.length * 1.2);
-                    const currentAudioCount = audioExercises.length;
-                    const diff = targetAudioCount - currentAudioCount;
-
-                    if (diff > 0 && audioExercises.length > 0) {
-                        for (let i = 0; i < diff; i++) {
-                            const exToClone = audioExercises[i % audioExercises.length];
-                            // Clone it with a new ID
-                            lesson.exercises.push({
-                                ...exToClone,
-                                id: exToClone.id + '-boost-' + i
-                            });
-                        }
-                    }
-
-                    // ====== UNIVERSAL INTRO SORTING ======
-                    // Ensure that ALL 'introduction' and 'intro-trap-philosophy' cards
-                    // appear at the VERY START of the lesson array so they are never
-                    // shuffled behind test exercises.
                     const intros = lesson.exercises.filter(e => e.type === 'introduction' || e.type.toString() === 'intro-trap-philosophy');
                     const others = lesson.exercises.filter(e => e.type !== 'introduction' && e.type.toString() !== 'intro-trap-philosophy');
-
-                    // Fisher-Yates shuffle ONLY the graded/test exercises
                     for (let i = others.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [others[i], others[j]] = [others[j], others[i]];
                     }
-
-                    // Reconstruct lesson with Intros safely locked at the front
                     lesson.exercises = [...intros, ...others];
                 });
             }
@@ -4113,5 +3651,24 @@ function postProcessCourse(course: Course): Course {
     return course;
 }
 
-export const courseData: Course = postProcessCourse(baseCourseData);
+export function getAllExercises(dialect: DialectId): Exercise[] {
+    const course = getCourseData(dialect);
+    const exercises: Exercise[] = [];
+    course.units.forEach(unit => {
+        unit.nodes.forEach(node => {
+            if (node.lessons) {
+                node.lessons.forEach(lesson => {
+                    exercises.push(...lesson.exercises);
+                });
+            }
+        });
+    });
+    return exercises;
+}
+
+export function getCourseData(dialect: DialectId): Course {
+    return postProcessCourse(getBaseCourseData(dialect));
+}
+
+export const courseData: Course = getCourseData('msa');
 

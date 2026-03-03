@@ -104,7 +104,7 @@ body {
 }
 
 .arabic-text {
-  font-family: 'Amiri', serif;
+  font-family: 'Noto Naskh Arabic', 'Amiri', serif;
   direction: rtl;
 }
 

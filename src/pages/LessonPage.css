@@ -60,7 +60,7 @@
 }
 
 .lesson-letter-char {
-    font-family: 'Amiri', serif;
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
     font-size: clamp(36px, 10vw, 56px);
     color: var(--color-primary);
     /* Gold text */

@@ -1,0 +1,1434 @@
+{
+  "letter_alif_fatha": {
+    "text": "أَ",
+    "path": "/audio/dialects/gulf/letters/letter_alif_fatha.mp3"
+  },
+  "letter_baa_fatha": {
+    "text": "بَ",
+    "path": "/audio/dialects/gulf/letters/letter_baa_fatha.mp3"
+  },
+  "letter_taa_fatha": {
+    "text": "تَ",
+    "path": "/audio/dialects/gulf/letters/letter_taa_fatha.mp3"
+  },
+  "letter_thaa_fatha": {
+    "text": "ثَ",
+    "path": "/audio/dialects/gulf/letters/letter_thaa_fatha.mp3"
+  },
+  "letter_jeem_fatha": {
+    "text": "جَ",
+    "path": "/audio/dialects/gulf/letters/letter_jeem_fatha.mp3"
+  },
+  "letter_haa_fatha": {
+    "text": "حَ",
+    "path": "/audio/dialects/gulf/letters/letter_haa_fatha.mp3"
+  },
+  "letter_khaa_fatha": {
+    "text": "خَ",
+    "path": "/audio/dialects/gulf/letters/letter_khaa_fatha.mp3"
+  },
+  "letter_daal_fatha": {
+    "text": "دَ",
+    "path": "/audio/dialects/gulf/letters/letter_daal_fatha.mp3"
+  },
+  "letter_dhaal_fatha": {
+    "text": "ذَ",
+    "path": "/audio/dialects/gulf/letters/letter_dhaal_fatha.mp3"
+  },
+  "letter_raa_fatha": {
+    "text": "رَ",
+    "path": "/audio/dialects/gulf/letters/letter_raa_fatha.mp3"
+  },
+  "letter_zaay_fatha": {
+    "text": "زَ",
+    "path": "/audio/dialects/gulf/letters/letter_zaay_fatha.mp3"
+  },
+  "letter_seen_fatha": {
+    "text": "سَ",
+    "path": "/audio/dialects/gulf/letters/letter_seen_fatha.mp3"
+  },
+  "letter_sheen_fatha": {
+    "text": "شَ",
+    "path": "/audio/dialects/gulf/letters/letter_sheen_fatha.mp3"
+  },
+  "letter_saad_fatha": {
+    "text": "صَ",
+    "path": "/audio/dialects/gulf/letters/letter_saad_fatha.mp3"
+  },
+  "letter_daad_fatha": {
+    "text": "ضَ",
+    "path": "/audio/dialects/gulf/letters/letter_daad_fatha.mp3"
+  },
+  "letter_taa2_fatha": {
+    "text": "طَ",
+    "path": "/audio/dialects/gulf/letters/letter_taa2_fatha.mp3"
+  },
+  "letter_dhaa2_fatha": {
+    "text": "ظَ",
+    "path": "/audio/dialects/gulf/letters/letter_dhaa2_fatha.mp3"
+  },
+  "letter_ayn_fatha": {
+    "text": "عَ",
+    "path": "/audio/dialects/gulf/letters/letter_ayn_fatha.mp3"
+  },
+  "letter_ghayn_fatha": {
+    "text": "غَ",
+    "path": "/audio/dialects/gulf/letters/letter_ghayn_fatha.mp3"
+  },
+  "letter_faa_fatha": {
+    "text": "فَ",
+    "path": "/audio/dialects/gulf/letters/letter_faa_fatha.mp3"
+  },
+  "letter_qaaf_fatha": {
+    "text": "قَ",
+    "path": "/audio/dialects/gulf/letters/letter_qaaf_fatha.mp3"
+  },
+  "letter_kaaf_fatha": {
+    "text": "كَ",
+    "path": "/audio/dialects/gulf/letters/letter_kaaf_fatha.mp3"
+  },
+  "letter_laam_fatha": {
+    "text": "لَ",
+    "path": "/audio/dialects/gulf/letters/letter_laam_fatha.mp3"
+  },
+  "letter_meem_fatha": {
+    "text": "مَ",
+    "path": "/audio/dialects/gulf/letters/letter_meem_fatha.mp3"
+  },
+  "letter_noon_fatha": {
+    "text": "نَ",
+    "path": "/audio/dialects/gulf/letters/letter_noon_fatha.mp3"
+  },
+  "letter_haa2_fatha": {
+    "text": "هَ",
+    "path": "/audio/dialects/gulf/letters/letter_haa2_fatha.mp3"
+  },
+  "letter_waaw_fatha": {
+    "text": "وَ",
+    "path": "/audio/dialects/gulf/letters/letter_waaw_fatha.mp3"
+  },
+  "letter_yaa_fatha": {
+    "text": "يَ",
+    "path": "/audio/dialects/gulf/letters/letter_yaa_fatha.mp3"
+  },
+  "letter_alif_name": {
+    "text": "أَلِف",
+    "path": "/audio/dialects/gulf/letters/letter_alif_name.mp3"
+  },
+  "letter_baa_name": {
+    "text": "باء",
+    "path": "/audio/dialects/gulf/letters/letter_baa_name.mp3"
+  },
+  "letter_taa_name": {
+    "text": "تاء",
+    "path": "/audio/dialects/gulf/letters/letter_taa_name.mp3"
+  },
+  "letter_thaa_name": {
+    "text": "ثاء",
+    "path": "/audio/dialects/gulf/letters/letter_thaa_name.mp3"
+  },
+  "letter_jeem_name": {
+    "text": "جيم",
+    "path": "/audio/dialects/gulf/letters/letter_jeem_name.mp3"
+  },
+  "letter_haa_name": {
+    "text": "حاء",
+    "path": "/audio/dialects/gulf/letters/letter_haa_name.mp3"
+  },
+  "letter_khaa_name": {
+    "text": "خاء",
+    "path": "/audio/dialects/gulf/letters/letter_khaa_name.mp3"
+  },
+  "letter_daal_name": {
+    "text": "دال",
+    "path": "/audio/dialects/gulf/letters/letter_daal_name.mp3"
+  },
+  "letter_dhaal_name": {
+    "text": "ذال",
+    "path": "/audio/dialects/gulf/letters/letter_dhaal_name.mp3"
+  },
+  "letter_raa_name": {
+    "text": "راء",
+    "path": "/audio/dialects/gulf/letters/letter_raa_name.mp3"
+  },
+  "letter_zaay_name": {
+    "text": "زاي",
+    "path": "/audio/dialects/gulf/letters/letter_zaay_name.mp3"
+  },
+  "letter_seen_name": {
+    "text": "سين",
+    "path": "/audio/dialects/gulf/letters/letter_seen_name.mp3"
+  },
+  "letter_sheen_name": {
+    "text": "شين",
+    "path": "/audio/dialects/gulf/letters/letter_sheen_name.mp3"
+  },
+  "letter_saad_name": {
+    "text": "صاد",
+    "path": "/audio/dialects/gulf/letters/letter_saad_name.mp3"
+  },
+  "letter_daad_name": {
+    "text": "ضاد",
+    "path": "/audio/dialects/gulf/letters/letter_daad_name.mp3"
+  },
+  "letter_taa2_name": {
+    "text": "طاء",
+    "path": "/audio/dialects/gulf/letters/letter_taa2_name.mp3"
+  },
+  "letter_dhaa2_name": {
+    "text": "ظاء",
+    "path": "/audio/dialects/gulf/letters/letter_dhaa2_name.mp3"
+  },
+  "letter_ayn_name": {
+    "text": "عين",
+    "path": "/audio/dialects/gulf/letters/letter_ayn_name.mp3"
+  },
+  "letter_ghayn_name": {
+    "text": "غين",
+    "path": "/audio/dialects/gulf/letters/letter_ghayn_name.mp3"
+  },
+  "letter_faa_name": {
+    "text": "فاء",
+    "path": "/audio/dialects/gulf/letters/letter_faa_name.mp3"
+  },
+  "letter_qaaf_name": {
+    "text": "قاف",
+    "path": "/audio/dialects/gulf/letters/letter_qaaf_name.mp3"
+  },
+  "letter_kaaf_name": {
+    "text": "كاف",
+    "path": "/audio/dialects/gulf/letters/letter_kaaf_name.mp3"
+  },
+  "letter_laam_name": {
+    "text": "لام",
+    "path": "/audio/dialects/gulf/letters/letter_laam_name.mp3"
+  },
+  "letter_meem_name": {
+    "text": "ميم",
+    "path": "/audio/dialects/gulf/letters/letter_meem_name.mp3"
+  },
+  "letter_noon_name": {
+    "text": "نون",
+    "path": "/audio/dialects/gulf/letters/letter_noon_name.mp3"
+  },
+  "letter_haa2_name": {
+    "text": "هاء",
+    "path": "/audio/dialects/gulf/letters/letter_haa2_name.mp3"
+  },
+  "letter_waaw_name": {
+    "text": "واو",
+    "path": "/audio/dialects/gulf/letters/letter_waaw_name.mp3"
+  },
+  "letter_yaa_name": {
+    "text": "ياء",
+    "path": "/audio/dialects/gulf/letters/letter_yaa_name.mp3"
+  },
+  "syl_baa_fatha": {
+    "text": "بَ",
+    "path": "/audio/dialects/gulf/syllables/syl_baa_fatha.mp3"
+  },
+  "syl_baa_kasra": {
+    "text": "بِ",
+    "path": "/audio/dialects/gulf/syllables/syl_baa_kasra.mp3"
+  },
+  "syl_baa_damma": {
+    "text": "بُ",
+    "path": "/audio/dialects/gulf/syllables/syl_baa_damma.mp3"
+  },
+  "syl_taa_fatha": {
+    "text": "تَ",
+    "path": "/audio/dialects/gulf/syllables/syl_taa_fatha.mp3"
+  },
+  "syl_taa_kasra": {
+    "text": "تِ",
+    "path": "/audio/dialects/gulf/syllables/syl_taa_kasra.mp3"
+  },
+  "syl_taa_damma": {
+    "text": "تُ",
+    "path": "/audio/dialects/gulf/syllables/syl_taa_damma.mp3"
+  },
+  "syl_thaa_fatha": {
+    "text": "ثَ",
+    "path": "/audio/dialects/gulf/syllables/syl_thaa_fatha.mp3"
+  },
+  "syl_thaa_kasra": {
+    "text": "ثِ",
+    "path": "/audio/dialects/gulf/syllables/syl_thaa_kasra.mp3"
+  },
+  "syl_thaa_damma": {
+    "text": "ثُ",
+    "path": "/audio/dialects/gulf/syllables/syl_thaa_damma.mp3"
+  },
+  "syl_jeem_fatha": {
+    "text": "جَ",
+    "path": "/audio/dialects/gulf/syllables/syl_jeem_fatha.mp3"
+  },
+  "syl_jeem_kasra": {
+    "text": "جِ",
+    "path": "/audio/dialects/gulf/syllables/syl_jeem_kasra.mp3"
+  },
+  "syl_jeem_damma": {
+    "text": "جُ",
+    "path": "/audio/dialects/gulf/syllables/syl_jeem_damma.mp3"
+  },
+  "syl_haa_fatha": {
+    "text": "حَ",
+    "path": "/audio/dialects/gulf/syllables/syl_haa_fatha.mp3"
+  },
+  "syl_haa_kasra": {
+    "text": "حِ",
+    "path": "/audio/dialects/gulf/syllables/syl_haa_kasra.mp3"
+  },
+  "syl_haa_damma": {
+    "text": "حُ",
+    "path": "/audio/dialects/gulf/syllables/syl_haa_damma.mp3"
+  },
+  "syl_khaa_fatha": {
+    "text": "خَ",
+    "path": "/audio/dialects/gulf/syllables/syl_khaa_fatha.mp3"
+  },
+  "syl_khaa_kasra": {
+    "text": "خِ",
+    "path": "/audio/dialects/gulf/syllables/syl_khaa_kasra.mp3"
+  },
+  "syl_khaa_damma": {
+    "text": "خُ",
+    "path": "/audio/dialects/gulf/syllables/syl_khaa_damma.mp3"
+  },
+  "syl_daal_fatha": {
+    "text": "دَ",
+    "path": "/audio/dialects/gulf/syllables/syl_daal_fatha.mp3"
+  },
+  "syl_daal_kasra": {
+    "text": "دِ",
+    "path": "/audio/dialects/gulf/syllables/syl_daal_kasra.mp3"
+  },
+  "syl_daal_damma": {
+    "text": "دُ",
+    "path": "/audio/dialects/gulf/syllables/syl_daal_damma.mp3"
+  },
+  "syl_dhaal_fatha": {
+    "text": "ذَ",
+    "path": "/audio/dialects/gulf/syllables/syl_dhaal_fatha.mp3"
+  },
+  "syl_dhaal_kasra": {
+    "text": "ذِ",
+    "path": "/audio/dialects/gulf/syllables/syl_dhaal_kasra.mp3"
+  },
+  "syl_dhaal_damma": {
+    "text": "ذُ",
+    "path": "/audio/dialects/gulf/syllables/syl_dhaal_damma.mp3"
+  },
+  "syl_raa_fatha": {
+    "text": "رَ",
+    "path": "/audio/dialects/gulf/syllables/syl_raa_fatha.mp3"
+  },
+  "syl_raa_kasra": {
+    "text": "رِ",
+    "path": "/audio/dialects/gulf/syllables/syl_raa_kasra.mp3"
+  },
+  "syl_raa_damma": {
+    "text": "رُ",
+    "path": "/audio/dialects/gulf/syllables/syl_raa_damma.mp3"
+  },
+  "syl_zaay_fatha": {
+    "text": "زَ",
+    "path": "/audio/dialects/gulf/syllables/syl_zaay_fatha.mp3"
+  },
+  "syl_zaay_kasra": {
+    "text": "زِ",
+    "path": "/audio/dialects/gulf/syllables/syl_zaay_kasra.mp3"
+  },
+  "syl_zaay_damma": {
+    "text": "زُ",
+    "path": "/audio/dialects/gulf/syllables/syl_zaay_damma.mp3"
+  },
+  "syl_seen_fatha": {
+    "text": "سَ",
+    "path": "/audio/dialects/gulf/syllables/syl_seen_fatha.mp3"
+  },
+  "syl_seen_kasra": {
+    "text": "سِ",
+    "path": "/audio/dialects/gulf/syllables/syl_seen_kasra.mp3"
+  },
+  "syl_seen_damma": {
+    "text": "سُ",
+    "path": "/audio/dialects/gulf/syllables/syl_seen_damma.mp3"
+  },
+  "syl_sheen_fatha": {
+    "text": "شَ",
+    "path": "/audio/dialects/gulf/syllables/syl_sheen_fatha.mp3"
+  },
+  "syl_sheen_kasra": {
+    "text": "شِ",
+    "path": "/audio/dialects/gulf/syllables/syl_sheen_kasra.mp3"
+  },
+  "syl_sheen_damma": {
+    "text": "شُ",
+    "path": "/audio/dialects/gulf/syllables/syl_sheen_damma.mp3"
+  },
+  "syl_saad_fatha": {
+    "text": "صَ",
+    "path": "/audio/dialects/gulf/syllables/syl_saad_fatha.mp3"
+  },
+  "syl_saad_kasra": {
+    "text": "صِ",
+    "path": "/audio/dialects/gulf/syllables/syl_saad_kasra.mp3"
+  },
+  "syl_saad_damma": {
+    "text": "صُ",
+    "path": "/audio/dialects/gulf/syllables/syl_saad_damma.mp3"
+  },
+  "syl_daad_fatha": {
+    "text": "ضَ",
+    "path": "/audio/dialects/gulf/syllables/syl_daad_fatha.mp3"
+  },
+  "syl_daad_kasra": {
+    "text": "ضِ",
+    "path": "/audio/dialects/gulf/syllables/syl_daad_kasra.mp3"
+  },
+  "syl_daad_damma": {
+    "text": "ضُ",
+    "path": "/audio/dialects/gulf/syllables/syl_daad_damma.mp3"
+  },
+  "syl_taa2_fatha": {
+    "text": "طَ",
+    "path": "/audio/dialects/gulf/syllables/syl_taa2_fatha.mp3"
+  },
+  "syl_taa2_kasra": {
+    "text": "طِ",
+    "path": "/audio/dialects/gulf/syllables/syl_taa2_kasra.mp3"
+  },
+  "syl_taa2_damma": {
+    "text": "طُ",
+    "path": "/audio/dialects/gulf/syllables/syl_taa2_damma.mp3"
+  },
+  "syl_dhaa2_fatha": {
+    "text": "ظَ",
+    "path": "/audio/dialects/gulf/syllables/syl_dhaa2_fatha.mp3"
+  },
+  "syl_dhaa2_kasra": {
+    "text": "ظِ",
+    "path": "/audio/dialects/gulf/syllables/syl_dhaa2_kasra.mp3"
+  },
+  "syl_dhaa2_damma": {
+    "text": "ظُ",
+    "path": "/audio/dialects/gulf/syllables/syl_dhaa2_damma.mp3"
+  },
+  "syl_ayn_fatha": {
+    "text": "عَ",
+    "path": "/audio/dialects/gulf/syllables/syl_ayn_fatha.mp3"
+  },
+  "syl_ayn_kasra": {
+    "text": "عِ",
+    "path": "/audio/dialects/gulf/syllables/syl_ayn_kasra.mp3"
+  },
+  "syl_ayn_damma": {
+    "text": "عُ",
+    "path": "/audio/dialects/gulf/syllables/syl_ayn_damma.mp3"
+  },
+  "syl_ghayn_fatha": {
+    "text": "غَ",
+    "path": "/audio/dialects/gulf/syllables/syl_ghayn_fatha.mp3"
+  },
+  "syl_ghayn_kasra": {
+    "text": "غِ",
+    "path": "/audio/dialects/gulf/syllables/syl_ghayn_kasra.mp3"
+  },
+  "syl_ghayn_damma": {
+    "text": "غُ",
+    "path": "/audio/dialects/gulf/syllables/syl_ghayn_damma.mp3"
+  },
+  "syl_faa_fatha": {
+    "text": "فَ",
+    "path": "/audio/dialects/gulf/syllables/syl_faa_fatha.mp3"
+  },
+  "syl_faa_kasra": {
+    "text": "فِ",
+    "path": "/audio/dialects/gulf/syllables/syl_faa_kasra.mp3"
+  },
+  "syl_faa_damma": {
+    "text": "فُ",
+    "path": "/audio/dialects/gulf/syllables/syl_faa_damma.mp3"
+  },
+  "syl_qaaf_fatha": {
+    "text": "قَ",
+    "path": "/audio/dialects/gulf/syllables/syl_qaaf_fatha.mp3"
+  },
+  "syl_qaaf_kasra": {
+    "text": "قِ",
+    "path": "/audio/dialects/gulf/syllables/syl_qaaf_kasra.mp3"
+  },
+  "syl_qaaf_damma": {
+    "text": "قُ",
+    "path": "/audio/dialects/gulf/syllables/syl_qaaf_damma.mp3"
+  },
+  "syl_kaaf_fatha": {
+    "text": "كَ",
+    "path": "/audio/dialects/gulf/syllables/syl_kaaf_fatha.mp3"
+  },
+  "syl_kaaf_kasra": {
+    "text": "كِ",
+    "path": "/audio/dialects/gulf/syllables/syl_kaaf_kasra.mp3"
+  },
+  "syl_kaaf_damma": {
+    "text": "كُ",
+    "path": "/audio/dialects/gulf/syllables/syl_kaaf_damma.mp3"
+  },
+  "syl_laam_fatha": {
+    "text": "لَ",
+    "path": "/audio/dialects/gulf/syllables/syl_laam_fatha.mp3"
+  },
+  "syl_laam_kasra": {
+    "text": "لِ",
+    "path": "/audio/dialects/gulf/syllables/syl_laam_kasra.mp3"
+  },
+  "syl_laam_damma": {
+    "text": "لُ",
+    "path": "/audio/dialects/gulf/syllables/syl_laam_damma.mp3"
+  },
+  "syl_meem_fatha": {
+    "text": "مَ",
+    "path": "/audio/dialects/gulf/syllables/syl_meem_fatha.mp3"
+  },
+  "syl_meem_kasra": {
+    "text": "مِ",
+    "path": "/audio/dialects/gulf/syllables/syl_meem_kasra.mp3"
+  },
+  "syl_meem_damma": {
+    "text": "مُ",
+    "path": "/audio/dialects/gulf/syllables/syl_meem_damma.mp3"
+  },
+  "syl_noon_fatha": {
+    "text": "نَ",
+    "path": "/audio/dialects/gulf/syllables/syl_noon_fatha.mp3"
+  },
+  "syl_noon_kasra": {
+    "text": "نِ",
+    "path": "/audio/dialects/gulf/syllables/syl_noon_kasra.mp3"
+  },
+  "syl_noon_damma": {
+    "text": "نُ",
+    "path": "/audio/dialects/gulf/syllables/syl_noon_damma.mp3"
+  },
+  "syl_haa2_fatha": {
+    "text": "هَ",
+    "path": "/audio/dialects/gulf/syllables/syl_haa2_fatha.mp3"
+  },
+  "syl_haa2_kasra": {
+    "text": "هِ",
+    "path": "/audio/dialects/gulf/syllables/syl_haa2_kasra.mp3"
+  },
+  "syl_haa2_damma": {
+    "text": "هُ",
+    "path": "/audio/dialects/gulf/syllables/syl_haa2_damma.mp3"
+  },
+  "syl_waaw_fatha": {
+    "text": "وَ",
+    "path": "/audio/dialects/gulf/syllables/syl_waaw_fatha.mp3"
+  },
+  "syl_waaw_kasra": {
+    "text": "وِ",
+    "path": "/audio/dialects/gulf/syllables/syl_waaw_kasra.mp3"
+  },
+  "syl_waaw_damma": {
+    "text": "وُ",
+    "path": "/audio/dialects/gulf/syllables/syl_waaw_damma.mp3"
+  },
+  "syl_yaa_fatha": {
+    "text": "يَ",
+    "path": "/audio/dialects/gulf/syllables/syl_yaa_fatha.mp3"
+  },
+  "syl_yaa_kasra": {
+    "text": "يِ",
+    "path": "/audio/dialects/gulf/syllables/syl_yaa_kasra.mp3"
+  },
+  "syl_yaa_damma": {
+    "text": "يُ",
+    "path": "/audio/dialects/gulf/syllables/syl_yaa_damma.mp3"
+  },
+  "word_salam": {
+    "text": "سَلام",
+    "path": "/audio/dialects/gulf/words/word_salam.mp3"
+  },
+  "word_marhaba": {
+    "text": "مَرحَبا",
+    "path": "/audio/dialects/gulf/words/word_marhaba.mp3"
+  },
+  "word_shukran": {
+    "text": "شُكرًا",
+    "path": "/audio/dialects/gulf/words/word_shukran.mp3"
+  },
+  "word_afwan": {
+    "text": "عَفوًا",
+    "path": "/audio/dialects/gulf/words/word_afwan.mp3"
+  },
+  "word_naam": {
+    "text": "نَعَم",
+    "path": "/audio/dialects/gulf/words/word_naam.mp3"
+  },
+  "word_laa": {
+    "text": "لا",
+    "path": "/audio/dialects/gulf/words/word_laa.mp3"
+  },
+  "word_min_fadlak": {
+    "text": "مِن فَضلِك",
+    "path": "/audio/dialects/gulf/words/word_min_fadlak.mp3"
+  },
+  "word_ab": {
+    "text": "أَب",
+    "path": "/audio/dialects/gulf/words/word_ab.mp3"
+  },
+  "word_umm": {
+    "text": "أُمّ",
+    "path": "/audio/dialects/gulf/words/word_umm.mp3"
+  },
+  "word_ibn": {
+    "text": "اِبن",
+    "path": "/audio/dialects/gulf/words/word_ibn.mp3"
+  },
+  "word_bint": {
+    "text": "بِنت",
+    "path": "/audio/dialects/gulf/words/word_bint.mp3"
+  },
+  "word_akh": {
+    "text": "أَخ",
+    "path": "/audio/dialects/gulf/words/word_akh.mp3"
+  },
+  "word_ukht": {
+    "text": "أُخت",
+    "path": "/audio/dialects/gulf/words/word_ukht.mp3"
+  },
+  "word_bayt": {
+    "text": "بَيت",
+    "path": "/audio/dialects/gulf/words/word_bayt.mp3"
+  },
+  "word_kitab": {
+    "text": "كِتاب",
+    "path": "/audio/dialects/gulf/words/word_kitab.mp3"
+  },
+  "word_qalam": {
+    "text": "قَلَم",
+    "path": "/audio/dialects/gulf/words/word_qalam.mp3"
+  },
+  "word_bab": {
+    "text": "باب",
+    "path": "/audio/dialects/gulf/words/word_bab.mp3"
+  },
+  "word_maa": {
+    "text": "ماء",
+    "path": "/audio/dialects/gulf/words/word_maa.mp3"
+  },
+  "word_tamr": {
+    "text": "تَمر",
+    "path": "/audio/dialects/gulf/words/word_tamr.mp3"
+  },
+  "word_shams": {
+    "text": "شَمس",
+    "path": "/audio/dialects/gulf/words/word_shams.mp3"
+  },
+  "word_qamar": {
+    "text": "قَمَر",
+    "path": "/audio/dialects/gulf/words/word_qamar.mp3"
+  },
+  "word_nahr": {
+    "text": "نَهر",
+    "path": "/audio/dialects/gulf/words/word_nahr.mp3"
+  },
+  "word_jabal": {
+    "text": "جَبَل",
+    "path": "/audio/dialects/gulf/words/word_jabal.mp3"
+  },
+  "word_madrasah": {
+    "text": "مَدرَسة",
+    "path": "/audio/dialects/gulf/words/word_madrasah.mp3"
+  },
+  "word_walad": {
+    "text": "وَلَد",
+    "path": "/audio/dialects/gulf/words/word_walad.mp3"
+  },
+  "word_rajul": {
+    "text": "رَجُل",
+    "path": "/audio/dialects/gulf/words/word_rajul.mp3"
+  },
+  "word_samak": {
+    "text": "سَمَك",
+    "path": "/audio/dialects/gulf/words/word_samak.mp3"
+  },
+  "word_tuffah": {
+    "text": "تُفّاح",
+    "path": "/audio/dialects/gulf/words/word_tuffah.mp3"
+  },
+  "word_kalb": {
+    "text": "كَلب",
+    "path": "/audio/dialects/gulf/words/word_kalb.mp3"
+  },
+  "word_qitt": {
+    "text": "قِطّ",
+    "path": "/audio/dialects/gulf/words/word_qitt.mp3"
+  },
+  "word_ahmar": {
+    "text": "أَحمَر",
+    "path": "/audio/dialects/gulf/words/word_ahmar.mp3"
+  },
+  "word_azraq": {
+    "text": "أَزرَق",
+    "path": "/audio/dialects/gulf/words/word_azraq.mp3"
+  },
+  "word_akhdar": {
+    "text": "أَخضَر",
+    "path": "/audio/dialects/gulf/words/word_akhdar.mp3"
+  },
+  "word_abyad": {
+    "text": "أَبيَض",
+    "path": "/audio/dialects/gulf/words/word_abyad.mp3"
+  },
+  "word_aswad": {
+    "text": "أَسوَد",
+    "path": "/audio/dialects/gulf/words/word_aswad.mp3"
+  },
+  "word_wahid": {
+    "text": "واحِد",
+    "path": "/audio/dialects/gulf/words/word_wahid.mp3"
+  },
+  "word_ithnan": {
+    "text": "اِثنان",
+    "path": "/audio/dialects/gulf/words/word_ithnan.mp3"
+  },
+  "word_thalathah": {
+    "text": "ثَلاثة",
+    "path": "/audio/dialects/gulf/words/word_thalathah.mp3"
+  },
+  "word_arba3ah": {
+    "text": "أَربَعة",
+    "path": "/audio/dialects/gulf/words/word_arba3ah.mp3"
+  },
+  "word_khamsah": {
+    "text": "خَمسة",
+    "path": "/audio/dialects/gulf/words/word_khamsah.mp3"
+  },
+  "word_sittah": {
+    "text": "سِتّة",
+    "path": "/audio/dialects/gulf/words/word_sittah.mp3"
+  },
+  "word_sab3ah": {
+    "text": "سَبعة",
+    "path": "/audio/dialects/gulf/words/word_sab3ah.mp3"
+  },
+  "word_thamaniyah": {
+    "text": "ثَمانية",
+    "path": "/audio/dialects/gulf/words/word_thamaniyah.mp3"
+  },
+  "word_tis3ah": {
+    "text": "تِسعة",
+    "path": "/audio/dialects/gulf/words/word_tis3ah.mp3"
+  },
+  "word_3asharah": {
+    "text": "عَشَرة",
+    "path": "/audio/dialects/gulf/words/word_3asharah.mp3"
+  },
+  "word_yad": {
+    "text": "يَد",
+    "path": "/audio/dialects/gulf/words/word_yad.mp3"
+  },
+  "word_ayn_body": {
+    "text": "عَين",
+    "path": "/audio/dialects/gulf/words/word_ayn_body.mp3"
+  },
+  "word_rass": {
+    "text": "رَأس",
+    "path": "/audio/dialects/gulf/words/word_rass.mp3"
+  },
+  "word_qalb": {
+    "text": "قَلب",
+    "path": "/audio/dialects/gulf/words/word_qalb.mp3"
+  },
+  "word_khubz": {
+    "text": "خُبز",
+    "path": "/audio/dialects/gulf/words/word_khubz.mp3"
+  },
+  "word_haleb": {
+    "text": "حَليب",
+    "path": "/audio/dialects/gulf/words/word_haleb.mp3"
+  },
+  "word_chai": {
+    "text": "شاي",
+    "path": "/audio/dialects/gulf/words/word_chai.mp3"
+  },
+  "word_qahwah": {
+    "text": "قَهوة",
+    "path": "/audio/dialects/gulf/words/word_qahwah.mp3"
+  },
+  "word_madha": {
+    "text": "وشو",
+    "path": "/audio/dialects/gulf/words/word_madha.mp3"
+  },
+  "word_kayfa": {
+    "text": "شلون",
+    "path": "/audio/dialects/gulf/words/word_kayfa.mp3"
+  },
+  "word_ayna": {
+    "text": "أَيْنَ",
+    "path": "/audio/dialects/gulf/words/word_ayna.mp3"
+  },
+  "word_limadha": {
+    "text": "لِمَاذَا",
+    "path": "/audio/dialects/gulf/words/word_limadha.mp3"
+  },
+  "word_hadha": {
+    "text": "هَذَا",
+    "path": "/audio/dialects/gulf/words/word_hadha.mp3"
+  },
+  "word_hadhihi": {
+    "text": "هَذِهِ",
+    "path": "/audio/dialects/gulf/words/word_hadhihi.mp3"
+  },
+  "word_ana": {
+    "text": "أَنَا",
+    "path": "/audio/dialects/gulf/words/word_ana.mp3"
+  },
+  "sent_assalamu": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/dialects/gulf/sentences/sent_assalamu.mp3"
+  },
+  "sent_bismillah": {
+    "text": "بِسمِ اللّه",
+    "path": "/audio/dialects/gulf/sentences/sent_bismillah.mp3"
+  },
+  "sent_kayf_halak": {
+    "text": "كَيفَ حالُك",
+    "path": "/audio/dialects/gulf/sentences/sent_kayf_halak.mp3"
+  },
+  "sent_ana_bikhayr": {
+    "text": "أَنا بِخَير",
+    "path": "/audio/dialects/gulf/sentences/sent_ana_bikhayr.mp3"
+  },
+  "sent_ismi": {
+    "text": "اِسمي",
+    "path": "/audio/dialects/gulf/sentences/sent_ismi.mp3"
+  },
+  "sent_hadha_kitab": {
+    "text": "هذا كِتاب",
+    "path": "/audio/dialects/gulf/sentences/sent_hadha_kitab.mp3"
+  },
+  "sent_hadhihi_madrasah": {
+    "text": "هذِهِ مَدرَسة",
+    "path": "/audio/dialects/gulf/sentences/sent_hadhihi_madrasah.mp3"
+  },
+  "sent_ana_uhibb": {
+    "text": "أَنا أُحِبُّ العَرَبيّة",
+    "path": "/audio/dialects/gulf/sentences/sent_ana_uhibb.mp3"
+  },
+  "sent_ma3a_salama": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/dialects/gulf/sentences/sent_ma3a_salama.mp3"
+  },
+  "sent_sabah_alkhayr": {
+    "text": "صَباحُ الخَير",
+    "path": "/audio/dialects/gulf/sentences/sent_sabah_alkhayr.mp3"
+  },
+  "sent_masaa_alkhayr": {
+    "text": "مَساءُ الخَير",
+    "path": "/audio/dialects/gulf/sentences/sent_masaa_alkhayr.mp3"
+  },
+  "sent_jazak_allah": {
+    "text": "جَزاكَ اللّه خَيرًا",
+    "path": "/audio/dialects/gulf/sentences/sent_jazak_allah.mp3"
+  },
+  "conv1_line1": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/dialects/gulf/conversations/conv1_line1.mp3"
+  },
+  "conv1_line2": {
+    "text": "وَعَلَيكُمُ السَّلامُ",
+    "path": "/audio/dialects/gulf/conversations/conv1_line2.mp3"
+  },
+  "conv1_line3": {
+    "text": "كَيفَ حالُكِ؟",
+    "path": "/audio/dialects/gulf/conversations/conv1_line3.mp3"
+  },
+  "conv1_line4": {
+    "text": "أَنا بِخَير، شُكرًا",
+    "path": "/audio/dialects/gulf/conversations/conv1_line4.mp3"
+  },
+  "conv1_line5": {
+    "text": "أَنا بِخَير أَيضًا",
+    "path": "/audio/dialects/gulf/conversations/conv1_line5.mp3"
+  },
+  "conv1_line6": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/dialects/gulf/conversations/conv1_line6.mp3"
+  },
+  "conv2_line1": {
+    "text": "صَباحُ الخَير",
+    "path": "/audio/dialects/gulf/conversations/conv2_line1.mp3"
+  },
+  "conv2_line2": {
+    "text": "صَباحُ النُّور",
+    "path": "/audio/dialects/gulf/conversations/conv2_line2.mp3"
+  },
+  "conv2_line3": {
+    "text": "هَذِهِ مَدرَسة",
+    "path": "/audio/dialects/gulf/conversations/conv2_line3.mp3"
+  },
+  "conv2_line4": {
+    "text": "نَعَم، هَذِهِ مَدرَسة جَميلة",
+    "path": "/audio/dialects/gulf/conversations/conv2_line4.mp3"
+  },
+  "conv2_line5": {
+    "text": "أَنا أُحِبُّ العَرَبيّة",
+    "path": "/audio/dialects/gulf/conversations/conv2_line5.mp3"
+  },
+  "conv2_line6": {
+    "text": "أَنا أُحِبُّ العَرَبيّة أَيضًا",
+    "path": "/audio/dialects/gulf/conversations/conv2_line6.mp3"
+  },
+  "conv3_line1": {
+    "text": "هَذا كِتاب",
+    "path": "/audio/dialects/gulf/conversations/conv3_line1.mp3"
+  },
+  "conv3_line2": {
+    "text": "كِتابٌ جَميل",
+    "path": "/audio/dialects/gulf/conversations/conv3_line2.mp3"
+  },
+  "conv3_line3": {
+    "text": "شُكرًا",
+    "path": "/audio/dialects/gulf/conversations/conv3_line3.mp3"
+  },
+  "conv3_line4": {
+    "text": "عَفوًا",
+    "path": "/audio/dialects/gulf/conversations/conv3_line4.mp3"
+  },
+  "conv3_line5": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/dialects/gulf/conversations/conv3_line5.mp3"
+  },
+  "conv3_line6": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/dialects/gulf/conversations/conv3_line6.mp3"
+  },
+  "conv4_line1": {
+    "text": "بِسمِ اللّه",
+    "path": "/audio/dialects/gulf/conversations/conv4_line1.mp3"
+  },
+  "conv4_line2": {
+    "text": "بِسمِ اللّه",
+    "path": "/audio/dialects/gulf/conversations/conv4_line2.mp3"
+  },
+  "conv4_line3": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/dialects/gulf/conversations/conv4_line3.mp3"
+  },
+  "conv4_line4": {
+    "text": "وَعَلَيكُمُ السَّلامُ",
+    "path": "/audio/dialects/gulf/conversations/conv4_line4.mp3"
+  },
+  "conv4_line5": {
+    "text": "كَيفَ حالُكُم؟",
+    "path": "/audio/dialects/gulf/conversations/conv4_line5.mp3"
+  },
+  "conv4_line6": {
+    "text": "نَحنُ بِخَير",
+    "path": "/audio/dialects/gulf/conversations/conv4_line6.mp3"
+  },
+  "conv5_line1": {
+    "text": "اَلسَّلامُ عَلَيكُم",
+    "path": "/audio/dialects/gulf/conversations/conv5_line1.mp3"
+  },
+  "conv5_line2": {
+    "text": "وَعَلَيكُمُ السَّلامُ",
+    "path": "/audio/dialects/gulf/conversations/conv5_line2.mp3"
+  },
+  "conv5_line3": {
+    "text": "ما اسمُكَ؟",
+    "path": "/audio/dialects/gulf/conversations/conv5_line3.mp3"
+  },
+  "conv5_line4": {
+    "text": "اِسمي أَحمَد",
+    "path": "/audio/dialects/gulf/conversations/conv5_line4.mp3"
+  },
+  "conv5_line5": {
+    "text": "اِسمي فاطِمة",
+    "path": "/audio/dialects/gulf/conversations/conv5_line5.mp3"
+  },
+  "conv5_line6": {
+    "text": "تَشَرَّفنا",
+    "path": "/audio/dialects/gulf/conversations/conv5_line6.mp3"
+  },
+  "conv6_line1": {
+    "text": "مَساءُ الخَير",
+    "path": "/audio/dialects/gulf/conversations/conv6_line1.mp3"
+  },
+  "conv6_line2": {
+    "text": "مَساءُ النُّور",
+    "path": "/audio/dialects/gulf/conversations/conv6_line2.mp3"
+  },
+  "conv6_line3": {
+    "text": "كَيفَ حالُكَ؟",
+    "path": "/audio/dialects/gulf/conversations/conv6_line3.mp3"
+  },
+  "conv6_line4": {
+    "text": "أَنا بِخَير، الحَمدُ لِلّه",
+    "path": "/audio/dialects/gulf/conversations/conv6_line4.mp3"
+  },
+  "conv6_line5": {
+    "text": "جَيِّد",
+    "path": "/audio/dialects/gulf/conversations/conv6_line5.mp3"
+  },
+  "conv6_line6": {
+    "text": "مَعَ السَّلامة",
+    "path": "/audio/dialects/gulf/conversations/conv6_line6.mp3"
+  },
+  "conv8_1_line1": {
+    "text": "أَهلًا وَسَهلًا بِكَ في مَطعَمِنا",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line1.mp3"
+  },
+  "conv8_1_line2": {
+    "text": "شُكرًا، هَذا المَكانُ جَميلٌ جِدًّا",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line2.mp3"
+  },
+  "conv8_1_line3": {
+    "text": "نَحنُ سُعَداءُ بِزِيارَتِكَ، ما الَّذي تُفَضِّلُهُ اليَومَ؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line3.mp3"
+  },
+  "conv8_1_line4": {
+    "text": "ما هُوَ أَشهَرُ طَبَقٍ عِندَكُم؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line4.mp3"
+  },
+  "conv8_1_line5": {
+    "text": "الكَبسَةُ بِاللَّحمِ هِيَ الأَشهَرُ وَالأَلَذّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line5.mp3"
+  },
+  "conv8_1_line6": {
+    "text": "مُمتازٌ، سَآخُذُ الكَبسَةَ مَعَ سَلَطَةٍ وَعَصيرِ بُرتُقال",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line6.mp3"
+  },
+  "conv8_1_line7": {
+    "text": "اختِيارٌ رائِعٌ، هَل تُريدُ الطَّبَقَ حارًّا أَم مُتَوَسِّطًا؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line7.mp3"
+  },
+  "conv8_1_line8": {
+    "text": "مُتَوَسِّطًا مِن فَضلِكَ، وَكَم يَستَغرِقُ التَّحضير؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line8.mp3"
+  },
+  "conv8_1_line9": {
+    "text": "حَوالَي عِشرينَ دَقيقَةً، هَل تُريدُ مُقَبِّلاتٍ أَثناءَ الانتِظار؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line9.mp3"
+  },
+  "conv8_1_line10": {
+    "text": "نَعَم، أَحضِر لي حُمُّصًا وَخُبزًا طازَجًا",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line10.mp3"
+  },
+  "conv8_1_line11": {
+    "text": "حاضِرٌ، سَأُحضِرُها فَورًا، بِالهَناءِ وَالشِّفاء",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line11.mp3"
+  },
+  "conv8_1_line12": {
+    "text": "شُكرًا جَزيلًا، اللهُ يُبارِكُ فيكَ",
+    "path": "/audio/dialects/gulf/conversations/conv8_1_line12.mp3"
+  },
+  "conv8_2_line1": {
+    "text": "صَباحُ الخَيرِ، تَفَضَّل بِالجُلوس",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line1.mp3"
+  },
+  "conv8_2_line2": {
+    "text": "صَباحُ النُّورِ، شُكرًا لِإِتاحَةِ هَذِهِ الفُرصَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line2.mp3"
+  },
+  "conv8_2_line3": {
+    "text": "أَخبِرني عَن خِبرَتِكَ العَمَليَّةِ السّابِقَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line3.mp3"
+  },
+  "conv8_2_line4": {
+    "text": "عَمِلتُ خَمسَ سَنَواتٍ في شَرِكَةٍ كَبيرَةٍ كَمُهَندِس",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line4.mp3"
+  },
+  "conv8_2_line5": {
+    "text": "مُمتازٌ، وَما هِيَ أَهَمُّ إِنجازاتِكَ هُناكَ؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line5.mp3"
+  },
+  "conv8_2_line6": {
+    "text": "قُدتُ فَريقًا نَجَحَ في تَطويرِ نِظامٍ جَديد",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line6.mp3"
+  },
+  "conv8_2_line7": {
+    "text": "رائِعٌ، لِماذا تُريدُ العَمَلَ مَعَنا بِالتَّحديد؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line7.mp3"
+  },
+  "conv8_2_line8": {
+    "text": "لِأَنَّ شَرِكَتَكُم رائِدَةٌ في المَجالِ وَلَدَيها سُمعَةٌ مُمتازَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line8.mp3"
+  },
+  "conv8_2_line9": {
+    "text": "ما هِيَ نِقاطُ قُوَّتِكَ وَضَعفِك؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line9.mp3"
+  },
+  "conv8_2_line10": {
+    "text": "أَنا مُجتَهِدٌ وَمُنَظَّمٌ، لَكِنّي أَحيانًا أَكونُ مُتَطَلِّبًا جِدًّا",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line10.mp3"
+  },
+  "conv8_2_line11": {
+    "text": "جَيِّدٌ، سَنَتَّصِلُ بِكَ خِلالَ أُسبوعٍ بِإِذنِ الله",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line11.mp3"
+  },
+  "conv8_2_line12": {
+    "text": "شُكرًا جَزيلًا، في انتِظارِ رَدِّكُم",
+    "path": "/audio/dialects/gulf/conversations/conv8_2_line12.mp3"
+  },
+  "conv8_3_line1": {
+    "text": "أُفَكِّرُ في السَّفَرِ إِلى تُركِيا الشَّهرَ القادِم",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line1.mp3"
+  },
+  "conv8_3_line2": {
+    "text": "فِكرَةٌ رائِعَة، كَم يَومًا سَتَبقى هُناكَ؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line2.mp3"
+  },
+  "conv8_3_line3": {
+    "text": "أُخَطِّطُ لِلبَقاءِ عَشَرَةَ أَيّامٍ لِزِيارَةِ إِسطَنبولَ وَأَنطاليا",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line3.mp3"
+  },
+  "conv8_3_line4": {
+    "text": "هَل حَجَزتَ الفُندُقَ وَالطَّيَرانَ بِالفِعل؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line4.mp3"
+  },
+  "conv8_3_line5": {
+    "text": "لا بَعدُ، أَبحَثُ عَن أَفضَلِ العُروضِ الآن",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line5.mp3"
+  },
+  "conv8_3_line6": {
+    "text": "أَنصَحُكَ بِالحَجزِ مُبَكِّرًا لِأَنَّ الأَسعارَ تَرتَفِع",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line6.mp3"
+  },
+  "conv8_3_line7": {
+    "text": "نَصيحَةٌ جَيِّدَة، ما هِيَ الميزانيَّةُ المُناسِبَةُ بِرَأيِكَ؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line7.mp3"
+  },
+  "conv8_3_line8": {
+    "text": "أَعتَقِدُ أَنَّ أَلفَي دولارٍ كافِيَةٌ لِرِحلَةٍ مُريحَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line8.mp3"
+  },
+  "conv8_3_line9": {
+    "text": "وَماذا عَنِ الأَماكِنِ الَّتي يَجِبُ زِيارَتُها؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line9.mp3"
+  },
+  "conv8_3_line10": {
+    "text": "لا تَفوتْ آيا صوفيا وَالبازارَ الكَبيرَ وَالبوسفور",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line10.mp3"
+  },
+  "conv8_3_line11": {
+    "text": "شُكرًا عَلى النَّصائِح، هَل سَبَقَ أَن زُرتِ تُركِيا؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line11.mp3"
+  },
+  "conv8_3_line12": {
+    "text": "نَعَم، زُرتُها العامَ الماضي وَكانَت تَجرِبَةً لا تُنسى",
+    "path": "/audio/dialects/gulf/conversations/conv8_3_line12.mp3"
+  },
+  "conv8_4_line1": {
+    "text": "أَهلًا بِكَ، ما الَّذي يُزعِجُكَ اليَوم؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line1.mp3"
+  },
+  "conv8_4_line2": {
+    "text": "دُكتور، أَشعُرُ بِأَلَمٍ شَديدٍ في المَعِدَةِ مُنذُ ثَلاثَةِ أَيّام",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line2.mp3"
+  },
+  "conv8_4_line3": {
+    "text": "هَلِ الأَلَمُ مُستَمِرٌّ أَم يَأتي وَيَذهَب؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line3.mp3"
+  },
+  "conv8_4_line4": {
+    "text": "يَأتي وَيَذهَب، وَيَزدادُ بَعدَ الأَكل",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line4.mp3"
+  },
+  "conv8_4_line5": {
+    "text": "هَل لَدَيكَ أَعراضٌ أُخرى مِثلَ الغَثَيانِ أَوِ الحُمّى؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line5.mp3"
+  },
+  "conv8_4_line6": {
+    "text": "نَعَم، أَشعُرُ بِالغَثَيانِ أَحيانًا وَلَيسَ لَدَيَّ شَهِيَّة",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line6.mp3"
+  },
+  "conv8_4_line7": {
+    "text": "يَبدو أَنَّها التِهابٌ في المَعِدَة، هَل أَكَلتَ شَيئًا غَيرَ عادِيّ؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line7.mp3"
+  },
+  "conv8_4_line8": {
+    "text": "رُبَّما، أَكَلتُ طَعامًا حارًّا جِدًّا قَبلَ أَربَعَةِ أَيّام",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line8.mp3"
+  },
+  "conv8_4_line9": {
+    "text": "هَذا يُفَسِّرُ الأَمرَ، سَأَصِفُ لَكَ دَواءً وَنِظامًا غِذائِيًّا",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line9.mp3"
+  },
+  "conv8_4_line10": {
+    "text": "شُكرًا دُكتور، مَتى سَأَشعُرُ بِالتَّحَسُّن؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line10.mp3"
+  },
+  "conv8_4_line11": {
+    "text": "خِلالَ يَومَينِ إِن شاءَ الله، وَتَجَنَّبِ الطَّعامَ الحارّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line11.mp3"
+  },
+  "conv8_4_line12": {
+    "text": "حاضِرٌ، جَزاكَ اللهُ خَيرًا",
+    "path": "/audio/dialects/gulf/conversations/conv8_4_line12.mp3"
+  },
+  "conv8_5_line1": {
+    "text": "ما الَّذي تَدرُسُهُ في الجامِعَةِ يا يوسُف؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line1.mp3"
+  },
+  "conv8_5_line2": {
+    "text": "أَدرُسُ الهَندَسَةَ المَعماريَّةَ، وَأَنا في السَّنَةِ الثّالِثَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line2.mp3"
+  },
+  "conv8_5_line3": {
+    "text": "رائِعٌ، هَل تَستَمتِعُ بِدِراسَتِكَ؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line3.mp3"
+  },
+  "conv8_5_line4": {
+    "text": "نَعَم كَثيرًا، خاصَّةً مَوادَّ التَّصميمِ وَالرَّسمِ الهَندَسِيّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line4.mp3"
+  },
+  "conv8_5_line5": {
+    "text": "وَما هُوَ حُلمُكَ بَعدَ التَّخَرُّج؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line5.mp3"
+  },
+  "conv8_5_line6": {
+    "text": "أَحلُمُ بِتَصميمِ مَبانٍ صَديقَةٍ لِلبيئَةِ في العالَمِ العَرَبِيّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line6.mp3"
+  },
+  "conv8_5_line7": {
+    "text": "هَدَفٌ نَبيلٌ، أَنا أَدرُسُ الطِّبَّ وَأُريدُ أَن أُصبِحَ جَرّاحَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line7.mp3"
+  },
+  "conv8_5_line8": {
+    "text": "ما شاءَ الله، الطِّبُّ تَخَصُّصٌ صَعبٌ وَلَكِنَّهُ مُهِمّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line8.mp3"
+  },
+  "conv8_5_line9": {
+    "text": "نَعَم، أَدرُسُ كَثيرًا وَأَحيانًا أَسهَرُ اللَّيلَ كُلَّه",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line9.mp3"
+  },
+  "conv8_5_line10": {
+    "text": "اللهُ يُعينُكِ، المُستَقبَلُ سَيَكونُ مُشرِقًا بِإِذنِ الله",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line10.mp3"
+  },
+  "conv8_5_line11": {
+    "text": "آمين، هَل تُفَكِّرُ في إِكمالِ الدِّراساتِ العُليا؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line11.mp3"
+  },
+  "conv8_5_line12": {
+    "text": "رُبَّما، أُفَكِّرُ في الحُصولِ عَلى الماجِستيرِ في الخارِج",
+    "path": "/audio/dialects/gulf/conversations/conv8_5_line12.mp3"
+  },
+  "conv8_6_line1": {
+    "text": "كَم مَضى مِنَ الوَقتِ مُنذُ آخِرِ لِقاءٍ عائِلِيّ؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line1.mp3"
+  },
+  "conv8_6_line2": {
+    "text": "تَقريبًا سَنَةٌ كامِلَة، مُنذُ عيدِ الفِطرِ الماضي",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line2.mp3"
+  },
+  "conv8_6_line3": {
+    "text": "اشتَقتُ لِلجَميعِ كَثيرًا، خاصَّةً جَدَّتي وَأَعمامي",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line3.mp3"
+  },
+  "conv8_6_line4": {
+    "text": "أَنا أَيضًا، جَدَّتُنا دائِمًا تَسأَلُ عَنكِ وَعَن دِراسَتِكِ",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line4.mp3"
+  },
+  "conv8_6_line5": {
+    "text": "اللهُ يَحفَظُها، ما رَأيُكَ أَن نُنَظِّمَ لِقاءً قَريبًا؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line5.mp3"
+  },
+  "conv8_6_line6": {
+    "text": "فِكرَةٌ مُمتازَة، رُبَّما في نِهايَةِ هَذا الشَّهر",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line6.mp3"
+  },
+  "conv8_6_line7": {
+    "text": "أَينَ يُمكِنُ أَن نَجتَمِعَ؟ بَيتُ جَدَّتي أَم مَكانٌ آخَر؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line7.mp3"
+  },
+  "conv8_6_line8": {
+    "text": "بَيتُ جَدَّتِنا أَفضَل، هُوَ كَبيرٌ وَمُريحٌ لِلجَميع",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line8.mp3"
+  },
+  "conv8_6_line9": {
+    "text": "حَسَنًا، سَأَتَّصِلُ بِالعائِلَةِ وَأُخبِرُهُم بِالمَوعِد",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line9.mp3"
+  },
+  "conv8_6_line10": {
+    "text": "وَأَنا سَأُساعِدُ في تَحضيرِ الطَّعامِ وَالتَّرتيبات",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line10.mp3"
+  },
+  "conv8_6_line11": {
+    "text": "رائِعٌ، سَتَكونُ أَمسِيَةً جَميلَةً بِإِذنِ الله",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line11.mp3"
+  },
+  "conv8_6_line12": {
+    "text": "إِن شاءَ الله، العائِلَةُ هِيَ أَغلى ما نَملِك",
+    "path": "/audio/dialects/gulf/conversations/conv8_6_line12.mp3"
+  },
+  "conv8_7_line1": {
+    "text": "هَل قَرَأتَ الخَبَرَ عَنِ التَّطَوُّراتِ التِّقنِيَّةِ الجَديدَة؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line1.mp3"
+  },
+  "conv8_7_line2": {
+    "text": "نَعَم، التَّكنولوجِيا تَتَقَدَّمُ بِسُرعَةٍ مُذهِلَةٍ هَذِهِ الأَيّام",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line2.mp3"
+  },
+  "conv8_7_line3": {
+    "text": "صَحيحٌ، لَكِن أَشعُرُ أَنَّ النّاسَ أَصبَحوا مُدمِنينَ عَلى هَواتِفِهِم",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line3.mp3"
+  },
+  "conv8_7_line4": {
+    "text": "أُوافِقُكَ تَمامًا، وَسائِلُ التَّواصُلِ الاجتِماعِيِّ لَها إِيجابِيّاتٌ وَسَلبِيّات",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line4.mp3"
+  },
+  "conv8_7_line5": {
+    "text": "ما رَأيُكَ في تَأثيرِها عَلى الشَّبابِ وَالأَطفال؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line5.mp3"
+  },
+  "conv8_7_line6": {
+    "text": "أَعتَقِدُ أَنَّها سِلاحٌ ذو حَدَّين، يَجِبُ استِخدامُها بِحِكمَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line6.mp3"
+  },
+  "conv8_7_line7": {
+    "text": "كَلامٌ سَليمٌ، المُشكِلَةُ أَنَّ الكَثيرينَ يُضَيِّعونَ وَقتَهُم فيها",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line7.mp3"
+  },
+  "conv8_7_line8": {
+    "text": "نَعَم، وَيَنسَونَ أَهَمِّيَّةَ التَّواصُلِ الحَقيقِيِّ وَجهًا لِوَجه",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line8.mp3"
+  },
+  "conv8_7_line9": {
+    "text": "بِالضَّبط، يَجِبُ أَن نَجِدَ تَوازُنًا بَينَ العالَمَين",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line9.mp3"
+  },
+  "conv8_7_line10": {
+    "text": "وَأَيضًا يَجِبُ تَعليمُ الأَجيالِ الجَديدَةِ الاستِخدامَ الصَّحيح",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line10.mp3"
+  },
+  "conv8_7_line11": {
+    "text": "أَتَّفِقُ مَعَكَ، التَّربِيَةُ الرَّقمِيَّةُ أَصبَحَت ضَروريَّة",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line11.mp3"
+  },
+  "conv8_7_line12": {
+    "text": "تَمامًا، هَذا هُوَ تَحَدّي عَصرِنا الحالِيّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_7_line12.mp3"
+  },
+  "conv8_8_line1": {
+    "text": "ما هُوَ مَفهومُكَ لِلسَّعادَةِ الحَقيقِيَّة؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line1.mp3"
+  },
+  "conv8_8_line2": {
+    "text": "سُؤالٌ عَميقٌ، أَعتَقِدُ أَنَّ السَّعادَةَ تَكمُنُ في الرِّضا وَالقَناعَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line2.mp3"
+  },
+  "conv8_8_line3": {
+    "text": "أُوافِقُكِ، لَكِن أَلَيسَ الطُّموحُ مُهِمًّا أَيضًا؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line3.mp3"
+  },
+  "conv8_8_line4": {
+    "text": "بَلى، المُهِمُّ هُوَ التَّوازُنُ بَينَ الطُّموحِ وَالرِّضا",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line4.mp3"
+  },
+  "conv8_8_line5": {
+    "text": "وَما رَأيُكِ في مَعنى النَّجاحِ في الحَياة؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line5.mp3"
+  },
+  "conv8_8_line6": {
+    "text": "النَّجاحُ لَيسَ فَقَط في المالِ وَالشُّهرَة، بَل في التَّأثيرِ الإِيجابِيّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line6.mp3"
+  },
+  "conv8_8_line7": {
+    "text": "كَلامٌ جَميلٌ، إِذًا النَّجاحُ يَرتَبِطُ بِخِدمَةِ الآخَرين؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line7.mp3"
+  },
+  "conv8_8_line8": {
+    "text": "نَعَم بِالتَّأكيد، وَأَيضًا في تَحقيقِ السَّلامِ الدّاخِلِيّ",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line8.mp3"
+  },
+  "conv8_8_line9": {
+    "text": "هَل تَعتَقِدينَ أَنَّ المالَ يَجلِبُ السَّعادَة؟",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line9.mp3"
+  },
+  "conv8_8_line10": {
+    "text": "المالُ وَسيلَةٌ وَلَيسَ غايَةً، يُساعِدُ لَكِنَّهُ لا يَضمَنُ السَّعادَة",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line10.mp3"
+  },
+  "conv8_8_line11": {
+    "text": "حِكمَةٌ بالِغَة، الصِّحَّةُ وَالعائِلَةُ أَهَمُّ مِنَ المال",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line11.mp3"
+  },
+  "conv8_8_line12": {
+    "text": "تَمامًا، هَذِهِ هِيَ الكُنوزُ الحَقيقِيَّةُ في الحَياة",
+    "path": "/audio/dialects/gulf/conversations/conv8_8_line12.mp3"
+  },
+  "quran_1_1": {
+    "text": "بِسمِ اللَّهِ الرَّحمَٰنِ الرَّحيم",
+    "path": "/audio/dialects/gulf/quran/quran_1_1.mp3"
+  },
+  "quran_1_2": {
+    "text": "الحَمدُ لِلَّهِ رَبِّ العالَمين",
+    "path": "/audio/dialects/gulf/quran/quran_1_2.mp3"
+  },
+  "quran_112_1": {
+    "text": "قُل هُوَ اللَّهُ أَحَد",
+    "path": "/audio/dialects/gulf/quran/quran_112_1.mp3"
+  },
+  "quran_112_2": {
+    "text": "اللَّهُ الصَّمَد",
+    "path": "/audio/dialects/gulf/quran/quran_112_2.mp3"
+  },
+  "quran_112_3": {
+    "text": "لَم يَلِد وَلَم يولَد",
+    "path": "/audio/dialects/gulf/quran/quran_112_3.mp3"
+  },
+  "quran_112_4": {
+    "text": "وَلَم يَكُن لَّهُ كُفُوًا أَحَد",
+    "path": "/audio/dialects/gulf/quran/quran_112_4.mp3"
+  },
+  "quran_113_1": {
+    "text": "قُل أَعوذُ بِرَبِّ الفَلَق",
+    "path": "/audio/dialects/gulf/quran/quran_113_1.mp3"
+  },
+  "quran_113_2": {
+    "text": "مِن شَرِّ ما خَلَق",
+    "path": "/audio/dialects/gulf/quran/quran_113_2.mp3"
+  },
+  "quran_114_1": {
+    "text": "قُل أَعوذُ بِرَبِّ النّاس",
+    "path": "/audio/dialects/gulf/quran/quran_114_1.mp3"
+  },
+  "quran_114_2": {
+    "text": "مَلِكِ النّاس",
+    "path": "/audio/dialects/gulf/quran/quran_114_2.mp3"
+  },
+  "quran_114_3": {
+    "text": "إِلَٰهِ النّاس",
+    "path": "/audio/dialects/gulf/quran/quran_114_3.mp3"
+  },
+  "quran_103_1": {
+    "text": "وَالعَصر",
+    "path": "/audio/dialects/gulf/quran/quran_103_1.mp3"
+  },
+  "quran_103_2": {
+    "text": "إِنَّ الإِنسانَ لَفي خُسر",
+    "path": "/audio/dialects/gulf/quran/quran_103_2.mp3"
+  },
+  "quran_103_3": {
+    "text": "إِلَّا الَّذينَ آمَنوا وَعَمِلوا الصّالِحاتِ وَتَواصَوا بِالحَقِّ وَتَواصَوا بِالصَّبر",
+    "path": "/audio/dialects/gulf/quran/quran_103_3.mp3"
+  },
+  "quran_108_1": {
+    "text": "إِنّا أَعطَيناكَ الكَوثَر",
+    "path": "/audio/dialects/gulf/quran/quran_108_1.mp3"
+  },
+  "quran_108_2": {
+    "text": "فَصَلِّ لِرَبِّكَ وَانحَر",
+    "path": "/audio/dialects/gulf/quran/quran_108_2.mp3"
+  },
+  "quran_108_3": {
+    "text": "إِنَّ شانِئَكَ هُوَ الأَبتَر",
+    "path": "/audio/dialects/gulf/quran/quran_108_3.mp3"
+  }
+}
